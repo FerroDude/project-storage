@@ -54,7 +54,7 @@ Some scripts need to run at predetermined intervals.
 // all, authenticated, viewers, creators, visitor
 
 | METHOD | PATH                          | DESCRIPTION                                                             | AUTHENTICATION |
-| ------ | ----------------------------- | ----------------------------------------------------------------------- | -------------- | --- |
+| ------ | ----------------------------- | ----------------------------------------------------------------------- | -------------- |
 | GET    | "/user"                       | Return authenticated user.                                              | authenticated  |
 | GET    | "/user/edit"                  | Edit authenticated user's details.                                      | authenticated  |
 | GET    | "/user/:id"                   | Return a user based on id.                                              | authenticated  |
@@ -67,7 +67,7 @@ Some scripts need to run at predetermined intervals.
 | DELETE | "/authentication/sign-out"    | Sign Out.                                                               | authenticated  |
 | GET    | "/subscription"               | Get status of subscription.                                             | renter         |
 | POST   | "/subscription"               | Create new renter subscription (credit card details - stripe token)     | renter         |
-| GET    | "/file-upload-authentication" | Allow imagekit to generate a signed URL that can be used to upload file | creators       | ??  |
+| GET    | "/file-upload-authentication" | Allow imagekit to generate a signed URL that can be used to upload file | creators       |
 
 // GET - Load data
 // POST - Create new resource
