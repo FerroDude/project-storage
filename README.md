@@ -1,6 +1,12 @@
 # project-storage
 
-Our application is divided between a client-side ReactJS application and a server-side Node.js application.
+## Technologies
+
+| USAGE                    | TECHNOLOGY             | DESCRIPTION                                        |
+| ------------------------ | ---------------------- | -------------------------------------------------- |
+| Asynchoronous operations | async-await            | We decided to use async-await instead of promises. |
+| Styling                  | Undecided              | Need to decide on a styling solution.              |
+| File-uploads             | Cloudinary or ImageKit | Option depends on whether we want videos or not.   |
 
 ## Server-side
 
@@ -48,23 +54,20 @@ Some scripts need to run at predetermined intervals.
 // all, authenticated, viewers, creators, visitor
 
 | METHOD | PATH                          | DESCRIPTION                                                             | AUTHENTICATION |
-| ------ | ----------------------------- | ----------------------------------------------------------------------- | -------------- |
-| GET    | "/course/list"                | List available courses.                                                 | all            |
-| GET    | "/course/:id"                 | Load details of single course.                                          | all            |
-| GET    | "/episode/:id"                | Load video URL for specific episode.                                    | viewers        |
-| POST   | "/authentication/sign-up"     | Sign Up.                                                                | visitor        |
+| ------ | ----------------------------- | ----------------------------------------------------------------------- | -------------- | --- |
+| GET    | "/user"                       | Return authenticated user.                                              | authenticated  |
+| GET    | "/user/edit"                  | Edit authenticated user's details.                                      | authenticated  |
+| GET    | "/user/:id"                   | Return a user based on id.                                              | authenticated  |
+| GET    | "/storage/list"               | List all storages.                                                      | all            |
+| GET    | "/storage/:id"                | Get a single storage with details.                                      | all            |
+| POST   | "/storage"                    | Create a new storage.                                                   | landlord       |
+| PATCH  | "/storage/:id"                | Update existing storage's details.                                      | landlord       |
+| POST   | "/authentication/sign-up"     | Register for the service with a new account                             | visitor        |
 | POST   | "/authentication/sign-in"     | Sign In.                                                                | visitor        |
 | DELETE | "/authentication/sign-out"    | Sign Out.                                                               | authenticated  |
-| GET    | "/subscription"               | Get status of subscription.                                             | viewers        |
-| POST   | "/subscription"               | Create new viewer subscription (credit card details - stripe token)     | viewers        |
-| PATCH  | "/subscription"               | Create new viewer subscription (credit card details - stripe token)     | viewers        |
-| GET    | "/settings"                   | Get settings for current account (email)                                | authenticated  |
-| GET    | "/creator/course/list"        | List all of creator's courses                                           | creators       |
-| POST   | "/creator/course"             | Create a new course                                                     | creators       |
-| PATCH  | "/creator/course/:id"         | Edit single course                                                      | creators       |
-| DELETE | "/creator/course/:id"         | Delete single course                                                    | creators       |
-| POST   | "/creator/course/:id/episode" | Add each episode individually.                                          | creators       |
-| GET    | "/file-upload-authentication" | Allow imagekit to generate a signed URL that can be used to upload file | creators       |
+| GET    | "/subscription"               | Get status of subscription.                                             | renter         |
+| POST   | "/subscription"               | Create new renter subscription (credit card details - stripe token)     | renter         |
+| GET    | "/file-upload-authentication" | Allow imagekit to generate a signed URL that can be used to upload file | creators       | ??  |
 
 // GET - Load data
 // POST - Create new resource
@@ -124,7 +127,7 @@ http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp
 
 ### Cloudinary
 
-1. User submits a form that issues a POST request to the server with encoding type of "multipart/form-data", where one inputs includes an image or video file.
+1. User submits a form that issues a POST request to the server with encoding type of "multipart/form-data", where one input includes an image file.
 2. Server handles request, multer middleware parses request body and uploads the file to cloudinary.
 3. Server responds with redirection to another page.
 
