@@ -7,17 +7,8 @@ const User = require('./../models/user');
 const router = express.Router();
 
 router.post('/sign-up', async (req, res, next) => {
-  const {
-    username,
-    fName,
-    lName,
-    phoneNumber,
-    email,
-    role,
-    lon,
-    lat,
-    password
-  } = req.body;
+  const { username, fName, lName, phoneNumber, email, role, password } =
+    req.body;
 
   try {
     const passwordHash = await bcrypt.hash(password, 10);
@@ -28,7 +19,6 @@ router.post('/sign-up', async (req, res, next) => {
       phoneNumber,
       email,
       role,
-      location: [lon, lat],
       passwordHash
     });
 
