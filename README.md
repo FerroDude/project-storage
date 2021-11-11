@@ -119,6 +119,7 @@ These are some edge cases we won't be considering:
 - Handling payment reversals.
 - Videos are provided as uploaded by the creator to the viewer.
 - Charge is unsuccessful (we won't retry it, just de-activate subscription).
+- Disclamer: Possible legal complications
 
 ## Other
 
