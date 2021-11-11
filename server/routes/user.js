@@ -16,7 +16,7 @@ router.get('/', (req, res, next) => {
   res.json(req.user);
 });
 
-router.patch('/', (req, res, next) => {
+router.patch('/', async (req, res, next) => {
   const { username, fName, lName, phoneNumber, email, location } = req.body;
   const id = req.user._id;
 

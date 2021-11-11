@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const routeGuard = require('./../middleware/route-guard');
 const Subscription = require('./../models/subscription');
-const stripe = require('./../utils/stripe-api');
+//const stripe = require('./../utils/stripe-api');
 
 router.get('/', routeGuard, async (req, res, next) => {
   try {

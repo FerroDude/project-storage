@@ -45,11 +45,15 @@ const schema = new mongoose.Schema(
       default: false
     },
     location: {
-      type: 'Point',
-      coordinates: {
-        type: [Number],
-        required: true
-      }
+      type: {
+        type: String,
+        default: 'Point'
+      },
+      coordinates: [
+        {
+          type: Number
+        }
+      ]
     }
   },
   { timestamps: { createdAt: 'createdAt', updatedAt: 'updateAt' } }

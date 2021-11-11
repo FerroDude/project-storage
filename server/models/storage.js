@@ -16,14 +16,18 @@ const schema = new mongoose.Schema(
       required: true
     },
     location: {
-      type: 'Point',
-      coordinates: {
-        type: [Number],
-        required: true
-      }
+      type: {
+        type: String,
+        default: 'Point'
+      },
+      coordinates: [
+        {
+          type: Number
+        }
+      ]
     },
     price: { type: String, required: true },
-    galery: {
+    gallery: {
       type: [String]
     },
     isRented: {
