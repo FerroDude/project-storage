@@ -4,6 +4,11 @@ const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema(
   {
+    username: {
+      type: String,
+      trim: true,
+      required: true
+    },
     fName: {
       type: String,
       trim: true,
