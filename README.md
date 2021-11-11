@@ -55,10 +55,13 @@ Some scripts need to run at predetermined intervals.
 | GET    | "/user"                       | Return authenticated user.                                              | authenticated  |
 | GET    | "/user/edit"                  | Edit authenticated user's details.                                      | authenticated  |
 | GET    | "/user/:id"                   | Return a user based on id.                                              | authenticated  |
+| PATCH  | "/user/:id"                   | Update a user based on id.                                              | authenticated  |
+| DELETE | "/user/:id"                   | Delete user based on id.                                                | authenticated  |
 | GET    | "/storage/list"               | List all storages.                                                      | all            |
 | GET    | "/storage/:id"                | Get a single storage with details.                                      | all            |
 | POST   | "/storage"                    | Create a new storage.                                                   | landlord       |
 | PATCH  | "/storage/:id"                | Update existing storage's details.                                      | landlord       |
+| DELETE | "/storage/:id"                | Delete storage's details.                                               | landlord       |
 | POST   | "/authentication/sign-up"     | Register for the service with a new account                             | visitor        |
 | POST   | "/authentication/sign-in"     | Sign In.                                                                | visitor        |
 | DELETE | "/authentication/sign-out"    | Sign Out.                                                               | authenticated  |
