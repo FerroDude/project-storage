@@ -17,8 +17,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.patch('/', (req, res, next) => {
-  const { username, firstName, lastName, phoneNumber, email, location } =
-    req.body;
+  const { username, fName, lName, phoneNumber, email, location } = req.body;
   const id = req.user._id;
 
   try {
@@ -26,8 +25,8 @@ router.patch('/', (req, res, next) => {
       id,
       {
         username,
-        firstName,
-        lastName,
+        fName,
+        lName,
         phoneNumber,
         email,
         location
