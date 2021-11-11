@@ -19,7 +19,8 @@
   - location - Point, has coordenates
   - email - String
   - passwordHashAndSalt - String
-  - role - String, either 'tenant' or 'landlord'
+  - role - String, either 'tenant' or 'landlord',
+  - active - Boolean, default: false
 - Storage
   - name - String
   - description - String
@@ -29,6 +30,8 @@
   - galery - Array of strings
   - isRented - Boolean
   - renter - ObjectId, starts as null
+  - width - Number
+  - length - Number
 - Subscription
   - user - ObjectId, refers to user document
   - startDate - Date
@@ -53,10 +56,9 @@ Some scripts need to run at predetermined intervals.
 | METHOD | PATH                          | DESCRIPTION                                                             | AUTHENTICATION |
 | ------ | ----------------------------- | ----------------------------------------------------------------------- | -------------- |
 | GET    | "/user"                       | Return authenticated user.                                              | authenticated  |
-| GET    | "/user/edit"                  | Edit authenticated user's details.                                      | authenticated  |
 | GET    | "/user/:id"                   | Return a user based on id.                                              | authenticated  |
-| PATCH  | "/user/:id"                   | Update a user based on id.                                              | authenticated  |
-| DELETE | "/user/:id"                   | Delete user based on id.                                                | authenticated  |
+| PATCH  | "/user"                       | Update a user based on id.                                              | authenticated  |
+| DELETE | "/user"                       | Delete user based on id.                                                | authenticated  |
 | GET    | "/storage/list"               | List all storages.                                                      | all            |
 | GET    | "/storage/:id"                | Get a single storage with details.                                      | all            |
 | POST   | "/storage"                    | Create a new storage.                                                   | landlord       |
@@ -119,6 +121,7 @@ These are some edge cases we won't be considering:
 - Handling payment reversals.
 - Videos are provided as uploaded by the creator to the viewer.
 - Charge is unsuccessful (we won't retry it, just de-activate subscription).
+- Disclamer: Possible legal complications
 
 ## Other
 

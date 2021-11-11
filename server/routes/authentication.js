@@ -1,55 +1,58 @@
 'use strict';
 
-const { Router } = require('express');
-
-const bcryptjs = require('bcryptjs');
+const express = require('express');
+const bcrypt = require('bcryptjs');
 const User = require('./../models/user');
 
-const router = new Router();
+const router = express.Router();
 
-router.post('/sign-up', (req, res, next) => {
-  const { name, email, password } = req.body;
-  bcryptjs
-    .hash(password, 10)
-    .then((hash) => {
-      return User.create({
-        name,
-        email,
-        passwordHashAndSalt: hash
-      });
-    })
-    .then((user) => {
-      req.session.userId = user._id;
-      res.json({ user });
-    })
-    .catch((error) => {
-      next(error);
+router.post('/sign-up', async (req, res, next) => {
+  const { username, fName, lName, phoneNumber, email, role, password } =
+    req.body;
+
+  try {
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = new User({
+      username,
+      fName,
+      lName,
+      phoneNumber,
+      email,
+      role,
+      passwordHash
     });
+
+    const newUser = await user.save();
+
+    req.session.userId = newUser._id;
+    res.json({ newUser });
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.post('/sign-in', (req, res, next) => {
-  let user;
-  const { email, password } = req.body;
-  User.findOne({ email })
-    .then((document) => {
-      if (!document) {
-        return Promise.reject(new Error("There's no user with that email."));
-      } else {
-        user = document;
-        return bcryptjs.compare(password, user.passwordHashAndSalt);
-      }
-    })
-    .then((result) => {
-      if (result) {
-        req.session.userId = user._id;
-        res.json({ user });
-      } else {
-        return Promise.reject(new Error('Wrong password.'));
-      }
-    })
-    .catch((error) => {
-      next(error);
-    });
+router.post('/sign-in', async (req, res, next) => {
+  const { emailOrUsername, password } = req.body;
+
+  try {
+    const user = await User.findOne({ emailOrUsername }).or([
+      { username: emailOrUsername },
+      { email: emailOrUsername }
+    ]);
+
+    const authorized =
+      user === null ? false : await bcrypt.compare(password, user.passwordHash);
+
+    if (!(user && authorized)) {
+      throw new Error('Wrong username or password');
+    }
+
+    req.session.userId = user._id;
+
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.post('/sign-out', (req, res, next) => {
