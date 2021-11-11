@@ -14,7 +14,8 @@ router.post('/sign-up', async (req, res, next) => {
     phoneNumber,
     email,
     role,
-    location,
+    lon,
+    lat,
     password
   } = req.body;
 
@@ -27,8 +28,8 @@ router.post('/sign-up', async (req, res, next) => {
       phoneNumber,
       email,
       role,
-      location,
-      hash
+      location: [lon, lat],
+      password: hash
     });
 
     const newUser = await user.save();
