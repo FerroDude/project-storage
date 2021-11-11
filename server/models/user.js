@@ -38,6 +38,13 @@ const schema = new mongoose.Schema(
     active: {
       type: Boolean,
       default: false
+    },
+    location: {
+      type: 'Point',
+      coordinates: {
+        type: [Number],
+        required: true
+      }
     }
   },
   { timestamps: { createdAt: 'createdAt', updatedAt: 'updateAt' } }
