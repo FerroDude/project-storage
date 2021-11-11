@@ -30,6 +30,8 @@
   - galery - Array of strings
   - isRented - Boolean
   - renter - ObjectId, starts as null
+  - width - Number
+  - length - Number
 - Subscription
   - user - ObjectId, refers to user document
   - startDate - Date
