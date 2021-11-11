@@ -20,7 +20,7 @@ router.post('/sign-up', async (req, res, next) => {
   } = req.body;
 
   try {
-    const hash = await bcrypt.hash(password, 10);
+    const passwordHash = await bcrypt.hash(password, 10);
     const user = new User({
       username,
       fName,
@@ -29,7 +29,7 @@ router.post('/sign-up', async (req, res, next) => {
       email,
       role,
       location: [lon, lat],
-      password: hash
+      passwordHash
     });
 
     const newUser = await user.save();

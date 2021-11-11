@@ -24,15 +24,11 @@ const schema = new mongoose.Schema(
       maxlength: 15,
       required: true
     },
-    passwordHashAndSalt: {
-      type: String,
-      required: true
-    },
     email: {
       type: String,
       required: true
     },
-    password: {
+    passwordHash: {
       type: String,
       required: true
     },
