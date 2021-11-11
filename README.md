@@ -2,11 +2,11 @@
 
 ## Technologies
 
-| USAGE                    | TECHNOLOGY             | DESCRIPTION                                        |
-| ------------------------ | ---------------------- | -------------------------------------------------- |
-| Asynchoronous operations | async-await            | We decided to use async-await instead of promises. |
-| Styling                  | Undecided              | Need to decide on a styling solution.              |
-| File-uploads             | Cloudinary or ImageKit | Option depends on whether we want videos or not.   |
+| USAGE                    | TECHNOLOGY  | DESCRIPTION                                        |
+| ------------------------ | ----------- | -------------------------------------------------- |
+| Asynchoronous operations | async-await | We decided to use async-await instead of promises. |
+| Styling                  | Undecided   | Need to decide on a styling solution.              |
+| File-uploads             | Cloudinary  | File uploads.                                      |
 
 ## Server-side
 
@@ -132,10 +132,3 @@ http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp
 1. User submits a form that issues a POST request to the server with encoding type of "multipart/form-data", where one input includes an image file.
 2. Server handles request, multer middleware parses request body and uploads the file to cloudinary.
 3. Server responds with redirection to another page.
-
-### Imagekit
-
-1. Imagekit React component makes GET request to "/file-upload-authentication".
-2. Request handler makes a call to the Imagekit API and generates some unique keys to perform the upload. It responds back to the client with said keys.
-3. Using keys from response, client makes additional request to Imagekit API to which it sends these keys + file.
-4. Imagekit API responds to client with success or error.
