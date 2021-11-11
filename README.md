@@ -40,9 +40,6 @@
   - date - Date
   - successful - Boolean
 
-///// WE DID UNTIL HERE
-///// BELOW IS UNFINISHED
-
 ### CRON Jobs
 
 Some scripts need to run at predetermined intervals.
@@ -80,19 +77,21 @@ Some scripts need to run at predetermined intervals.
 
 ### Views
 
-| NAME             | DESCRIPTION                                                                                                                                                                               |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Home             | Display list of available courses to any user, authenticated or not. If user is not authenticated, they should also see a call to action asking them to join the service or authenticate. |
-| Course           | Display information about a course, such as title, cover image, description, creator, episode list. Each episode in list should display episode name and possible description.            |
-| Episode          | Display episode video element.                                                                                                                                                            |
-| SignIn           | Show sign in form.                                                                                                                                                                        |
-| SignUp           | Show sign up form.                                                                                                                                                                        |
-| CreatorSignUp    | Show sign up form.                                                                                                                                                                        |
-| Subscription     | Shows subscription status. If no subscription has been made, display credit card form. Otherwise, show subscription details, cancel subscription.                                         |
-| Settings         | Allow viewers to change account settings (email, password).                                                                                                                               |
-| CourseCreate     | Allows creators to add a course (create a CourseForm component which is also shared with CourseManagement view).                                                                          |
-| CourseList       | Shows a creator all of their courses.                                                                                                                                                     |
-| CourseManagement | Allows creators to manage a course.                                                                                                                                                       |
+| NAME              | DESCRIPTION                                                                                                                                                                                                                        |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Home              | Display landing page, maybe showing some storages near the user if authenticated in a carousel, if not authenticated show sign in and sign up options, allow user to search storages even if not authenticated                     |
+| Storage           | Display information about the storage space such as price, pictures, owner, location and description. Should show availability and option to rent if authenticated, if not authenticated it should instead display 'login to rent' |
+|                   |
+| SignIn            | Show sign in form.                                                                                                                                                                                                                 |
+| SignUp            | Show sign up form.                                                                                                                                                                                                                 |
+| LandlordSignUp    | Show sign up form.                                                                                                                                                                                                                 |
+| RentedSpaces      | Shows a renter the spaces he is renting, if no space is being rented by the user it should show storage spaces near him                                                                                                            |
+| Settings          | Allow viewers to change account settings (email, password, locations).                                                                                                                                                             |
+| StorageCreate     | Allows landlords to add a storage space                                                                                                                                                                                            |
+| StorageList       | Shows a landlord all of their storages with option to click the to edit them (entering StorageManagement view)                                                                                                                     |
+| StorageManagement | Allows landlords to manage a storage space. LandlordSignUp                                                                                                                                                                         |
+| StorageSearch     | Displays input to search for storages with options to filter be parameters such as location, distance, price, size                                                                                                                 |
+| Payment           | Displays the payment options with inputs for credit card number, expiration date etc.                                                                                                                                              |
 
 ## Wishlist Items
 
