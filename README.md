@@ -19,7 +19,8 @@
   - location - Point, has coordenates
   - email - String
   - passwordHashAndSalt - String
-  - role - String, either 'tenant' or 'landlord'
+  - role - String, either 'tenant' or 'landlord',
+  - active - Boolean, default: false
 - Storage
   - name - String
   - description - String
