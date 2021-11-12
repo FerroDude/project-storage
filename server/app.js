@@ -2,6 +2,7 @@
 
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 const createError = require('http-errors');
 const expressSession = require('express-session');
 const logger = require('morgan');
@@ -16,6 +17,12 @@ const sessionConfig = require('./config/session');
 
 const app = express();
 
+app.use(
+  cors({
+    origin: process.env.CLIENT_APP_ORIGIN,
+    credentials: true
+  })
+);
 app.use(serveFavicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
