@@ -11,3 +11,7 @@ export const signIn = (body) => {
     .post('authentication/sign-in', body)
     .then((response) => response.data);
 };
+
+export const signOut = () => {
+  return api.post('/authentication/sign-out');
+};

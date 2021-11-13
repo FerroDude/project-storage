@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { signUp } from './../services/authentication';
+import { useHistory } from 'react-router-dom';
 
 const SignUpView = (props) => {
   const [inputValues, setInputValues] = useState({
@@ -11,6 +12,7 @@ const SignUpView = (props) => {
     phoneNumber: '',
     role: ''
   });
+  const history = useHistory();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -25,6 +27,7 @@ const SignUpView = (props) => {
     } catch (error) {
       console.log(error, 'Api call for signup failed');
     }
+    history.push('/profile');
   };
 
   return (

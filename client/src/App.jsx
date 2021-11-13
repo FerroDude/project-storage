@@ -1,10 +1,11 @@
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
 import HomeView from './views/Home.jsx';
 import SignInView from './views/SignIn.jsx';
 import SignUpView from './views/SignUp';
 import { useState, useEffect } from 'react';
 import ProfileView from './views/Profile';
 import SettingsView from './views/Settings';
+import { signOut } from './services/authentication';
 import {
   loadAuthenticatedUser,
   editUser,
@@ -25,7 +26,7 @@ function App() {
 
   useEffect(() => {
     loadUser();
-  }, []);
+  }, [user]);
 
   const handleAuthenticationChange = async (user) => {
     setUser(user);
@@ -39,9 +40,9 @@ function App() {
   };
 
   const handleSignOut = async () => {
-    await deleteUser();
-    setUser(null);
+    await signOut();
     setIsLoaded(false);
+    setUser(null);
   };
 
   return (
@@ -56,10 +57,31 @@ function App() {
         <Link to="signIn">Sign In</Link>
         <Link to="signUp">Sign Up</Link>
         <Link to="profile">Profile</Link>
+        <Link onClick={handleSignOut} to="/">
+          <button onClick={handleSignOut}>Sign Out</button>
+        </Link>
+
         <Switch>
-          <Route exact path="/" component={HomeView} />
-          <Route exact path="/signIn" component={SignInView} />
-          <Route exact path="/signUp" component={SignUpView} />
+          <Route
+            exact
+            path="/signIn"
+            render={(props) => (
+              <SignInView
+                {...props}
+                onAuthenticationChange={handleAuthenticationChange}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/signUp"
+            render={(props) => (
+              <SignUpView
+                {...props}
+                onAuthenticationChange={handleAuthenticationChange}
+              />
+            )}
+          />
           <Route
             exact
             path="/profile"
@@ -72,6 +94,7 @@ function App() {
               <SettingsView {...props} onEditUser={handleEditUser} />
             )}
           />
+          <Route exact path="/" component={HomeView} />
         </Switch>
       </BrowserRouter>
     </div>

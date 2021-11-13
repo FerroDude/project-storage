@@ -1,9 +1,10 @@
 import SignInForm from '../components/SignInForm';
 
-const SignInView = () => {
+const SignInView = (props) => {
   return (
     <div>
-      <SignInForm />
+      <h1>Hello Sign in</h1>
+      <SignInForm onAuthenticationChange={props.onAuthenticationChange} />
     </div>
   );
 };
