@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+const ratingSchema = new mongoose.Schema({
+  ratings: [Number],
+  average: Number
+});
+
 const schema = new mongoose.Schema(
   {
     name: {
@@ -46,14 +51,18 @@ const schema = new mongoose.Schema(
       type: Number,
       required: true
     },
-    rating: {
-      type: [Number]
-    },
+    rating: [ratingSchema],
     review: {
       type: [mongoose.ObjectId]
     }
   },
   { timestamps: { createdAt: 'createAt', updatedAt: 'updateAt' } }
 );
+
+const Storage = mongoose.model('storage', schema);
+
+Storage.ensureIndexes({
+  location: '2dSphere'
+});
 
 module.exports = mongoose.model('storage', schema);
