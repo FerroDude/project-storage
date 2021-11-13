@@ -1,9 +1,7 @@
-import axios from 'axios';
+import api from '../config/api';
 
 export const signUp = (body) => {
-  axios
-    .post(/*missing server here*/ '/authentication/sign-up', body)
-    .then((res) => {
-      return res.data.user;
-    });
+  api.post('/authentication/sign-up', body).then((res) => {
+    return res.data.user;
+  });
 };
