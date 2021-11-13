@@ -2,6 +2,7 @@
 
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const routeGuard = require('../middleware/route-guard');
 const User = require('./../models/user');
 
 const router = express.Router();
@@ -55,7 +56,7 @@ router.post('/sign-in', async (req, res, next) => {
   }
 });
 
-router.post('/sign-out', (req, res, next) => {
+router.post('/sign-out', routeGuard, (req, res, next) => {
   req.session.destroy();
   res.json({});
 });
