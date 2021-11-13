@@ -5,7 +5,7 @@ import { signIn } from './../services/authentication';
 
 const SignInForm = () => {
   const [inputValues, setInputValues] = useState({
-    emailOrusername: '',
+    emailOrUsername: '',
     password: ''
   });
 
