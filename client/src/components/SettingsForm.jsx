@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { loadAuthenticatedUser, editUser } from './../services/user';
+import { loadAuthenticatedUser } from './../services/user';
 
-const SettingsForm = () => {
+const SettingsForm = ({ history, onEditUser }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -20,8 +20,8 @@ const SettingsForm = () => {
   const handleFormSubmission = async (event) => {
     event.preventDefault();
     try {
-      const response = await editUser(user);
-      console.log(response);
+      await onEditUser(user);
+      history.push('/profile');
     } catch (error) {
       console.log(error);
     }
