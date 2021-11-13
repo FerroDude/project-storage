@@ -30,6 +30,7 @@ function App() {
   const handleAuthenticationChange = async (user) => {
     setUser(user);
     setIsLoaded(true);
+    console.log('user', user);
   };
 
   const handleEditUser = async (user) => {
@@ -40,6 +41,7 @@ function App() {
   const handleSignOut = async () => {
     await deleteUser();
     setUser(null);
+    setIsLoaded(false);
   };
 
   return (
