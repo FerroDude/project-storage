@@ -66,7 +66,13 @@ function App() {
             path="/profile"
             render={(props) => <ProfileView {...props} user={user} />}
           />
-          <Route exact path="/settings" component={SettingsView} />
+          <Route
+            exact
+            path="/settings"
+            render={(props) => (
+              <SettingsView {...props} onEditUser={handleEditUser} />
+            )}
+          />
         </Switch>
       </BrowserRouter>
     </div>

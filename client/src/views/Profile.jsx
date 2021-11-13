@@ -5,10 +5,10 @@ const ProfileView = ({ user }) => {
     user && (
       <div>
         <h2>Profile View</h2>
-        <h3>johnny</h3>
+        <h3>{user.username}</h3>
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYSprYSGY7wv-OyUUMHyEYhPtVO1juHDCtVg&usqp=CAU"
-          alt={`${'johnny'}'s profile`}
+          alt={`${user.username}'s profile`}
           height="150px"
           width="150px"
         />
