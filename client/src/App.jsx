@@ -46,18 +46,23 @@ function App() {
     <div className="App">
       <h1>PROJECT STORAGE</h1>
       {(!isLoaded && <div>No User</div>) || (
-        <h2>Name: {`${user.Fname} ${user.Lname}`}</h2>
+        <h2>Name: {`${user.fName} ${user.lName}`}</h2>
       )}
 
       <BrowserRouter>
         <Link to="/">Home</Link>
         <Link to="signIn">Sign In</Link>
         <Link to="signUp">Sign Up</Link>
+        <Link to="profile">Profile</Link>
         <Switch>
           <Route exact path="/" component={HomeView} />
           <Route exact path="/signIn" component={SignInView} />
           <Route exact path="/signUp" component={SignUpView} />
-          <Route exact path="/profile" component={ProfileView} />
+          <Route
+            exact
+            path="/profile"
+            render={(props) => <ProfileView {...props} user={user} />}
+          />
           <Route exact path="/settings" component={SettingsView} />
         </Switch>
       </BrowserRouter>
