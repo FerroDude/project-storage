@@ -1,23 +1,28 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const validateEmail = require('../utils/email-validator');
+const capitalize = require('../utils/capitalize');
 
 const schema = new mongoose.Schema(
   {
     username: {
       type: String,
       trim: true,
-      required: true
+      required: true,
+      unique: true
     },
     fName: {
       type: String,
       trim: true,
-      required: true
+      required: true,
+      set: capitalize
     },
     lName: {
       type: String,
       trim: true,
-      required: true
+      required: true,
+      set: capitalize
     },
     phoneNumber: {
       type: String,
@@ -26,7 +31,12 @@ const schema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true
+      required: true,
+      unique: true,
+      validate: {
+        validator: validateEmail,
+        message: 'Please enter a valid email address.'
+      }
     },
     passwordHash: {
       type: String,

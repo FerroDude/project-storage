@@ -2,8 +2,8 @@
 
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 const createError = require('http-errors');
-const connectMongo = require('connect-mongo');
 const expressSession = require('express-session');
 const logger = require('morgan');
 const serveFavicon = require('serve-favicon');
@@ -13,27 +13,20 @@ const authenticationRouter = require('./routes/authentication');
 const userRouter = require('./routes/user');
 const storageRouter = require('./routes/storage');
 const subscriptionRouter = require('./routes/subscription');
+const sessionConfig = require('./config/session');
 
 const app = express();
 
+app.use(
+  cors({
+    origin: process.env.CLIENT_APP_ORIGIN,
+    credentials: true
+  })
+);
 app.use(serveFavicon(path.join(__dirname, 'public/images', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
-app.use(
-  expressSession({
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 15 * 24 * 60 * 60 * 1000,
-      httpOnly: true
-    },
-    store: connectMongo.create({
-      mongoUrl: process.env.MONGODB_URI,
-      ttl: 60 * 60
-    })
-  })
-);
+app.use(expressSession(sessionConfig));
 app.use(basicAuthenticationDeserializer);
 app.use(bindUserToViewLocals);
 

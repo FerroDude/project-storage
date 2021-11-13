@@ -12,11 +12,11 @@ router.get('/:id', async (req, res, next) => {
   res.json(user);
 });
 
-router.get('/', (req, res, next) => {
+router.get('/', routeGuard, (req, res, next) => {
   res.json(req.user);
 });
 
-router.patch('/', async (req, res, next) => {
+router.patch('/', routeGuard, async (req, res, next) => {
   const { username, fName, lName, phoneNumber, email, location } = req.body;
   const id = req.user._id;
 
@@ -39,7 +39,7 @@ router.patch('/', async (req, res, next) => {
   }
 });
 
-router.delete('/', async (req, res, next) => {
+router.delete('/', routeGuard, async (req, res, next) => {
   const id = req.user._id;
   await User.findByIdAndDelete(id);
   res.json({});
