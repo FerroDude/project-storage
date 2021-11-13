@@ -5,6 +5,7 @@ import SignUpView from './views/SignUp';
 import { useState, useEffect } from 'react';
 import ProfileView from './views/Profile';
 import SettingsView from './views/Settings';
+
 import {
   loadAuthenticatedUser,
   editUser,
