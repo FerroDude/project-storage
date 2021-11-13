@@ -2,9 +2,13 @@ import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import HomeView from './views/Home.jsx';
 import SignInView from './views/SignIn.jsx';
 import SignUpView from './views/SignUp';
+import { useState, useEffect } from 'react';
 import './App.scss';
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
     <div className="App">
       <h1>PROJECT STORAGE</h1>
