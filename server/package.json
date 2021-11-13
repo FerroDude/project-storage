@@ -21,7 +21,8 @@
     "mongoose": "^6.0.5",
     "morgan": "^1.10.0",
     "serve-favicon": "^2.5.0",
-    "stripe": "^8.186.1"
+    "stripe": "^8.186.1",
+    "turf": "^3.0.14"
   },
   "devDependencies": {
     "eslint": "^7.18.0",

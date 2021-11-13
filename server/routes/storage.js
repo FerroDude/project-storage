@@ -1,12 +1,59 @@
 'use strict';
 
+require('dotenv').config();
 const express = require('express');
 const routeGuard = require('../middleware/route-guard');
 const Storage = require('../models/storage');
+const sortStorageByProximity = require('..//utils/sort-storage-by-proximity');
 
 const router = express.Router();
 
-router.get('/list/', async (req, res, next) => {});
+router.get('/list/', async (req, res, next) => {
+  const user = req.user;
+  const [lon, lat] = req.params;
+
+  if (user) {
+    const [lon, lat] = user.location.coordinates;
+
+    try {
+      const storages = await Storage.find({
+        location: {
+          $geoWithin: {
+            $centerSphere: [[lon, lat], 10 / process.env.EARTH_RADIUS]
+          }
+        }
+      });
+
+      const sortedStorages = sortStorageByProximity(storages, lon, lat);
+      res.json(sortStorageByProximity(sortedStorages, lon, lat));
+    } catch (err) {
+      next(err);
+    }
+  } else {
+    if (lon && lat) {
+      try {
+        const storages = await Storage.find({
+          location: {
+            $geoWithin: {
+              $centerSphere: [[lon, lat], 10 / process.env.EARTH_RADIUS]
+            }
+          }
+        });
+
+        const sortedStorages = sortStorageByProximity(storages, lon, lat);
+        res.json(sortStorageByProximity(sortedStorages, lon, lat));
+      } catch (err) {
+        next(err);
+      }
+    } else {
+      // ** Placeholder => We should return the location with highest rating
+      const storages = await Storage.find()
+        .sort({ 'rating.average': -1 })
+        .limit(10);
+      res.json(storages);
+    }
+  }
+});
 
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
