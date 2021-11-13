@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { signUp } from './../services/authentication';
 
-const SignUpView = () => {
+const SignUpView = (props) => {
   const [inputValues, setInputValues] = useState({
     username: '',
     fName: '',
@@ -20,14 +20,12 @@ const SignUpView = () => {
   const handleFormSubmission = async (event) => {
     event.preventDefault();
     try {
-      const response = await signUp(inputValues);
-      console.log(response);
+      const user = await signUp(inputValues);
+      props.onAuthenticationChange(user);
     } catch (error) {
-      console.log(error);
+      console.log(error, 'Api call for signup failed');
     }
   };
-
-  //missing inputs for all the fields
 
   return (
     <div>
@@ -40,6 +38,7 @@ const SignUpView = () => {
           name="username"
           value={inputValues.username}
           onChange={handleInputChange}
+          required
         />
         <label htmlFor="input-fName">First Name</label>
         <input
@@ -49,6 +48,7 @@ const SignUpView = () => {
           name="fName"
           value={inputValues.fName}
           onChange={handleInputChange}
+          required
         />
         <label htmlFor="input-lName">Last name</label>
         <input
@@ -58,6 +58,7 @@ const SignUpView = () => {
           name="lName"
           value={inputValues.lName}
           onChange={handleInputChange}
+          required
         />
         <label htmlFor="input-email">Email</label>
         <input
@@ -67,6 +68,7 @@ const SignUpView = () => {
           name="email"
           value={inputValues.email}
           onChange={handleInputChange}
+          required
         />
         <label htmlFor="input-password">Password</label>
         <input
@@ -76,15 +78,17 @@ const SignUpView = () => {
           name="password"
           value={inputValues.password}
           onChange={handleInputChange}
+          required
         />
         <label htmlFor="input-phone">Phone Number</label>
         <input
           id="input-phone"
-          type="text"
+          type="number"
           placeholder="Your Phone Number"
           name="phoneNumber"
           value={inputValues.phoneNumber}
           onChange={handleInputChange}
+          required
         />
         <label htmlFor="input-role">Role</label>
         <select
@@ -92,6 +96,7 @@ const SignUpView = () => {
           name="role"
           value={inputValues.role}
           onChange={handleInputChange}
+          required
         >
           <option value="">Select a role</option>
           <option value="tenant">Tenant</option>

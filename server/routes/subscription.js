@@ -34,7 +34,7 @@ router.post('/', async (req, res, next) => {
       customerId: customer.id,
       paymentMethodToken
     });
-    res.json({ subscription });
+    res.json(subscription);
   } catch (error) {
     next(error);
   }
