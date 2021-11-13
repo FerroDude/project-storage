@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { signIn } from './../services/authentication';
-
-//state not used in this component warning test
+import { useHistory } from 'react-router-dom';
 
 const SignInForm = (props) => {
   const [inputValues, setInputValues] = useState({
     emailOrUsername: '',
     password: ''
   });
+
+  const history = useHistory();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -17,7 +18,8 @@ const SignInForm = (props) => {
   const handleFormSubmission = async (event) => {
     event.preventDefault();
     const user = await signIn(inputValues);
-    props.authenticationChange(user);
+    props.onAuthenticationChange(user);
+    history.push('/profile');
   };
 
   return (
