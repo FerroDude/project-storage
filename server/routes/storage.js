@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get('/list/', async (req, res, next) => {
   const user = req.user;
-  const [lon, lat] = req.params;
+  const [guestLon, guestLat] = req.params;
 
   if (user) {
     const [lon, lat] = user.location.coordinates;
@@ -30,18 +30,25 @@ router.get('/list/', async (req, res, next) => {
       next(err);
     }
   } else {
-    if (lon && lat) {
+    if (guestLon && guestLat) {
       try {
         const storages = await Storage.find({
           location: {
             $geoWithin: {
-              $centerSphere: [[lon, lat], 10 / process.env.EARTH_RADIUS]
+              $centerSphere: [
+                [guestLon, guestLat],
+                10 / process.env.EARTH_RADIUS
+              ]
             }
           }
         });
 
-        const sortedStorages = sortStorageByProximity(storages, lon, lat);
-        res.json(sortStorageByProximity(sortedStorages, lon, lat));
+        const sortedStorages = sortStorageByProximity(
+          storages,
+          guestLon,
+          guestLat
+        );
+        res.json(sortStorageByProximity(sortedStorages, guestLon, guestLat));
       } catch (err) {
         next(err);
       }
