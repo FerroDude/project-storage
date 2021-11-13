@@ -45,6 +45,12 @@ const schema = new mongoose.Schema(
     length: {
       type: Number,
       required: true
+    },
+    rating: {
+      type: [Number]
+    },
+    review: {
+      type: [mongoose.ObjectId]
     }
   },
   { timestamps: { createdAt: 'createAt', updatedAt: 'updateAt' } }

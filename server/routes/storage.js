@@ -6,7 +6,7 @@ const Storage = require('../models/storage');
 
 const router = express.Router();
 
-router.get('/list', async (req, res, next) => {});
+router.get('/list/', async (req, res, next) => {});
 
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
