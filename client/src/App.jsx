@@ -30,6 +30,7 @@ function App() {
   const handleAuthenticationChange = async (user) => {
     setUser(user);
     setIsLoaded(true);
+    console.log('user', user);
   };
 
   const handleEditUser = async (user) => {
@@ -40,12 +41,13 @@ function App() {
   const handleSignOut = async () => {
     await deleteUser();
     setUser(null);
+    setIsLoaded(false);
   };
 
   return (
     <div className="App">
       <h1>PROJECT STORAGE</h1>
-      {(!isLoaded && <div>No User</div>) || (
+      {(!user && <div>No User</div>) || (
         <h2>Name: {`${user.Fname} ${user.Lname}`}</h2>
       )}
 
@@ -56,7 +58,16 @@ function App() {
         <Switch>
           <Route exact path="/" component={HomeView} />
           <Route exact path="/signIn" component={SignInView} />
-          <Route exact path="/signUp" component={SignUpView} />
+          <Route
+            exact
+            path="/signUp"
+            render={(props) => (
+              <SignUpView
+                {...props}
+                handleAuthenticationChange={handleAuthenticationChange()}
+              />
+            )}
+          />
           <Route exact path="/profile" component={ProfileView} />
           <Route exact path="/settings" component={SettingsView} />
         </Switch>

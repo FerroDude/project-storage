@@ -18,17 +18,14 @@ const SignUpView = (props) => {
   };
 
   const handleFormSubmission = async (event) => {
-    console.log(inputValues);
     event.preventDefault();
     try {
-      const response = await signUp(inputValues);
-      console.log(response);
+      const user = await signUp(inputValues);
+      props.onAuthenticationChange(user);
     } catch (error) {
       console.log(error, 'Api call for signup failed');
     }
   };
-
-  //missing inputs for all the fields
 
   return (
     <div>
