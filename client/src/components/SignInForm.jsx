@@ -3,7 +3,7 @@ import { signIn } from './../services/authentication';
 
 //state not used in this component warning test
 
-const SignInForm = () => {
+const SignInForm = (props) => {
   const [inputValues, setInputValues] = useState({
     emailOrusername: '',
     password: ''
@@ -16,9 +16,8 @@ const SignInForm = () => {
 
   const handleFormSubmission = async (event) => {
     event.preventDefault();
-    const response = await signIn(inputValues);
-    console.log(response);
-    console.log(inputValues);
+    const user = await signIn(inputValues);
+    props.authenticationChange(user);
   };
 
   return (

@@ -5,7 +5,7 @@ import SignUpView from './views/SignUp';
 import { useState, useEffect } from 'react';
 import ProfileView from './views/Profile';
 import SettingsView from './views/Settings';
-
+import { signOut } from './services/authentication';
 import {
   loadAuthenticatedUser,
   editUser,
@@ -40,7 +40,7 @@ function App() {
   };
 
   const handleSignOut = async () => {
-    await deleteUser();
+    await signOut();
     setUser(null);
     setIsLoaded(false);
   };
@@ -57,9 +57,19 @@ function App() {
         <Link to="signIn">Sign In</Link>
         <Link to="signUp">Sign Up</Link>
         <Link to="profile">Profile</Link>
+        <button onClick={handleSignOut}>Sign Out</button>
         <Switch>
           <Route exact path="/" component={HomeView} />
-          <Route exact path="/signIn" component={SignInView} />
+          <Route
+            exact
+            path="/signIn"
+            render={(props) => {
+              <SignInView
+                {...props}
+                authenticationChange={handleAuthenticationChange}
+              />;
+            }}
+          />
           <Route exact path="/signUp" component={SignUpView} />
           <Route
             exact
