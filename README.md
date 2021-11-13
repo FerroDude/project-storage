@@ -32,6 +32,11 @@
   - renter - ObjectId, starts as null
   - width - Number
   - length - Number
+- Review
+
+  - reviewer - ObjectId
+  - storage - ObjectId
+
 - Subscription
   - user - ObjectId, refers to user document
   - startDate - Date

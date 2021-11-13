@@ -6,7 +6,7 @@ const Storage = require('../models/storage');
 
 const router = express.Router();
 
-router.get('/list', async (req, res, next) => {});
+router.get('/list/', async (req, res, next) => {});
 
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
@@ -14,7 +14,7 @@ router.get('/:id', async (req, res, next) => {
   res.json(storage);
 });
 
-router.patch('/:id', async (req, res, next) => {
+router.patch('/:id', routeGuard, async (req, res, next) => {
   const { name, description, price, gallery } = req.body;
   const { id } = req.params;
   const storage = Storage.findByIdAndUpdate(id, {
@@ -26,24 +26,21 @@ router.patch('/:id', async (req, res, next) => {
   res.json(storage);
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', routeGuard, async (req, res, next) => {
   const { id } = req.params;
   const deletedStorage = await Storage.findByIdAndDelete(id);
   res.json({ deletedStorage });
 });
 
-router.post('/', async (req, res, next) => {
-  const { name, description, location, price, gallery, isRented, renter } =
-    req.body;
+router.post('/', routeGuard, async (req, res, next) => {
+  const { name, description, location, price, gallery } = req.body;
   const storage = new Storage({
     name,
     description,
     owner: req.user._id,
     location,
     price,
-    gallery,
-    isRented,
-    renter
+    gallery
   });
 
   const newStorage = await storage.save();
