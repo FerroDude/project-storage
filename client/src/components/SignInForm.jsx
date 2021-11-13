@@ -5,7 +5,7 @@ import { signIn } from './../services/authentication';
 
 const SignInForm = () => {
   const [inputValues, setInputValues] = useState({
-    username: '',
+    emailOrusername: '',
     password: ''
   });
 
@@ -24,14 +24,14 @@ const SignInForm = () => {
   return (
     <div>
       <form onSubmit={handleFormSubmission}>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="emailOrUsername">Email or username</label>
         <input
-          id="username"
-          name="username"
+          id="emailOrUsername"
+          name="emailOrUsername"
           type="text"
           value={inputValues.username}
           onChange={handleInputChange}
-          placeholder="username"
+          placeholder="Email or username"
         />
         <label htmlFor="password">Password</label>
         <input
