@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { loadAuthenticatedUser } from './../services/user';
+import { loadAuthenticatedUser, uploadImage } from './../services/user';
 
 const SettingsForm = ({ history, onEditUser }) => {
   const [user, setUser] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -19,18 +20,33 @@ const SettingsForm = ({ history, onEditUser }) => {
 
   const handleFormSubmission = async (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append('profilePicture', imageFile);
+
     try {
-      await onEditUser(user);
+      const profilePicture = await uploadImage(formData);
+      await onEditUser({ ...user, profilePicture });
       history.push('/profile');
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleImageChange = (event) => {
+    const image = event.target.files[0];
+    setImageFile(image);
+  };
+
   return (
     user && (
       <div>
         <form onSubmit={handleFormSubmission}>
+          <input
+            name="profilePicture"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
           <h3>Personal details</h3>
           <label htmlFor="input-username">Username</label>
           <input
