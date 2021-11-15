@@ -9,7 +9,7 @@ const schema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  nextBillinggDate: {
+  nextBillingDate: {
     type: Date,
     required: true
   },
@@ -23,4 +23,4 @@ const schema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('subscription', schema);
+module.exports = mongoose.model('Subscription', schema);

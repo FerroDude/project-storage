@@ -17,7 +17,15 @@ router.get('/', routeGuard, (req, res, next) => {
 });
 
 router.patch('/', routeGuard, async (req, res, next) => {
-  const { username, fName, lName, phoneNumber, email, location } = req.body;
+  const {
+    username,
+    fName,
+    lName,
+    phoneNumber,
+    email,
+    location,
+    profilePicture
+  } = req.body;
   const id = req.user._id;
 
   try {
@@ -29,7 +37,8 @@ router.patch('/', routeGuard, async (req, res, next) => {
         lName,
         phoneNumber,
         email,
-        location
+        location,
+        profilePicture
       },
       { new: true }
     );

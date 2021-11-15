@@ -13,6 +13,7 @@ const authenticationRouter = require('./routes/authentication');
 const userRouter = require('./routes/user');
 const storageRouter = require('./routes/storage');
 const subscriptionRouter = require('./routes/subscription');
+const fileUploadRouter = require('./routes/fileupload');
 const sessionConfig = require('./config/session');
 
 const app = express();
@@ -34,7 +35,7 @@ app.use('/authentication', authenticationRouter);
 app.use('/user', userRouter);
 app.use('/storage', storageRouter);
 app.use('/subscription', subscriptionRouter);
-
+app.use('/upload', fileUploadRouter);
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));

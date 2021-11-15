@@ -5,6 +5,7 @@ const express = require('express');
 const routeGuard = require('../middleware/route-guard');
 const Storage = require('../models/storage');
 const sortStorageByProximity = require('..//utils/sort-storage-by-proximity');
+const getLngLat = require('../api/google/geoLocation');
 
 const router = express.Router();
 
@@ -53,7 +54,6 @@ router.get('/list/', async (req, res, next) => {
         next(err);
       }
     } else {
-      // ** Placeholder => We should return the location with highest rating
       const storages = await Storage.find()
         .sort({ 'rating.average': -1 })
         .limit(10);
@@ -87,17 +87,28 @@ router.delete('/:id', routeGuard, async (req, res, next) => {
 });
 
 router.post('/', routeGuard, async (req, res, next) => {
-  const { name, description, location, price, gallery } = req.body;
+  const { name, description, price, gallery } = req.body.information;
+  const { lng, lat } = getLngLat(req.body.address);
+
   const storage = new Storage({
     name,
     description,
     owner: req.user._id,
-    location,
+    location: {
+      coordinates: {
+        lon: lng,
+        lat: lat
+      }
+    },
     price,
     gallery
   });
 
-  const newStorage = await storage.save();
+  const newStorage = await storage.save((err, storage) => {
+    if (err) {
+      next(err);
+    }
+  });
   res.json(newStorage);
 });
 
