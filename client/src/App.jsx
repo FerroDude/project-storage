@@ -5,6 +5,7 @@ import SignUpView from './views/SignUp';
 import { useState, useEffect } from 'react';
 import ProfileView from './views/Profile';
 import SettingsView from './views/Settings';
+import StorageCreateView from './views/StorageCreate';
 import { signOut } from './services/authentication';
 import {
   loadAuthenticatedUser,
@@ -94,6 +95,7 @@ function App() {
               <SettingsView {...props} onEditUser={handleEditUser} />
             )}
           />
+          <Route exact path="/storage/create" component={StorageCreateView} />
           <Route exact path="/" component={HomeView} />
         </Switch>
       </BrowserRouter>
