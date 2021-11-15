@@ -1,4 +1,6 @@
 const StorageCreateView = () => {
+  const [inputData, setInputData] = useState(null);
+
   return (
     <div>
       <form>
