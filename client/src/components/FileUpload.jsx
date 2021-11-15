@@ -4,13 +4,19 @@ const FileUpload = ({ type, onPickFile }) => {
   const [previewFile, setPreviewFile] = useState(null);
 
   const handleFileChange = (event) => {
-    if (type === 'multiple') {
-      //   setPreviewFile(event.target.files);
-      //   onPickFile(event.target.files);
+    const file = event.target.files[0];
+
+    if (file) {
+      if (type === 'multiple') {
+        //   setPreviewFile(event.target.files);
+        //   onPickFile(event.target.files);
+      } else {
+        setPreviewFile(URL.createObjectURL(event.target.files[0]));
+        onPickFile(event.target.files[0]);
+        URL.revokeObjectURL(event.target.files[0]);
+      }
     } else {
-      setPreviewFile(URL.createObjectURL(event.target.files[0]));
-      onPickFile(event.target.files[0]);
-      URL.revokeObjectURL(event.target.files[0]);
+      setPreviewFile(null);
     }
   };
 
