@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {} from '../services/storage';
+import { createStorage } from '../services/storage';
 
 const StorageCreateView = () => {
   const [inputValues, setInputValues] = useState({
@@ -11,8 +11,14 @@ const StorageCreateView = () => {
     length: ''
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      await createStorage(inputValues);
+      console.log('Storage created');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleInputChange = (event) => {
@@ -32,7 +38,7 @@ const StorageCreateView = () => {
           value={inputValues.name}
           onChange={handleInputChange}
         />
-        <label htmlFor="input-storage-name">Description</label>
+        <label htmlFor="input-storage-description">Description</label>
         <textarea
           id="input-storage-description"
           type="text"
@@ -41,12 +47,12 @@ const StorageCreateView = () => {
           value={inputValues.description}
           onChange={handleInputChange}
         />
-        <label htmlFor="input-storage-name">Location</label>
+        <label htmlFor="input-storage-address">Address</label>
         <input
-          id="input-storage-location"
+          id="input-storage-address"
           type="text"
-          placeholder="Name"
-          name="location"
+          placeholder="Address"
+          name="Address"
           value={inputValues.location}
           onChange={handleInputChange}
         />
@@ -60,7 +66,7 @@ const StorageCreateView = () => {
           onChange={handleInputChange}
         />
         <p>Storage space size</p>
-        <label htmlFor="input-storage-price">Width</label>
+        <label htmlFor="input-storage-width">Width</label>
         <input
           id="input-storage-width"
           type="text"
@@ -69,7 +75,7 @@ const StorageCreateView = () => {
           value={inputValues.width}
           onChange={handleInputChange}
         />
-        <label htmlFor="input-storage-price">Length</label>
+        <label htmlFor="input-storage-length">Length</label>
         <input
           id="input-storage-length"
           type="text"
