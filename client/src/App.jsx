@@ -12,9 +12,11 @@ import {
   getUser,
   deleteUser
 } from './services/user.js';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 import './App.scss';
 
 function App() {
+  //setting state for user with hooks
   const [user, setUser] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
