@@ -4,8 +4,6 @@ const express = require('express');
 const routeGuard = require('../middleware/route-guard');
 const User = require('./../models/user');
 
-const upload = require('../config/cloudinary');
-
 const router = express.Router();
 
 router.get('/:id', async (req, res, next) => {
@@ -49,15 +47,6 @@ router.patch('/', routeGuard, async (req, res, next) => {
     next(err);
   }
 });
-
-router.post(
-  '/upload',
-  routeGuard,
-  upload.single('profilePicture'),
-  async (req, res, next) => {
-    res.json(req.file.path);
-  }
-);
 
 router.delete('/', routeGuard, async (req, res, next) => {
   const id = req.user._id;

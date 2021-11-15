@@ -24,15 +24,3 @@ export const deleteUser = (id) => {
     return res.data;
   });
 };
-
-export const uploadImage = (data) => {
-  return api
-    .post(`${endpoint}/upload`, data, {
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
-    })
-    .then((res) => {
-      return res.data;
-    });
-};

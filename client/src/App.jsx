@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     loadUser();
-  }, [user]);
+  }, []);
 
   const handleAuthenticationChange = async (user) => {
     setUser(user);
