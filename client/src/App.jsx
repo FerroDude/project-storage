@@ -58,7 +58,7 @@ function App() {
         <Link to="signUp">Sign Up</Link>
         <Link to="profile">Profile</Link>
         <Link onClick={handleSignOut} to="/">
-          <button onClick={handleSignOut}>Sign Out</button>
+          <button>Sign Out</button>
         </Link>
 
         <Switch>
@@ -101,4 +101,5 @@ function App() {
   );
 }
 
+<div></div>;
 export default App;
