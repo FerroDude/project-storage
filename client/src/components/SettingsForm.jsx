@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { loadAuthenticatedUser, uploadImage } from './../services/user';
+import { loadAuthenticatedUser } from '../services/user';
+import { uploadSingleFile } from '../services/fileupload';
 
 const SettingsForm = ({ history, onEditUser }) => {
   const [user, setUser] = useState(null);
@@ -24,7 +25,7 @@ const SettingsForm = ({ history, onEditUser }) => {
     formData.append('profilePicture', imageFile);
 
     try {
-      const profilePicture = await uploadImage(formData);
+      const profilePicture = await uploadSingleFile(formData);
       await onEditUser({ ...user, profilePicture });
       history.push('/profile');
     } catch (error) {
