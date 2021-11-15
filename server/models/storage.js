@@ -17,7 +17,8 @@ const schema = new mongoose.Schema(
       required: true
     },
     owner: {
-      type: mongoose.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       required: true
     },
     location: {
@@ -40,7 +41,8 @@ const schema = new mongoose.Schema(
       default: false
     },
     renter: {
-      type: mongoose.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       default: null
     },
     width: {
@@ -59,10 +61,10 @@ const schema = new mongoose.Schema(
   { timestamps: { createdAt: 'createAt', updatedAt: 'updateAt' } }
 );
 
-const Storage = mongoose.model('storage', schema);
+const Storage = mongoose.model('Storage', schema);
 
 Storage.ensureIndexes({
   location: '2dSphere'
 });
 
-module.exports = mongoose.model('storage', schema);
+module.exports = mongoose.model('Storage', schema);
