@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { createStorage } from '../services/storage';
+import AddressSearch from '../components/AddressSearch';
+import FileUpload from '../components/FileUpload';
 
 const StorageCreateView = () => {
   const [inputValues, setInputValues] = useState({
     name: '',
     description: '',
-    location: '',
+    address: '',
     price: '',
     width: '',
-    length: ''
+    length: '',
+    gallery: []
   });
-
+  console.log(inputValues);
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -26,9 +29,14 @@ const StorageCreateView = () => {
     setInputValues({ ...inputValues, [name]: value });
   };
 
+  const handleGalleryChange = (files) => {
+    setInputValues({ ...inputValues, gallery: files });
+  };
+
   return (
     <div>
       <form>
+        <FileUpload type="multiple" onPickFile={handleGalleryChange} />
         <label htmlFor="input-storage-name">Storage name</label>
         <input
           id="input-storage-name"
@@ -38,24 +46,20 @@ const StorageCreateView = () => {
           value={inputValues.name}
           onChange={handleInputChange}
         />
-        <label htmlFor="input-storage-description">Description</label>
-        <textarea
-          id="input-storage-description"
-          type="text"
-          placeholder="Description (max. X characters)"
-          name="description"
-          value={inputValues.description}
-          onChange={handleInputChange}
-        />
-        <label htmlFor="input-storage-address">Address</label>
-        <input
-          id="input-storage-address"
-          type="text"
-          placeholder="Address"
-          name="Address"
-          value={inputValues.location}
-          onChange={handleInputChange}
-        />
+        <div>
+          <label htmlFor="input-storage-description">Description</label>
+          <textarea
+            id="input-storage-description"
+            type="text"
+            placeholder="Description (max. 160 characters)"
+            name="description"
+            value={inputValues.description}
+            onChange={handleInputChange}
+            maxLength="160"
+          />
+          <p>{160 - inputValues.description.length} characters remaining.</p>
+        </div>
+        <AddressSearch />
         <label htmlFor="input-storage-price">Price</label>
         <input
           id="input-storage-price"

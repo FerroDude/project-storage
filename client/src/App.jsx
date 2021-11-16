@@ -58,10 +58,10 @@ function App() {
         <Link to="signIn">Sign In</Link>
         <Link to="signUp">Sign Up</Link>
         <Link to="profile">Profile</Link>
+        <Link to="storage/create">Create storage</Link>
         <Link onClick={handleSignOut} to="/">
           <button onClick={handleSignOut}>Sign Out</button>
         </Link>
-
         <Switch>
           <Route
             exact
