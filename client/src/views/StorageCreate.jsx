@@ -13,7 +13,7 @@ const StorageCreateView = () => {
     length: '',
     gallery: []
   });
-  console.log(inputValues);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
