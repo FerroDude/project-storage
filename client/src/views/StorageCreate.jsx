@@ -7,7 +7,7 @@ const StorageCreateView = () => {
   const [inputValues, setInputValues] = useState({
     name: '',
     description: '',
-    address: '',
+    coordinates: null,
     price: '',
     width: '',
     length: '',
@@ -31,6 +31,10 @@ const StorageCreateView = () => {
 
   const handleGalleryChange = (files) => {
     setInputValues({ ...inputValues, gallery: files });
+  };
+
+  const handleCoordinatesChange = (coordinates) => {
+    setInputValues({ ...inputValues, coordinates });
   };
 
   return (
@@ -59,7 +63,7 @@ const StorageCreateView = () => {
           />
           <p>{160 - inputValues.description.length} characters remaining.</p>
         </div>
-        <AddressSearch />
+        <AddressSearch onCoordinatesChange={handleCoordinatesChange} />
         <label htmlFor="input-storage-price">Price</label>
         <input
           id="input-storage-price"
