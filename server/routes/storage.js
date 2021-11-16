@@ -83,7 +83,7 @@ router.patch('/:id', routeGuard, async (req, res, next) => {
 router.delete('/:id', routeGuard, async (req, res, next) => {
   const { id } = req.params;
   const deletedStorage = await Storage.findByIdAndDelete(id);
-  res.json({ deletedStorage });
+  res.json(deletedStorage);
 });
 
 router.post('/', routeGuard, async (req, res, next) => {

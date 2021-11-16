@@ -84,7 +84,7 @@ const StorageCreateView = () => {
           value={inputValues.length}
           onChange={handleInputChange}
         />
-        <p>Area: {inputValues.width * inputValues.length}</p>
+        <p>Total area: {inputValues.width * inputValues.length}</p>
         <button onClick={handleSubmit}>Save storage</button>
       </form>
     </div>
