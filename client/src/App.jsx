@@ -59,9 +59,10 @@ function App() {
       <BrowserRouter>
         <Navigation user={user} handleSignOut={handleSignOut} />
         <Switch>
-          <Route
-            exact
+          <ProtectedRoute
             path="/signIn"
+            authorized={!isLoaded || !user}
+            redirect="/"
             render={(props) => (
               <SignInView
                 {...props}
@@ -69,9 +70,11 @@ function App() {
               />
             )}
           />
-          <Route
-            exact
+
+          <ProtectedRoute
             path="/signUp"
+            authorized={!isLoaded || !user}
+            redirect="/"
             render={(props) => (
               <SignUpView
                 {...props}
@@ -79,19 +82,27 @@ function App() {
               />
             )}
           />
-          <Route
-            exact
+
+          <ProtectedRoute
             path="/profile"
+            authorized={isLoaded && user}
+            redirect="/signIn"
             render={(props) => <ProfileView {...props} user={user} />}
           />
-          <Route
-            exact
+          <ProtectedRoute
             path="/settings"
+            authorized={isLoaded && user}
+            redirect="/signIn"
             render={(props) => (
               <SettingsView {...props} onEditUser={handleEditUser} />
             )}
           />
-          <Route exact path="/storage/create" component={StorageCreateView} />
+          <ProtectedRoute
+            path="/storage/create"
+            authorized={!isLoaded || (user && user.role === 'landlord')}
+            redirect="/signUp"
+            render={(props) => <StorageCreateView {...props} user={user} />}
+          />
           <Route exact path="/" component={HomeView} />
         </Switch>
       </BrowserRouter>

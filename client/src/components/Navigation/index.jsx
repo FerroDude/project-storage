@@ -7,8 +7,12 @@ const Navigation = (props) => {
 
       {(props.user && (
         <>
-          <Link to="profile">Profile</Link>
-          <Link to="storage/create">Create storage</Link>
+          <Link to="/profile">Profile</Link>
+          {props.user.role === 'landlord' && (
+            <>
+              <Link to="/storage/create">Create storage</Link>
+            </>
+          )}
           <Link to="/">
             {' '}
             <button onClick={props.handleSignOut}>Sign out</button>
