@@ -1,10 +1,10 @@
 require.resolve('dotenv');
 const axios = require('axios');
 
-module.exports = async (address1, postalCode, city, country) => {
+module.exports = async ({ address, postalCode, city, country }) => {
   // !! Address1 format (BuildingNumber<space>StreetName,<space>City,<Space>State/Province)
   const { data } = await axios.get(
-    `${process.env.GEOCODING_API_URL}?address=${address1}&components=postal_code:${postalCode}|country:${country}|locality:${city}]&key=${process.env.GEOCODING_API_KEY}`
+    `${process.env.GEOCODING_API_URL}?address=${address}&components=postal_code:${postalCode}|country:${country}|locality:${city}]&key=${process.env.GEOCODING_API_KEY}`
   );
 
   return data.results.geometry.location;

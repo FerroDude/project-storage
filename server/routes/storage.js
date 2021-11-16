@@ -5,7 +5,6 @@ const express = require('express');
 const routeGuard = require('../middleware/route-guard');
 const Storage = require('../models/storage');
 const sortStorageByProximity = require('..//utils/sort-storage-by-proximity');
-const getLngLat = require('../api/google/geoLocation');
 
 const router = express.Router();
 
@@ -87,21 +86,20 @@ router.delete('/:id', routeGuard, async (req, res, next) => {
 });
 
 router.post('/', routeGuard, async (req, res, next) => {
-  const { name, description, price, gallery } = req.body;
-  const { lng, lat } = getLngLat(req.body.address);
+  const { name, description, price, gallery, coordinates, width, length } =
+    req.body;
 
   const storage = new Storage({
     name,
     description,
     owner: req.user._id,
     location: {
-      coordinates: {
-        lon: lng,
-        lat: lat
-      }
+      coordinates: [coordinates.lng, coordinates.lat]
     },
     price,
-    gallery
+    gallery,
+    width,
+    length
   });
 
   try {
