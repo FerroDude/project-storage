@@ -29,7 +29,7 @@ router.post(
       const paths = req.files.map((file) => file.path);
       res.json(paths);
     } else {
-      res.json([]);
+      res.json('');
     }
   }
 );

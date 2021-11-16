@@ -55,7 +55,8 @@ const schema = new mongoose.Schema(
     },
     rating: [ratingSchema],
     review: {
-      type: [mongoose.ObjectId]
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Review'
     }
   },
   { timestamps: { createdAt: 'createAt', updatedAt: 'updateAt' } }
