@@ -7,6 +7,7 @@ import ProfileView from './views/Profile';
 import SettingsView from './views/Settings';
 import StorageCreateView from './views/StorageCreate';
 import { signOut } from './services/authentication';
+import Navigation from './components/Navigation/index.jsx';
 import {
   loadAuthenticatedUser,
   editUser,
@@ -56,14 +57,7 @@ function App() {
       )}
 
       <BrowserRouter>
-        <Link to="/">Home</Link>
-        <Link to="signIn">Sign In</Link>
-        <Link to="signUp">Sign Up</Link>
-        <Link to="profile">Profile</Link>
-        <Link to="storage/create">Create storage</Link>
-        <Link onClick={handleSignOut} to="/">
-          <button>Sign Out</button>
-        </Link>
+        <Navigation user={user} handleSignOut={handleSignOut} />
         <Switch>
           <Route
             exact
