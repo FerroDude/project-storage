@@ -12,8 +12,11 @@ router.post(
   routeGuard,
   upload.single('profilePicture'),
   async (req, res, next) => {
-    console.log(req.file);
-    res.json(req.file.path);
+    if (req.file) {
+      res.json(req.file.path);
+    } else {
+      res.json('');
+    }
   }
 );
 
@@ -22,8 +25,12 @@ router.post(
   routeGuard,
   upload.array('pictures', 10), //revise the max image limit
   async (req, res, next) => {
-    const paths = req.files.map((file) => file.path);
-    res.json(paths);
+    if (req.files) {
+      const paths = req.files.map((file) => file.path);
+      res.json(paths);
+    } else {
+      res.json([]);
+    }
   }
 );
 
