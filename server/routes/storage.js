@@ -83,11 +83,11 @@ router.patch('/:id', routeGuard, async (req, res, next) => {
 router.delete('/:id', routeGuard, async (req, res, next) => {
   const { id } = req.params;
   const deletedStorage = await Storage.findByIdAndDelete(id);
-  res.json({ deletedStorage });
+  res.json(deletedStorage);
 });
 
 router.post('/', routeGuard, async (req, res, next) => {
-  const { name, description, price, gallery } = req.body.information;
+  const { name, description, price, gallery } = req.body;
   const { lng, lat } = getLngLat(req.body.address);
 
   const storage = new Storage({
@@ -104,12 +104,12 @@ router.post('/', routeGuard, async (req, res, next) => {
     gallery
   });
 
-  const newStorage = await storage.save((err, storage) => {
-    if (err) {
-      next(err);
-    }
-  });
-  res.json(newStorage);
+  try {
+    const newStorage = await storage.save();
+    res.json(newStorage);
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;

@@ -5,6 +5,7 @@ import SignUpView from './views/SignUp';
 import { useState, useEffect } from 'react';
 import ProfileView from './views/Profile';
 import SettingsView from './views/Settings';
+import StorageCreateView from './views/StorageCreate';
 import { signOut } from './services/authentication';
 import {
   loadAuthenticatedUser,
@@ -59,10 +60,10 @@ function App() {
         <Link to="signIn">Sign In</Link>
         <Link to="signUp">Sign Up</Link>
         <Link to="profile">Profile</Link>
+        <Link to="storage/create">Create storage</Link>
         <Link onClick={handleSignOut} to="/">
           <button>Sign Out</button>
         </Link>
-
         <Switch>
           <Route
             exact
@@ -96,6 +97,7 @@ function App() {
               <SettingsView {...props} onEditUser={handleEditUser} />
             )}
           />
+          <Route exact path="/storage/create" component={StorageCreateView} />
           <Route exact path="/" component={HomeView} />
         </Switch>
       </BrowserRouter>
