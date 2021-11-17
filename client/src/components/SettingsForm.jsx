@@ -3,8 +3,9 @@ import { loadAuthenticatedUser } from '../services/user';
 import { uploadSingleFile } from '../services/fileupload';
 import FileUpload from './FileUpload';
 import AddressSearch from './AddressSearch';
+import { useHistory } from 'react-router-dom';
 
-const SettingsForm = ({ history, onEditUser }) => {
+const SettingsForm = ({ onEditUser }) => {
   const [user, setUser] = useState({
     username: '',
     fName: '',
@@ -14,6 +15,7 @@ const SettingsForm = ({ history, onEditUser }) => {
     coordinates: null
   });
   const [file, setFile] = useState(null);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchUser = async () => {

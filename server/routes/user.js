@@ -38,7 +38,7 @@ router.patch('/', routeGuard, async (req, res, next) => {
         phoneNumber,
         email,
         location: {
-          coordinates: [coordinates.lng, coordinates.lat]
+          coordinates: [coordinates?.lng, coordinates?.lat]
         },
         profilePicture
       },

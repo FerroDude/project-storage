@@ -11,6 +11,7 @@ const Navigation = (props) => {
           {props.user.role === 'landlord' && (
             <>
               <Link to="/storage/create">Create storage</Link>
+              <Link to="storage/manage">Manage storage</Link>
             </>
           )}
           <Link to="/">
