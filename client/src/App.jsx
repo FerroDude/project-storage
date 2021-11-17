@@ -8,6 +8,7 @@ import SettingsView from './views/Settings';
 import StorageCreateView from './views/StorageCreate';
 import { signOut } from './services/authentication';
 import Navigation from './components/Navigation/index.jsx';
+import StorageList from './views/StorageList';
 import {
   loadAuthenticatedUser,
   editUser,
@@ -103,6 +104,7 @@ function App() {
             redirect="/signUp"
             render={(props) => <StorageCreateView {...props} user={user} />}
           />
+          <Route path="/storage/list" component={StorageList} exact />
           <Route exact path="/" component={HomeView} />
         </Switch>
       </BrowserRouter>
