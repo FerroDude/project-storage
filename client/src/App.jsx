@@ -14,6 +14,22 @@ import {
 } from './services/user.js';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import './App.scss';
+import styled from 'styled-components';
+import Navabar from './components/Navabar.jsx';
+
+const Wrapper = styled.div`
+  width: 100vw;
+  font-family: 'Manrope', sans-serif;
+  margin: 0;
+  padding-top: 1em;
+  background: #000;
+`;
+const Container = styled.div`
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background: black;
+`;
 
 function App() {
   //setting state for user with hooks
@@ -48,58 +64,53 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>PROJECT STORAGE</h1>
-      {(!isLoaded && <div>No User</div>) || (
-        <h2>Name: {`${user.fName} ${user.lName}`}</h2>
-      )}
-
+    <Wrapper>
       <BrowserRouter>
-        <Link to="/">Home</Link>
-        <Link to="signIn">Sign In</Link>
-        <Link to="signUp">Sign Up</Link>
-        <Link to="profile">Profile</Link>
-        <Link onClick={handleSignOut} to="/">
-          <button>Sign Out</button>
-        </Link>
+        <Container className="App">
+          <Navabar />
+          <h1>PROJECT STORAGE</h1>
+          {(!isLoaded && <div>No User</div>) || (
+            <h2>Name: {`${user.fName} ${user.lName}`}</h2>
+          )}
 
-        <Switch>
-          <Route
-            exact
-            path="/signIn"
-            render={(props) => (
-              <SignInView
-                {...props}
-                onAuthenticationChange={handleAuthenticationChange}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/signUp"
-            render={(props) => (
-              <SignUpView
-                {...props}
-                onAuthenticationChange={handleAuthenticationChange}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/profile"
-            render={(props) => <ProfileView {...props} user={user} />}
-          />
-          <Route
-            exact
-            path="/settings"
-            render={(props) => (
-              <SettingsView {...props} onEditUser={handleEditUser} />
-            )}
-          />
-          <Route exact path="/" component={HomeView} />
-        </Switch>
+          <Switch>
+            <Route
+              exact
+              path="/signIn"
+              render={(props) => (
+                <SignInView
+                  {...props}
+                  onAuthenticationChange={handleAuthenticationChange}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/signUp"
+              render={(props) => (
+                <SignUpView
+                  {...props}
+                  onAuthenticationChange={handleAuthenticationChange}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/profile"
+              render={(props) => <ProfileView {...props} user={user} />}
+            />
+            <Route
+              exact
+              path="/settings"
+              render={(props) => (
+                <SettingsView {...props} onEditUser={handleEditUser} />
+              )}
+            />
+            <Route exact path="/" component={HomeView} />
+          </Switch>
+        </Container>
       </BrowserRouter>
-    </div>
+    </Wrapper>
   );
 }
 
