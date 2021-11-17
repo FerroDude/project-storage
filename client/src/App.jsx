@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import ProfileView from './views/Profile';
 import SettingsView from './views/Settings';
 import StorageCreateView from './views/StorageCreate';
+import StorageManagementView from './views/StorageManagement';
 import { signOut } from './services/authentication';
 import Navigation from './components/Navigation/index.jsx';
 import {
@@ -101,7 +102,13 @@ function App() {
             path="/storage/create"
             authorized={!isLoaded || (user && user.role === 'landlord')}
             redirect="/signUp"
-            render={(props) => <StorageCreateView {...props} user={user} />}
+            render={(props) => <StorageCreateView {...props} />}
+          />
+          <ProtectedRoute
+            path="/storage/manage"
+            authorized={!isLoaded || (user && user.role === 'landlord')}
+            redirect="/signUp"
+            render={(props) => <StorageManagementView {...props} />}
           />
           <Route exact path="/" component={HomeView} />
         </Switch>
