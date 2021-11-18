@@ -6,12 +6,14 @@ const ProfileView = ({ user }) => {
       <div>
         <h2>Profile View</h2>
         <h3>{user.username}</h3>
-        <img
-          src={user.profilePicture}
-          alt={`${user.username}'s profile`}
-          height="150px"
-          width="150px"
-        />
+        {user.profilePicture && (
+          <img
+            src={user.profilePicture}
+            alt={`${user.username}'s profile`}
+            height="150px"
+            width="150px"
+          />
+        )}
         <h3>Personal details</h3>
         <br />
         <strong>First name: </strong>

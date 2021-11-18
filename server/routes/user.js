@@ -23,7 +23,7 @@ router.patch('/', routeGuard, async (req, res, next) => {
     lName,
     phoneNumber,
     email,
-    location,
+    coordinates,
     profilePicture
   } = req.body;
   const id = req.user._id;
@@ -37,7 +37,9 @@ router.patch('/', routeGuard, async (req, res, next) => {
         lName,
         phoneNumber,
         email,
-        location,
+        location: {
+          coordinates: [coordinates?.lng, coordinates?.lat]
+        },
         profilePicture
       },
       { new: true }

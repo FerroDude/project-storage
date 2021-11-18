@@ -2,7 +2,7 @@ import styledComponents from 'styled-components';
 import MenuIcon from '@mui/icons-material/Menu';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import ClearIcon from '@mui/icons-material/Clear';
-import { styled, css } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 

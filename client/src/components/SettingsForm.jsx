@@ -2,15 +2,32 @@ import { useState, useEffect } from 'react';
 import { loadAuthenticatedUser } from '../services/user';
 import { uploadSingleFile } from '../services/fileupload';
 import FileUpload from './FileUpload';
+import AddressSearch from './AddressSearch';
+import { useHistory } from 'react-router-dom';
 
-const SettingsForm = ({ history, onEditUser }) => {
-  const [user, setUser] = useState(null);
+const SettingsForm = ({ onEditUser }) => {
+  const [user, setUser] = useState({
+    username: '',
+    fName: '',
+    lName: '',
+    email: '',
+    phoneNumber: '',
+    coordinates: null
+  });
   const [file, setFile] = useState(null);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchUser = async () => {
       const user = await loadAuthenticatedUser();
-      setUser(user);
+      setUser({
+        username: user.username,
+        fName: user.fName,
+        lName: user.lName,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        coordinates: user.coordinates
+      });
     };
     fetchUser();
   }, []);
@@ -22,6 +39,10 @@ const SettingsForm = ({ history, onEditUser }) => {
 
   const setProfileImgFile = (file) => {
     setFile(file);
+  };
+
+  const handleCoordinatesChange = (coordinates) => {
+    setUser({ ...user, coordinates });
   };
 
   const handleFormSubmission = async (event) => {
@@ -90,6 +111,8 @@ const SettingsForm = ({ history, onEditUser }) => {
             value={user.phoneNumber}
             onChange={handleInputChange}
           />
+          <h3>Location</h3>
+          <AddressSearch onCoordinatesChange={handleCoordinatesChange} />
           <button type="submit">Save</button>
         </form>
       </div>

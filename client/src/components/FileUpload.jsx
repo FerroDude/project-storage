@@ -1,35 +1,58 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const FileUpload = ({ type, onPickFile }) => {
-  const [previewFile, setPreviewFile] = useState(null);
+  const [previewFiles, setPreviewFiles] = useState(null);
+
+  useEffect(() => {
+    return () => {
+      if (previewFiles) {
+        for (let i = 0; i < previewFiles.length; i++) {
+          URL.revokeObjectURL(previewFiles[i]);
+          setPreviewFiles(null);
+        }
+      }
+    };
+  });
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
+    const files = event.target.files;
+    if (files) {
       if (type === 'multiple') {
-        //   setPreviewFile(event.target.files);
-        //   onPickFile(event.target.files);
+        let previews = [];
+        for (let i = 0; i < files.length; i++) {
+          previews.push(URL.createObjectURL(files[i]));
+        }
+        setPreviewFiles(previews);
+        onPickFile(files);
       } else {
-        setPreviewFile(URL.createObjectURL(event.target.files[0]));
-        onPickFile(event.target.files[0]);
-        URL.revokeObjectURL(event.target.files[0]);
+        setPreviewFiles(URL.createObjectURL(files[0]));
+        onPickFile(files[0]);
+        URL.revokeObjectURL(files[0]);
       }
-    } else {
-      setPreviewFile(null);
     }
   };
 
   return (
     <div>
-      <div>
-        {previewFile && <img src={previewFile} alt="preview" height="100px" />}
-      </div>
+      {previewFiles && (
+        <div>
+          {type === 'multiple' ? (
+            <div>
+              {previewFiles.map((file) => (
+                <img key={file.name} src={file} alt="preview" height="100px" />
+              ))}
+            </div>
+          ) : (
+            <img src={previewFiles} alt="preview" height="100px" />
+          )}
+        </div>
+      )}
       <input
         name="fileupload"
         type="file"
         accept="image/*"
         onChange={handleFileChange}
+        multiple={type === 'multiple'}
       />
     </div>
   );
