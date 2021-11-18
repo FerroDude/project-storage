@@ -64,6 +64,7 @@ function App() {
           )}
           <AllRoutes
             user={user}
+            isLoaded={isLoaded}
             handleAuthenticationChange={handleAuthenticationChange}
             handleEditUser={handleEditUser}
           />
