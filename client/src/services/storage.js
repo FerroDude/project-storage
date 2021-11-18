@@ -1,10 +1,22 @@
 import api from '../config/api';
 const endpoint = '/storage';
 
+export const listAllStorages = () => {
+  return api
+    .get(`${endpoint}/listAll`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const listStorages = () => {
   return api
     .get(`${endpoint}/list`)
     .then((res) => {
+      console.log(res.data);
       return res.data;
     })
     .catch((err) => {
