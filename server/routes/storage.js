@@ -8,6 +8,11 @@ const sortStorageByProximity = require('..//utils/sort-storage-by-proximity');
 
 const router = express.Router();
 
+router.get('/listAll', async (req, res) => {
+  const storages = await Storage.find({});
+  res.json(storages);
+});
+
 router.get('/list/', async (req, res, next) => {
   const user = req.user;
   const [guestLon, guestLat] = req.params;
