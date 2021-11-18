@@ -3,9 +3,11 @@ import FileUpload from '../components/FileUpload';
 import PhotoGallery from '../components/PhotoGallery';
 import { editStorage, getStorage, deleteStorage } from '../services/storage';
 import { useHistory } from 'react-router-dom';
+import { uploadMultipleFiles } from '../services/fileupload';
 
 const StorageManagementView = (props) => {
   const [storage, setStorage] = useState(null);
+  const [files, setFiles] = useState(null);
   const history = useHistory();
   const { id } = props.match.params;
 
@@ -20,9 +22,15 @@ const StorageManagementView = (props) => {
   const handleFormSubmission = async (event) => {
     event.preventDefault();
     try {
-      await editStorage(storage._id, storage);
+      const formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        formData.append('pictures', file);
+      }
+      const gallery = await uploadMultipleFiles(formData);
+      await editStorage(storage._id, { ...storage, gallery });
       console.log('Storage updated');
-      history.push('/');
+      history.push('/storage/list');
     } catch (error) {
       console.log(error);
     }
@@ -33,7 +41,9 @@ const StorageManagementView = (props) => {
     setStorage({ ...storage, [name]: value });
   };
 
-  const handleGalleryChange = () => {};
+  const handleGalleryChange = (files) => {
+    setFiles({ files });
+  };
 
   const handleStorageDeletion = async () => {
     await deleteStorage(storage._id);

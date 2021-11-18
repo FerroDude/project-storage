@@ -14,11 +14,7 @@ router.get('/listAll', async (req, res) => {
   res.json(storages);
 });
 
-<<<<<<< HEAD
-router.get('/list', async (req, res, next) => {
-=======
 /* router.get('/list/', async (req, res, next) => {
->>>>>>> ef03c520b1ff83c071a1271b7733feff5240e65a
   const user = req.user;
   const [guestLon, guestLat] = req.params;
 
@@ -79,7 +75,6 @@ router.get('/mystorages', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
   const storage = await Storage.findById(id);
-  console.log(storage);
   res.json(storage);
 });
 
