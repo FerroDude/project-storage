@@ -4,18 +4,18 @@ import PhotoGallery from '../components/PhotoGallery';
 import { editStorage, getStorage, deleteStorage } from '../services/storage';
 import { useHistory } from 'react-router-dom';
 
-const StorageManagementView = () => {
+const StorageManagementView = (props) => {
   const [storage, setStorage] = useState(null);
-  console.log(storage);
   const history = useHistory();
+  const { id } = props.match.params;
 
   useEffect(() => {
     const fetchStorage = async () => {
-      const storage = await getStorage('61950ffbc08b186747db97b1');
+      const storage = await getStorage(id);
       setStorage(storage);
     };
     fetchStorage();
-  }, []);
+  }, [id]);
 
   const handleFormSubmission = async (event) => {
     event.preventDefault();
