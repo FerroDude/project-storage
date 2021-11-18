@@ -3,6 +3,7 @@ import HomeView from './views/Home.jsx';
 import SignInView from './views/SignIn.jsx';
 import SignUpView from './views/SignUp';
 import { useState, useEffect } from 'react';
+import StorageView from './views/Storage';
 import ProfileView from './views/Profile';
 import SettingsView from './views/Settings';
 import StorageCreateView from './views/StorageCreate';
@@ -97,18 +98,6 @@ function App() {
                 />
               )}
             />
-            <Route
-              exact
-              path="/profile"
-              render={(props) => <ProfileView {...props} user={user} />}
-            />
-            <Route
-              exact
-              path="/settings"
-              render={(props) => (
-                <SettingsView {...props} onEditUser={handleEditUser} />
-              )}
-            />
             <Route exact path="/" component={HomeView} />
           </Switch>
         </Container>
@@ -163,6 +152,12 @@ function App() {
             authorized={!isLoaded || (user && user.role === 'landlord')}
             redirect="/signUp"
             render={(props) => <StorageManagementView {...props} />}
+          />
+          <ProtectedRoute
+            path="/storage/:id"
+            authorized={!isLoaded || user}
+            redirect="/signUp"
+            render={(props) => <StorageView {...props} />}
           />
           <Route exact path="/" component={HomeView} />
         </Switch>
