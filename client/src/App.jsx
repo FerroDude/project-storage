@@ -9,7 +9,6 @@ import SettingsView from './views/Settings';
 import StorageCreateView from './views/StorageCreate';
 import StorageManagementView from './views/StorageManagement';
 import { signOut } from './services/authentication';
-import Navigation from './components/Navigation/index.jsx';
 import { loadAuthenticatedUser, editUser } from './services/user.js';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import './App.scss';
@@ -66,12 +65,11 @@ function App() {
     <Wrapper>
       <BrowserRouter>
         <Container className="App">
-          <Navbar />
+          <Navbar user={user} handleSignOut={handleSignOut} />
           <h1>PROJECT STORAGE</h1>
           {(!isLoaded && <div>No User</div>) || (
             <h2>Name: {`${user.fName} ${user.lName}`}</h2>
           )}
-          <Navigation user={user} handleSignOut={handleSignOut} />
           <Switch>
             <ProtectedRoute
               path="/signIn"
