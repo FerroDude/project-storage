@@ -4,7 +4,6 @@ const Navigation = (props) => {
   return (
     <nav className="Navigation">
       <Link to="/">Home</Link>
-      <Link to="/storage/list">Storages list</Link>
 
       {(props.user && (
         <>

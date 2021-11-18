@@ -13,7 +13,7 @@ router.get('/listAll', async (req, res) => {
   res.json(storages);
 });
 
-router.get('/list/', async (req, res, next) => {
+/* router.get('/list/', async (req, res, next) => {
   const user = req.user;
   const [guestLon, guestLat] = req.params;
 
@@ -64,7 +64,7 @@ router.get('/list/', async (req, res, next) => {
       res.json(storages);
     }
   }
-});
+}); */
 
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
