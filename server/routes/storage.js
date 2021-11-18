@@ -75,7 +75,6 @@ router.get('/mystorages', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
   const storage = await Storage.findById(id);
-  console.log(storage);
   res.json(storage);
 });
 

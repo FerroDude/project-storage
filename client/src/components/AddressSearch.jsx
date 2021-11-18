@@ -45,7 +45,12 @@ const AddressSearch = ({ onCoordinatesChange }) => {
                   backgroundColor: suggestion.active && '#41b3f3'
                 };
                 return (
-                  <div {...getSuggestionItemProps(suggestion, { style })}>
+                  <div
+                    {...getSuggestionItemProps(suggestion, {
+                      style,
+                      key: suggestion.description
+                    })}
+                  >
                     {suggestion.description}
                   </div>
                 );

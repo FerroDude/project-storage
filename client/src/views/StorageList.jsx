@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { listMyStorages } from 'react';
+import { listMyStorages } from '../services/storage';
+import { Link } from 'react-router-dom';
 
 const StorageListView = () => {
   const [storages, setStorages] = useState(null);
@@ -12,13 +13,17 @@ const StorageListView = () => {
   }, []);
 
   return (
-    <div>
-      <ul>
-        {storages.map((storage) => (
-          <li key={storage._id}>{storage.name}</li>
-        ))}
-      </ul>
-    </div>
+    storages && (
+      <div>
+        <ul>
+          {storages.map((storage) => (
+            <li key={storage._id}>
+              <Link to={`/storage/${storage._id}/manage`}>{storage.name}</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
   );
 };
 
