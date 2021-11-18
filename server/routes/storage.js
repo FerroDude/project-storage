@@ -68,14 +68,15 @@ router.get('/list/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
-  const storage = Storage.findById(id);
+  const storage = await Storage.findById(id);
+  console.log(storage);
   res.json(storage);
 });
 
 router.patch('/:id', routeGuard, async (req, res, next) => {
   const { name, description, price, gallery } = req.body;
   const { id } = req.params;
-  const storage = Storage.findByIdAndUpdate(id, {
+  const storage = await Storage.findByIdAndUpdate(id, {
     name,
     description,
     price,

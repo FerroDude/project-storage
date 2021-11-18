@@ -1,11 +1,13 @@
-import { BrowserRouter, Route, Switch, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HomeView from './views/Home.jsx';
 import SignInView from './views/SignIn.jsx';
 import SignUpView from './views/SignUp';
 import { useState, useEffect } from 'react';
+import StorageView from './views/Storage';
 import ProfileView from './views/Profile';
 import SettingsView from './views/Settings';
 import StorageCreateView from './views/StorageCreate';
+import StorageManagementView from './views/StorageManagement';
 import { signOut } from './services/authentication';
 import Navigation from './components/Navigation/index.jsx';
 import StorageList from './views/StorageList';
@@ -17,6 +19,22 @@ import {
 } from './services/user.js';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import './App.scss';
+import styled from 'styled-components';
+import Navabar from './components/Navabar.jsx';
+
+const Wrapper = styled.div`
+  width: 100vw;
+  font-family: 'Manrope', sans-serif;
+  margin: 0;
+  padding-top: 1em;
+  background: #000;
+`;
+const Container = styled.div`
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background: black;
+`;
 
 function App() {
   //setting state for user with hooks
@@ -51,13 +69,39 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>PROJECT STORAGE</h1>
-      {(!isLoaded && <div>No User</div>) || (
-        <h2>Name: {`${user.fName} ${user.lName}`}</h2>
-      )}
-
+    <Wrapper>
       <BrowserRouter>
+        <Container className="App">
+          <Navabar />
+          <h1>PROJECT STORAGE</h1>
+          {(!isLoaded && <div>No User</div>) || (
+            <h2>Name: {`${user.fName} ${user.lName}`}</h2>
+          )}
+
+          <Switch>
+            <Route
+              exact
+              path="/signIn"
+              render={(props) => (
+                <SignInView
+                  {...props}
+                  onAuthenticationChange={handleAuthenticationChange}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/signUp"
+              render={(props) => (
+                <SignUpView
+                  {...props}
+                  onAuthenticationChange={handleAuthenticationChange}
+                />
+              )}
+            />
+            <Route exact path="/" component={HomeView} />
+          </Switch>
+        </Container>
         <Navigation user={user} handleSignOut={handleSignOut} />
         <Switch>
           <ProtectedRoute
@@ -102,13 +146,25 @@ function App() {
             path="/storage/create"
             authorized={!isLoaded || (user && user.role === 'landlord')}
             redirect="/signUp"
-            render={(props) => <StorageCreateView {...props} user={user} />}
+            render={(props) => <StorageCreateView {...props} />}
+          />
+          <ProtectedRoute
+            path="/storage/manage"
+            authorized={!isLoaded || (user && user.role === 'landlord')}
+            redirect="/signUp"
+            render={(props) => <StorageManagementView {...props} />}
+          />
+          <ProtectedRoute
+            path="/storage/:id"
+            authorized={!isLoaded || user}
+            redirect="/signUp"
+            render={(props) => <StorageView {...props} />}
           />
           <Route path="/storage/list" component={StorageList} exact />
           <Route exact path="/" component={HomeView} />
         </Switch>
       </BrowserRouter>
-    </div>
+    </Wrapper>
   );
 }
 

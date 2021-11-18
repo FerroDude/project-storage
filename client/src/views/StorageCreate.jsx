@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { createStorage } from '../services/storage';
 import AddressSearch from '../components/AddressSearch';
 import FileUpload from '../components/FileUpload';
+import { uploadMultipleFiles } from '../services/fileupload';
 
 const StorageCreateView = () => {
   const [inputValues, setInputValues] = useState({
@@ -16,8 +17,15 @@ const StorageCreateView = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
-      await createStorage(inputValues);
+      const formData = new FormData();
+      for (let i = 0; i < inputValues.gallery.length; i++) {
+        const file = inputValues.gallery[i];
+        formData.append('pictures', file);
+      }
+      const gallery = await uploadMultipleFiles(formData);
+      await createStorage({ ...inputValues, gallery });
       console.log('Storage created');
     } catch (error) {
       console.log(error);
@@ -39,7 +47,7 @@ const StorageCreateView = () => {
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <FileUpload type="multiple" onPickFile={handleGalleryChange} />
         <label htmlFor="input-storage-name">Storage name</label>
         <input
@@ -93,7 +101,7 @@ const StorageCreateView = () => {
           onChange={handleInputChange}
         />
         <p>Total area: {inputValues.width * inputValues.length}</p>
-        <button onClick={handleSubmit}>Save storage</button>
+        <button>Save storage</button>
       </form>
     </div>
   );

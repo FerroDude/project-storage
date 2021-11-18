@@ -1,15 +1,11 @@
-import { useState } from 'react';
-
-const PhotoGallery = () => {
-  const [images, setImages] = useState(null);
-
+const PhotoGallery = ({ images }) => {
   return (
     <div>
-      <h1>Gallery</h1>
+      <p>Gallery</p>
       {images && (
         <div>
           {images.map((image) => (
-            <img src={image} alt="whatever" height="100px" />
+            <img key={image} src={image} alt="whatever" height="100px" />
           ))}
         </div>
       )}
