@@ -12,6 +12,17 @@ export const listAllStorages = () => {
     });
 };
 
+export const listMyStorages = () => {
+  return api
+    .get(`${endpoint}/mystorages`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const listStorages = () => {
   return api
     .get(`${endpoint}/list`)

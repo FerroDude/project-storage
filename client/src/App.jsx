@@ -10,7 +10,6 @@ import StorageCreateView from './views/StorageCreate';
 import StorageManagementView from './views/StorageManagement';
 import { signOut } from './services/authentication';
 import Navigation from './components/Navigation/index.jsx';
-import StorageList from './views/StorageList';
 import {
   loadAuthenticatedUser,
   editUser,
