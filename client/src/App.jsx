@@ -10,12 +10,7 @@ import StorageCreateView from './views/StorageCreate';
 import StorageManagementView from './views/StorageManagement';
 import { signOut } from './services/authentication';
 import Navigation from './components/Navigation/index.jsx';
-import {
-  loadAuthenticatedUser,
-  editUser,
-  getUser,
-  deleteUser
-} from './services/user.js';
+import { loadAuthenticatedUser, editUser } from './services/user.js';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import './App.scss';
 import styled from 'styled-components';
