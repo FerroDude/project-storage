@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import StorageView from './views/Storage';
 import ProfileView from './views/Profile';
 import SettingsView from './views/Settings';
+import StorageListView from './views/StorageList.jsx';
 import StorageCreateView from './views/StorageCreate';
 import StorageManagementView from './views/StorageManagement';
 import { signOut } from './services/authentication';
@@ -84,7 +85,6 @@ function App() {
                 />
               )}
             />
-
             <ProtectedRoute
               path="/signUp"
               authorized={!isLoaded || !user}
@@ -96,7 +96,6 @@ function App() {
                 />
               )}
             />
-
             <ProtectedRoute
               path="/profile"
               authorized={isLoaded && user}
@@ -128,6 +127,12 @@ function App() {
               authorized={!isLoaded || user}
               redirect="/signUp"
               render={(props) => <StorageView {...props} />}
+            />
+            <ProtectedRoute
+              path="/storage/list"
+              authorized={!isLoaded || user}
+              redirect="/signUp"
+              render={(props) => <StorageListView {...props} />}
             />
             <Route exact path="/" component={HomeView} />
           </Switch>
