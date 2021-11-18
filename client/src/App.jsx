@@ -19,7 +19,7 @@ import {
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import './App.scss';
 import styled from 'styled-components';
-import Navabar from './components/Navabar.jsx';
+import Navbar from './components/Navbar.jsx';
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -71,16 +71,17 @@ function App() {
     <Wrapper>
       <BrowserRouter>
         <Container className="App">
-          <Navabar />
+          <Navbar />
           <h1>PROJECT STORAGE</h1>
           {(!isLoaded && <div>No User</div>) || (
             <h2>Name: {`${user.fName} ${user.lName}`}</h2>
           )}
-
+          <Navigation user={user} handleSignOut={handleSignOut} />
           <Switch>
-            <Route
-              exact
+            <ProtectedRoute
               path="/signIn"
+              authorized={!isLoaded || !user}
+              redirect="/"
               render={(props) => (
                 <SignInView
                   {...props}
@@ -88,9 +89,11 @@ function App() {
                 />
               )}
             />
-            <Route
-              exact
+
+            <ProtectedRoute
               path="/signUp"
+              authorized={!isLoaded || !user}
+              redirect="/"
               render={(props) => (
                 <SignUpView
                   {...props}
@@ -98,69 +101,42 @@ function App() {
                 />
               )}
             />
+
+            <ProtectedRoute
+              path="/profile"
+              authorized={isLoaded && user}
+              redirect="/signIn"
+              render={(props) => <ProfileView {...props} user={user} />}
+            />
+            <ProtectedRoute
+              path="/settings"
+              authorized={isLoaded && user}
+              redirect="/signIn"
+              render={(props) => (
+                <SettingsView {...props} onEditUser={handleEditUser} />
+              )}
+            />
+            <ProtectedRoute
+              path="/storage/create"
+              authorized={!isLoaded || (user && user.role === 'landlord')}
+              redirect="/signUp"
+              render={(props) => <StorageCreateView {...props} />}
+            />
+            <ProtectedRoute
+              path="/storage/manage"
+              authorized={!isLoaded || (user && user.role === 'landlord')}
+              redirect="/signUp"
+              render={(props) => <StorageManagementView {...props} />}
+            />
+            <ProtectedRoute
+              path="/storage/:id"
+              authorized={!isLoaded || user}
+              redirect="/signUp"
+              render={(props) => <StorageView {...props} />}
+            />
             <Route exact path="/" component={HomeView} />
           </Switch>
         </Container>
-        <Navigation user={user} handleSignOut={handleSignOut} />
-        <Switch>
-          <ProtectedRoute
-            path="/signIn"
-            authorized={!isLoaded || !user}
-            redirect="/"
-            render={(props) => (
-              <SignInView
-                {...props}
-                onAuthenticationChange={handleAuthenticationChange}
-              />
-            )}
-          />
-
-          <ProtectedRoute
-            path="/signUp"
-            authorized={!isLoaded || !user}
-            redirect="/"
-            render={(props) => (
-              <SignUpView
-                {...props}
-                onAuthenticationChange={handleAuthenticationChange}
-              />
-            )}
-          />
-
-          <ProtectedRoute
-            path="/profile"
-            authorized={isLoaded && user}
-            redirect="/signIn"
-            render={(props) => <ProfileView {...props} user={user} />}
-          />
-          <ProtectedRoute
-            path="/settings"
-            authorized={isLoaded && user}
-            redirect="/signIn"
-            render={(props) => (
-              <SettingsView {...props} onEditUser={handleEditUser} />
-            )}
-          />
-          <ProtectedRoute
-            path="/storage/create"
-            authorized={!isLoaded || (user && user.role === 'landlord')}
-            redirect="/signUp"
-            render={(props) => <StorageCreateView {...props} />}
-          />
-          <ProtectedRoute
-            path="/storage/manage"
-            authorized={!isLoaded || (user && user.role === 'landlord')}
-            redirect="/signUp"
-            render={(props) => <StorageManagementView {...props} />}
-          />
-          <ProtectedRoute
-            path="/storage/:id"
-            authorized={!isLoaded || user}
-            redirect="/signUp"
-            render={(props) => <StorageView {...props} />}
-          />
-          <Route exact path="/" component={HomeView} />
-        </Switch>
       </BrowserRouter>
     </Wrapper>
   );
