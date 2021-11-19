@@ -4,16 +4,18 @@ import { Link } from 'react-router-dom';
 
 const StorageListView = () => {
   const [storages, setStorages] = useState(null);
+
+  const fetchStorages = async () => {
+    const storages = await listMyStorages();
+    setStorages(storages);
+  };
+
   useEffect(() => {
-    const fetchStorages = async () => {
-      const storages = await listMyStorages();
-      setStorages(storages);
-    };
     fetchStorages();
   }, []);
 
   return (
-    storages && (
+    (storages && (
       <div>
         <ul>
           {storages.map((storage) => (
@@ -23,7 +25,7 @@ const StorageListView = () => {
           ))}
         </ul>
       </div>
-    )
+    )) || <h1>No Storages</h1>
   );
 };
 
