@@ -14,6 +14,7 @@ export const uploadSingleFile = (data) => {
 };
 
 export const uploadMultipleFiles = (data) => {
+  console.log(data, 'hi2');
   return api
     .post(`${endpoint}/multiple`, data, {
       headers: {

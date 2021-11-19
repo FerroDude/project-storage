@@ -24,33 +24,32 @@ const CustomizedLocationIcon = styled((props) => <LocationOnIcon {...props} />)`
 `;
 
 const CurrentLocation = styledComponents.span`
-  font-size: 15px;
-  margin-left: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
-  background: #FFB76B;
-  background: -webkit-linear-gradient(to right, #FFB76B 13%, #FFA73D 18%, #FF7C00 90%, #FF7F04 40%);
-  background: -moz-linear-gradient(to right, #FFB76B 13%, #FFA73D 18%, #FF7C00 90%, #FF7F04 40%);
-  background: linear-gradient(to right, #FFB76B 13%, #FFA73D 18%, #FF7C00 90%, #FF7F04 40%);
+  font-size: 15px; 
+  margin-left: 5px; 
+  cursor: pointer; 
+  text-decoration: none; 
+  color: white; 
+  background: #FFB76B; 
+  background: -webkit-linear-gradient(to right, #FFB76B 13% , #FFA73D 18% , #FF7C00 90% , #FF7F04 40% ); 
+  background: -moz-linear-gradient(to right, #FFB76B 13% , #FFA73D 18% , #FF7C00 90% , #FF7F04 40% ); background: linear-gradient(to right, #FFB76B 13% , #FFA73D 18% , #FF7C00 90% , #FF7F04 40% ); 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-`;
+  `;
 
 const Right = styledComponents.div`
-flex: 1;
-display: flex;
-justify-content: flex-end;
-position: relative;
-padding-right: 10px;
+  flex: 1; 
+  display: flex; 
+  justify-content: flex-end; 
+  position: relative; 
+  padding-right: 10px;
 
-`;
+  `;
 
 const Button = styledComponents.button`
-  background: none;
-  border: none;
+  background: none; 
+  border: none; 
   cursor: pointer;
-`;
+  `;
 
 const CustomizedMenuIcon = styled((props) => <MenuIcon {...props} />)`
   color: orange;
@@ -63,55 +62,52 @@ const CustomizedCancelIcon = styled((props) => <ClearIcon {...props} />)`
 `;
 
 const DropdownMenu = styledComponents.div`
-  position: absolute;
-  height:calc(100vh - (37px + 1em));
-  width:100vw;
-  top: calc(37px + 1em);
+  position: absolute; 
+  height: calc(100vh - (37px + 1em)); 
+  width: 100vw; 
+  top: calc(37px + 1em); 
   background: #000;
-  // background: -webkit-linear-gradient(to right, #FFB76B 13%, #FFA73D 18%, #FF7C00 90%, #FF7F04 40%);
-  // background: -moz-linear-gradient(to right, #FFB76B 13%, #FFA73D 18%, #FF7C00 90%, #FF7F04 40%);
-  // background: linear-gradient(to right, #FFB76B 13%, #FFA73D 18%, #FF7C00 90%, #FF7F04 40%);
   transform: ${(props) =>
     props.isClicked ? 'translateX(0vw)' : 'translateX(100vw)'};
   transition: transform ease .5s;
-  padding: 15px 0;
+  padding: 25px 0 0 0;
 `;
 
 const UnorderedList = styledComponents.ul`
-    width: 100%;
-    height: 85%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0;
-    list-style: none;
-
+width: 100% ;
+height: 70% ;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: center;
+padding: 0;
+list-style: none;
 `;
 
 const ListItem = styledComponents.li`
-  text-align: center;
-  width: 50%;
-  
-  & .active {
-    padding: 15px 45px;
-    color: #FFA73D;
-    // background: #000;
-    // width: 50%;
-    // border-radius: 15px;
+text-align: center;
+width: 50 % ;
+
+&
+.active {
+  padding: 15px 45px;
+  color: #FFA73D;
+  // background: #000;
+  // width: 50%;
+  // border-radius: 15px;
 }
 
 `;
 
 const CustomizedNavLink = styledComponents((props) => <NavLink {...props} />)`
-  text-decoration: none;
-  width: 50%;
-  color: #fff;
-  font-size: 1.2em;
-  font-weight: 600;
+text-decoration: none;
+width: 50% ;
+color: #fff;
+font-size: 1.2em;
+font-weight: 600;
 `;
 
-const Navabar = ({ handleSignOut }) => {
+const Navabar = ({ handleSignOut, user }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   function handleClick() {
@@ -132,41 +128,59 @@ const Navabar = ({ handleSignOut }) => {
               Home
             </CustomizedNavLink>
           </ListItem>
-          <ListItem>
-            <CustomizedNavLink
-              onClick={() => {
-                setIsClicked(false);
-              }}
-              to="signIn"
-            >
-              Sign In
-            </CustomizedNavLink>
-          </ListItem>
-          <ListItem>
-            <CustomizedNavLink
-              onClick={() => {
-                setIsClicked(false);
-              }}
-              to="signUp"
-            >
-              Sign Up
-            </CustomizedNavLink>
-          </ListItem>
-          <ListItem>
-            <CustomizedNavLink
-              onClick={() => {
-                setIsClicked(false);
-              }}
-              to="profile"
-            >
-              Profile
-            </CustomizedNavLink>
-          </ListItem>
-          <ListItem>
-            <CustomizedNavLink onClick={handleSignOut} to="/">
-              Sign Out
-            </CustomizedNavLink>
-          </ListItem>
+
+          {(user && (
+            <>
+              <ListItem>
+                <CustomizedNavLink
+                  onClick={() => {
+                    setIsClicked(false);
+                  }}
+                  to="profile"
+                >
+                  Profile
+                </CustomizedNavLink>
+              </ListItem>
+              {user.role === 'landlord' && (
+                <>
+                  <CustomizedNavLink to="/storage/create">
+                    Create storage
+                  </CustomizedNavLink>
+                  <CustomizedNavLink to="storage/manage">
+                    Manage storage
+                  </CustomizedNavLink>
+                </>
+              )}
+              <ListItem>
+                <CustomizedNavLink onClick={handleSignOut} to="/">
+                  Sign Out
+                </CustomizedNavLink>
+              </ListItem>
+            </>
+          )) || (
+            <>
+              <ListItem>
+                <CustomizedNavLink
+                  onClick={() => {
+                    setIsClicked(false);
+                  }}
+                  to="signUp"
+                >
+                  Sign Up
+                </CustomizedNavLink>
+              </ListItem>
+              <ListItem>
+                <CustomizedNavLink
+                  onClick={() => {
+                    setIsClicked(false);
+                  }}
+                  to="signIn"
+                >
+                  Sign In
+                </CustomizedNavLink>
+              </ListItem>
+            </>
+          )}
         </UnorderedList>
       </DropdownMenu>
       <Left>
