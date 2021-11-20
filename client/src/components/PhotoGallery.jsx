@@ -5,19 +5,19 @@ import Modal from '@mui/material/Modal';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 
+const GalleryModal = styled(Modal)``;
+
+const CustomImageList = styled(ImageList)`
+  height: 80%;
+  width: 80%;
+`;
+
+const Image = styledComponents.img`
+  width: 25vw;
+`;
+
 const PhotoGallery = ({ images }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const GalleryModal = styled(Modal)``;
-
-  const CustomImageList = styled(ImageList)`
-    height: 80%;
-    width: 80%;
-  `;
-
-  const Image = styledComponents.img`
-    width: 25vw;
-  `;
 
   const handleOpen = () => {
     setIsOpen(!isOpen);

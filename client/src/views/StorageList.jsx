@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { listMyStorages } from '../services/storage';
+import { listMyStorages, listRentedStorages } from '../services/storage';
 import { Link } from 'react-router-dom';
 
-const StorageListView = () => {
+const StorageListView = ({ user }) => {
   const [storages, setStorages] = useState(null);
 
   const fetchStorages = async () => {
@@ -11,8 +11,15 @@ const StorageListView = () => {
   };
 
   useEffect(() => {
+    const fetchStorages = async () => {
+      let storages;
+      user.role === 'landlord'
+        ? (storages = await listMyStorages())
+        : (storages = await listRentedStorages());
+      setStorages(storages);
+    };
     fetchStorages();
-  }, []);
+  }, [user.role]);
 
   return (
     (storages && (
@@ -20,7 +27,11 @@ const StorageListView = () => {
         <ul>
           {storages.map((storage) => (
             <li key={storage._id}>
-              <Link to={`/storage/${storage._id}/manage`}>{storage.name}</Link>
+              {(user.role === 'landlord' && (
+                <Link to={`/storage/${storage._id}/manage`}>
+                  {storage.name}
+                </Link>
+              )) || <Link to={`/storage/${storage._id}`}>{storage.name}</Link>}
             </li>
           ))}
         </ul>
