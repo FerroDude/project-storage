@@ -100,3 +100,10 @@ export const deleteStorage = (id) => {
       return err;
     });
 };
+
+export const getStorageNearCoods = (body) => {
+  return api
+    .get(`${endpoint}/list/search`, body)
+    .then((res) => res.data)
+    .catch((err) => err);
+};

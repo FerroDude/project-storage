@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { rentStorage, getStorage } from '../services/storage';
 import PhotoGallery from '../components/PhotoGallery';
+import PaymentView from '../views/Payment';
 
 const StorageView = (props) => {
   const [storage, setStorage] = useState(null);
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
 
   const { user } = props;
   const { id } = props.match.params;
@@ -32,6 +34,9 @@ const StorageView = (props) => {
     await rentStorage(storage);
   };
 
+  const handleShowPaymentForm = () => {
+    setShowPaymentForm(!showPaymentForm);
+  };
   // setStorage({ ...storage, isRented: true, renter: user._id }); PREVIOUS WAY
 
   return (
@@ -56,11 +61,13 @@ const StorageView = (props) => {
         <span></span>
         <br />
         {(!storage.isRented && (
-          <button onClick={handleRent}>Rent this storage!</button>
+          <button onClick={handleShowPaymentForm}>Rent this storage!</button>
         )) ||
           (storage.renter === user._id && (
             <button onClick={handleUnrent}>Return this storage</button>
           )) || <em>Not available!</em>}
+
+        {showPaymentForm && <PaymentView onRent={handleRent} />}
       </div>
     )
   );
