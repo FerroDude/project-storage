@@ -73,7 +73,7 @@ export default function AllRoutes({
         path="/storage/list"
         authorized={!isLoaded || user}
         redirect="/signUp"
-        render={(props) => <StorageListView {...props} />}
+        render={(props) => <StorageListView {...props} user={user} />}
       />
       <ProtectedRoute
         path="/storage/:id"
