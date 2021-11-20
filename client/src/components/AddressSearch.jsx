@@ -5,7 +5,7 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 
 const searchOptions = {
-  componentRestrictions: { country: ['es'] },
+  componentRestrictions: { country: ['es', 'pt'] },
   types: ['address']
 };
 

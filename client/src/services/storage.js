@@ -23,6 +23,17 @@ export const listMyStorages = () => {
     });
 };
 
+export const listRentedStorages = () => {
+  return api
+    .get(`${endpoint}/rented`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const listStorages = () => {
   return api
     .get(`${endpoint}/list`)
@@ -60,6 +71,17 @@ export const createStorage = (body) => {
 export const editStorage = (id, body) => {
   return api
     .patch(`${endpoint}/${id}`, body)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+
+export const rentStorage = (body) => {
+  return api
+    .patch(`${endpoint}/${body._id}/rent`, body)
     .then((res) => {
       return res.data;
     })

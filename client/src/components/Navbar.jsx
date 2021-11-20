@@ -136,7 +136,7 @@ const Navbar = ({ handleSignOut, user }) => {
                   onClick={() => {
                     setIsClicked(false);
                   }}
-                  to="profile"
+                  to="/profile"
                 >
                   Profile
                 </CustomizedNavLink>
@@ -146,7 +146,7 @@ const Navbar = ({ handleSignOut, user }) => {
                   <CustomizedNavLink to="/storage/create">
                     Create storage
                   </CustomizedNavLink>
-                  <CustomizedNavLink to="storage/manage">
+                  <CustomizedNavLink to="/storage/manage">
                     Manage storage
                   </CustomizedNavLink>
                 </>
@@ -164,7 +164,7 @@ const Navbar = ({ handleSignOut, user }) => {
                   onClick={() => {
                     setIsClicked(false);
                   }}
-                  to="signUp"
+                  to="/signUp"
                 >
                   Sign Up
                 </CustomizedNavLink>
@@ -174,7 +174,7 @@ const Navbar = ({ handleSignOut, user }) => {
                   onClick={() => {
                     setIsClicked(false);
                   }}
-                  to="signIn"
+                  to="/signIn"
                 >
                   Sign In
                 </CustomizedNavLink>

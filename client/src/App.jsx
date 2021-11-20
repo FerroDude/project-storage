@@ -6,6 +6,7 @@ import './App.scss';
 import styled from 'styled-components';
 import Navbar from './components/Navbar.jsx';
 import AllRoutes from './components/AllRoutes.jsx';
+import './App.scss';
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -60,6 +61,7 @@ function App() {
 
           <AllRoutes
             user={user}
+            isLoaded={isLoaded}
             handleAuthenticationChange={handleAuthenticationChange}
             handleEditUser={handleEditUser}
           />

@@ -69,21 +69,45 @@ router.get('/mystorages', async (req, res, next) => {
   res.json(storages);
 });
 
+router.get('/rented', async (req, res, next) => {
+  const storages = await Storage.find({ renter: req.user._id });
+  res.json(storages);
+});
+
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
   const storage = await Storage.findById(id);
   res.json(storage);
 });
 
+router.patch('/:id/rent', routeGuard, async (req, res, next) => {
+  const { id } = req.params;
+  const { isRented, renter } = req.body;
+  const storage = await Storage.findByIdAndUpdate(
+    id,
+    {
+      isRented,
+      renter
+    },
+    { new: true }
+  );
+  console.log(req.body);
+  res.json(storage);
+});
+
 router.patch('/:id', routeGuard, async (req, res, next) => {
   const { name, description, price, gallery } = req.body;
   const { id } = req.params;
-  const storage = await Storage.findByIdAndUpdate(id, {
-    name,
-    description,
-    price,
-    gallery
-  });
+  const storage = await Storage.findByIdAndUpdate(
+    id,
+    {
+      name,
+      description,
+      price,
+      gallery
+    },
+    { new: true }
+  );
   res.json(storage);
 });
 
