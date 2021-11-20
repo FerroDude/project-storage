@@ -25,7 +25,7 @@ const StorageListView = () => {
           ))}
         </ul>
       </div>
-    )) || <h1>No Storages</h1>
+    )) || <p>No storages</p>
   );
 };
 

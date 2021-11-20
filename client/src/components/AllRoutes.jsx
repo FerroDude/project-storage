@@ -7,6 +7,7 @@ import SignInView from '../views/SignIn';
 import StorageView from '../views/Storage';
 import StorageCreateView from '../views/StorageCreate';
 import StorageManagementView from '../views/StorageManagement';
+import StorageListView from '../views/StorageList';
 import ProtectedRoute from './ProtectedRoute';
 import SignUpView from './SignUpForm';
 
@@ -63,10 +64,16 @@ export default function AllRoutes({
         render={(props) => <StorageCreateView {...props} />}
       />
       <ProtectedRoute
-        path="/storage/manage"
+        path="/storage/:id/manage"
         authorized={!isLoaded || (user && user.role === 'landlord')}
         redirect="/signUp"
         render={(props) => <StorageManagementView {...props} />}
+      />
+      <ProtectedRoute
+        path="/storage/list"
+        authorized={!isLoaded || user}
+        redirect="/signUp"
+        render={(props) => <StorageListView {...props} />}
       />
       <ProtectedRoute
         path="/storage/:id"
