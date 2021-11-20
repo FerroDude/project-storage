@@ -18,20 +18,20 @@ router.get('/list/search', async (req, res, next) => {
   const [lng, lat] = req.params;
 
   try {
-      const storages = await Storage.find({
-        location: {
-          $geoWithin: {
-            $centerSphere: [[lng, lat], 1000 / process.env.EARTH_RADIUS]
-          }
+    const storages = await Storage.find({
+      location: {
+        $geoWithin: {
+          $centerSphere: [[lng, lat], 1000 / process.env.EARTH_RADIUS]
         }
-      });
+      }
+    });
 
-      const sortedStorages = sortStorageByProximity(storages, lon, lat);
-      const sortedStorages;
-      res.json(sortStorageByProximity(sortedStorages, lon, lat));
-    } catch (err) {
-      next(err);
-    }
+    const sortedStorages = sortStorageByProximity(storages, lon, lat);
+
+    res.json(sortStorageByProximity(sortedStorages, lon, lat));
+  } catch (err) {
+    next(err);
+  }
   // } else {
   //   if (guestLon && guestLat) {
   //     try {
@@ -62,7 +62,7 @@ router.get('/list/search', async (req, res, next) => {
   //     res.json(storages);
   //   }
   // }
-}); 
+});
 
 router.get('/mystorages', async (req, res, next) => {
   const storages = await Storage.find({ owner: req.user._id });
