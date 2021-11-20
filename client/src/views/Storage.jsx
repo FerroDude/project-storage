@@ -25,6 +25,13 @@ const StorageView = (props) => {
     await rentStorage(storage);
   };
 
+  const handleUnrent = async () => {
+    storage.isRented = false;
+    storage.renter = null;
+    setStorage({ ...storage });
+    await rentStorage(storage);
+  };
+
   // setStorage({ ...storage, isRented: true, renter: user._id }); PREVIOUS WAY
 
   return (
@@ -50,7 +57,10 @@ const StorageView = (props) => {
         <br />
         {(!storage.isRented && (
           <button onClick={handleRent}>Rent this storage!</button>
-        )) || <em>Not available!</em>}
+        )) ||
+          (storage.renter === user._id && (
+            <button onClick={handleUnrent}>Return this storage</button>
+          )) || <em>Not available!</em>}
       </div>
     )
   );
