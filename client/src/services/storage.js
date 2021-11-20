@@ -23,6 +23,17 @@ export const listMyStorages = () => {
     });
 };
 
+export const listRentedStorages = () => {
+  return api
+    .get(`${endpoint}/rented`)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const listStorages = () => {
   return api
     .get(`${endpoint}/list`)
