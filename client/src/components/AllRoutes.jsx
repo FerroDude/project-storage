@@ -65,17 +65,18 @@ export default function AllRoutes({
         redirect="/signUp"
         render={(props) => <StorageCreateView {...props} />}
       />
-      <ProtectedRoute
-        path="/storage/:id/manage"
-        authorized={!isLoaded || (user && user.role === 'landlord')}
-        redirect="/signUp"
-        render={(props) => <StorageManagementView {...props} />}
-      />
+
       <ProtectedRoute
         path="/storage/list"
         authorized={!isLoaded || user}
         redirect="/signUp"
         render={(props) => <StorageListView {...props} user={user} />}
+      />
+      <ProtectedRoute
+        path="/storage/:id/manage"
+        authorized={!isLoaded || (user && user.role === 'landlord')}
+        redirect="/signUp"
+        render={(props) => <StorageManagementView {...props} />}
       />
       <ProtectedRoute
         path="/storage/:id"
