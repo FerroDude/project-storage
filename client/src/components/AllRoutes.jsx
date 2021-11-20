@@ -10,6 +10,7 @@ import StorageManagementView from '../views/StorageManagement';
 import StorageListView from '../views/StorageList';
 import ProtectedRoute from './ProtectedRoute';
 import SignUpView from './SignUpForm';
+import AllStorages from '../views/AllStorages';
 
 export default function AllRoutes({
   handleAuthenticationChange,
@@ -57,6 +58,7 @@ export default function AllRoutes({
           <SettingsView {...props} onEditUser={handleEditUser} />
         )}
       />
+      <Route exact path="/storage/all" component={AllStorages} />
       <ProtectedRoute
         path="/storage/create"
         authorized={!isLoaded || (user && user.role === 'landlord')}
@@ -79,8 +81,9 @@ export default function AllRoutes({
         path="/storage/:id"
         authorized={!isLoaded || user}
         redirect="/signUp"
-        render={(props) => <StorageView {...props} />}
+        render={(props) => <StorageView {...props} user={user} />}
       />
+
       <Route exact path="/" component={HomeView} />
     </Switch>
   );

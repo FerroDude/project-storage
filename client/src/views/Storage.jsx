@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { getStorage } from '../services/storage';
+import { rentStorage, getStorage } from '../services/storage';
 import PhotoGallery from '../components/PhotoGallery';
 
 const StorageView = (props) => {
   const [storage, setStorage] = useState(null);
+
+  const { user } = props;
   const { id } = props.match.params;
 
   useEffect(() => {
@@ -13,6 +15,11 @@ const StorageView = (props) => {
     };
     fetchStorage();
   }, [id]);
+
+  const handleRent = async () => {
+    setStorage({ ...storage, isRented: true, renter: user._id });
+    await rentStorage(storage);
+  };
 
   return (
     storage && (
@@ -35,6 +42,9 @@ const StorageView = (props) => {
         <strong>Location:</strong>
         <span></span>
         <br />
+        {(!storage.isRented && (
+          <button onClick={handleRent}>Rent this storage!</button>
+        )) || <em>Not available!</em>}
       </div>
     )
   );

@@ -78,15 +78,34 @@ router.get('/:id', async (req, res, next) => {
   res.json(storage);
 });
 
+router.patch('/:id/rent', routeGuard, async (req, res, next) => {
+  const { id } = req.params;
+  const { isRented, renter } = req.body;
+  const storage = await Storage.findByIdAndUpdate(
+    id,
+    {
+      isRented,
+      renter
+    },
+    { new: true }
+  );
+  console.log('Backend', storage);
+  res.json(storage);
+});
+
 router.patch('/:id', routeGuard, async (req, res, next) => {
   const { name, description, price, gallery } = req.body;
   const { id } = req.params;
-  const storage = await Storage.findByIdAndUpdate(id, {
-    name,
-    description,
-    price,
-    gallery
-  });
+  const storage = await Storage.findByIdAndUpdate(
+    id,
+    {
+      name,
+      description,
+      price,
+      gallery
+    },
+    { new: true }
+  );
   res.json(storage);
 });
 
