@@ -107,7 +107,7 @@ font-size: 1.2em;
 font-weight: 600;
 `;
 
-const Navabar = ({ handleSignOut, user }) => {
+const Navbar = ({ handleSignOut, user }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   function handleClick() {
@@ -198,4 +198,4 @@ const Navabar = ({ handleSignOut, user }) => {
   );
 };
 
-export default Navabar;
+export default Navbar;

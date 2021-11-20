@@ -14,58 +14,55 @@ router.get('/listAll', async (req, res) => {
   res.json(storages);
 });
 
-/* router.get('/list/', async (req, res, next) => {
-  const user = req.user;
-  const [guestLon, guestLat] = req.params;
+router.get('/list/search', async (req, res, next) => {
+  const [lng, lat] = req.params;
 
-  if (user) {
-    const [lon, lat] = user.location.coordinates;
-
-    try {
+  try {
       const storages = await Storage.find({
         location: {
           $geoWithin: {
-            $centerSphere: [[lon, lat], 10 / process.env.EARTH_RADIUS]
+            $centerSphere: [[lng, lat], 1000 / process.env.EARTH_RADIUS]
           }
         }
       });
 
       const sortedStorages = sortStorageByProximity(storages, lon, lat);
+      const sortedStorages;
       res.json(sortStorageByProximity(sortedStorages, lon, lat));
     } catch (err) {
       next(err);
     }
-  } else {
-    if (guestLon && guestLat) {
-      try {
-        const storages = await Storage.find({
-          location: {
-            $geoWithin: {
-              $centerSphere: [
-                [guestLon, guestLat],
-                10 / process.env.EARTH_RADIUS
-              ]
-            }
-          }
-        });
+  // } else {
+  //   if (guestLon && guestLat) {
+  //     try {
+  //       const storages = await Storage.find({
+  //         location: {
+  //           $geoWithin: {
+  //             $centerSphere: [
+  //               [guestLon, guestLat],
+  //               10 / process.env.EARTH_RADIUS
+  //             ]
+  //           }
+  //         }
+  //       });
 
-        const sortedStorages = sortStorageByProximity(
-          storages,
-          guestLon,
-          guestLat
-        );
-        res.json(sortStorageByProximity(sortedStorages, guestLon, guestLat));
-      } catch (err) {
-        next(err);
-      }
-    } else {
-      const storages = await Storage.find()
-        .sort({ 'rating.average': -1 })
-        .limit(10);
-      res.json(storages);
-    }
-  }
-}); */
+  //       const sortedStorages = sortStorageByProximity(
+  //         storages,
+  //         guestLon,
+  //         guestLat
+  //       );
+  //       res.json(sortStorageByProximity(sortedStorages, guestLon, guestLat));
+  //     } catch (err) {
+  //       next(err);
+  //     }
+  //   } else {
+  //     const storages = await Storage.find()
+  //       .sort({ 'rating.average': -1 })
+  //       .limit(10);
+  //     res.json(storages);
+  //   }
+  // }
+}); 
 
 router.get('/mystorages', async (req, res, next) => {
   const storages = await Storage.find({ owner: req.user._id });
