@@ -5,21 +5,18 @@ import { Link } from 'react-router-dom';
 const StorageListView = ({ user }) => {
   const [storages, setStorages] = useState(null);
 
-  const fetchStorages = async () => {
-    const storages = await listMyStorages();
-    setStorages(storages);
-  };
-
   useEffect(() => {
     const fetchStorages = async () => {
       let storages;
-      user.role === 'landlord'
-        ? (storages = await listMyStorages())
-        : (storages = await listRentedStorages());
-      setStorages(storages);
+      if (user) {
+        user.role === 'landlord'
+          ? (storages = await listMyStorages())
+          : (storages = await listRentedStorages());
+        setStorages(storages);
+      }
     };
     fetchStorages();
-  }, [user.role]);
+  }, [user]);
 
   return (
     (storages && (
