@@ -79,6 +79,17 @@ export const editStorage = (id, body) => {
     });
 };
 
+export const rentStorage = (body) => {
+  return api
+    .patch(`${endpoint}/${body._id}/rent`, body)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const deleteStorage = (id) => {
   return api
     .delete(`${endpoint}/${id}`)
