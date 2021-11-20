@@ -86,7 +86,7 @@ export const rentStorage = (body) => {
       return res.data;
     })
     .catch((err) => {
-      console.log(err);
+      return err;
     });
 };
 

@@ -72,11 +72,6 @@ router.get('/mystorages', async (req, res, next) => {
   res.json(storages);
 });
 
-router.get('/rented', async (req, res, next) => {
-  const storages = await Storage.find({ renter: req.user._id });
-  res.json(storages);
-});
-
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
   const storage = await Storage.findById(id);
@@ -94,7 +89,7 @@ router.patch('/:id/rent', routeGuard, async (req, res, next) => {
     },
     { new: true }
   );
-  console.log('Backend', storage);
+  console.log(req.body);
   res.json(storage);
 });
 

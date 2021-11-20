@@ -17,9 +17,15 @@ const StorageView = (props) => {
   }, [id]);
 
   const handleRent = async () => {
-    setStorage({ ...storage, isRented: true, renter: user._id });
+    storage.isRented = true;
+    storage.renter = user._id;
+
+    setStorage({ ...storage });
+    console.log(storage);
     await rentStorage(storage);
   };
+
+  // setStorage({ ...storage, isRented: true, renter: user._id }); PREVIOUS WAY
 
   return (
     storage && (
