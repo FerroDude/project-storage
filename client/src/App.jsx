@@ -9,16 +9,15 @@ import AllRoutes from './components/AllRoutes.jsx';
 
 const Wrapper = styled.div`
   width: 100vw;
+  height: 100%;
   font-family: 'Manrope', sans-serif;
   margin: 0;
   padding-top: 1em;
-  background: #000;
 `;
 const Container = styled.div`
   height: 100%;
   width: 100%;
   position: relative;
-  background: black;
 `;
 
 function App() {
@@ -58,10 +57,7 @@ function App() {
       <BrowserRouter>
         <Container className="App">
           <Navbar user={user} handleSignOut={handleSignOut} />
-          <h1>PROJECT STORAGE</h1>
-          {(!isLoaded && <div>No User</div>) || (
-            <h2>Name: {`${user.fName} ${user.lName}`}</h2>
-          )}
+
           <AllRoutes
             user={user}
             handleAuthenticationChange={handleAuthenticationChange}
