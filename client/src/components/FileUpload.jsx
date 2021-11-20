@@ -1,7 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import styledComponents from 'styled-components';
+
+const FilePicker = styledComponents.div`
+  background: grey;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+`;
 
 const FileUpload = ({ type, onPickFile }) => {
   const [previewFiles, setPreviewFiles] = useState(null);
+  const fileInput = useRef(null);
 
   useEffect(() => {
     return () => {
@@ -32,6 +41,10 @@ const FileUpload = ({ type, onPickFile }) => {
     }
   };
 
+  const handleClick = (event) => {
+    fileInput.current.click();
+  };
+
   return (
     <div>
       {previewFiles && (
@@ -47,9 +60,12 @@ const FileUpload = ({ type, onPickFile }) => {
           )}
         </div>
       )}
+      <FilePicker onClick={handleClick}>Click to select image(s)</FilePicker>
       <input
+        style={{ display: 'none' }}
         name="fileupload"
         type="file"
+        ref={fileInput}
         accept="image/*"
         onChange={handleFileChange}
         multiple={type === 'multiple'}

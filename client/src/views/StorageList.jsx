@@ -13,7 +13,7 @@ const StorageListView = () => {
   }, []);
 
   return (
-    storages && (
+    (storages && (
       <div>
         <ul>
           {storages.map((storage) => (
@@ -23,7 +23,7 @@ const StorageListView = () => {
           ))}
         </ul>
       </div>
-    )
+    )) || <p>No storages</p>
   );
 };
 
