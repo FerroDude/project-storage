@@ -60,14 +60,20 @@ const StorageView = (props) => {
         <strong>Location:</strong>
         <span></span>
         <br />
-        {(!storage.isRented && (
-          <button onClick={handleShowPaymentForm}>Rent this storage!</button>
-        )) ||
-          (storage.renter === user._id && (
-            <button onClick={handleUnrent}>Return this storage</button>
-          )) || <em>Not available!</em>}
+        {user && user.role === 'tenant' && (
+          <div>
+            {(!storage.isRented && (
+              <button onClick={handleShowPaymentForm}>
+                Rent this storage!
+              </button>
+            )) ||
+              (storage.renter === user._id && (
+                <button onClick={handleUnrent}>Return this storage</button>
+              )) || <em>Not available!</em>}
 
-        {showPaymentForm && <PaymentView onRent={handleRent} />}
+            {showPaymentForm && <PaymentView onRent={handleRent} />}
+          </div>
+        )}
       </div>
     )
   );
