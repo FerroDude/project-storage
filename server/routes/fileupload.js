@@ -23,7 +23,7 @@ router.post(
 router.post(
   '/multiple',
   routeGuard,
-  upload.array('pictures', 10), //revise the max image limit
+  upload.array('pictures', 15), //revise the max image limit
   async (req, res, next) => {
     console.log(req.files);
     if (req.files) {

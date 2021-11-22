@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import Preview from './Preview';
+import Carousel from './Carousel';
 import styledComponents from 'styled-components';
 
 const FilePicker = styledComponents.div`
@@ -48,7 +48,7 @@ const FileUpload = ({ type, onPickFile }) => {
 
   return (
     <div>
-      {previewFiles && <Preview images={previewFiles} type={type} />}
+      {previewFiles && <Carousel images={previewFiles} type={type} />}
       <FilePicker onClick={handleClick}>Click to select image(s)</FilePicker>
       <input
         style={{ display: 'none' }}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import styledComponents from 'styled-components';
 import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import CloseIcon from '@mui/icons-material/Close';
@@ -9,28 +10,37 @@ import CloseIcon from '@mui/icons-material/Close';
 const Gallery = styledComponents.div`
   margin: 0;
   padding: 0;
+
+  @media only screen and (max-width: 600px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const GalleryModal = styled(Modal)`
-  background: rgba(0, 0, 0, 0.88);
   height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
-`;
 
-const CustomImageList = styled(ImageList)`
-  padding: 0;
-  margin: 1.5em auto;
-  height: 80%;
-  width: 80%;
+  .MuiBackdrop-root {
+    background: rgba(0, 0, 0, 0.9);
+    @media only screen and (max-width: 600px) {
+      background: black;
+    }
+  }
+
+  & :focus {
+    outline: none;
+  }
 `;
 
 const ClosedGallery = styled(ImageList)`
   height: auto;
   width: 30%;
   @media only screen and (max-width: 600px) {
-    width: 100%;
+    width: 80%;
   }
 `;
 
@@ -48,12 +58,14 @@ const OpenGallery = styledComponents.div`
 `;
 
 const Close = styled(CloseIcon)`
+  color: #ffb76b;
+  cursor: pointer;
   font-size: 3em;
 `;
 
 const CustomImgListItem = styled(ImageListItem)`
   &:last-child img {
-    opacity: 0.5;
+    opacity: 0.3;
   }
 `;
 
@@ -78,31 +90,41 @@ const Fig = styledComponents.figure`
 const PhotoGallery = ({ images }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOpen = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <Gallery>
       {isOpen && (
         <GalleryModal open={isOpen}>
           {images && (
             <OpenGallery>
-              <Close onClick={handleOpen} />
-              <CustomImageList variant="masonry" cols={4} gap={8}>
-                {images.map((image) => (
-                  <ImageListItem key={image}>
-                    <Image src={`${image}?fit=crop&auto=format`} alt={image} />
-                  </ImageListItem>
-                ))}
-              </CustomImageList>
+              <Close onClick={setIsOpen(false)} />
+              <Box
+                sx={{
+                  margin: '0 auto',
+                  width: '80vw',
+                  height: 450,
+                  overflowY: 'scroll'
+                }}
+              >
+                <ImageList variant="masonry" cols={4} gap={10}>
+                  {images.map((image) => (
+                    <ImageListItem key={image}>
+                      <Image
+                        src={`${image}?w=248&fit=crop&auto=format`}
+                        srcSet={`${image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                        alt={image}
+                        loading="lazy"
+                      />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              </Box>
             </OpenGallery>
           )}
         </GalleryModal>
       )}
       <ClosedGallery cols={3} gap={8}>
         {images.slice(0, 5).map((image, i) => (
-          <CustomImgListItem onClick={handleOpen} key={image}>
+          <CustomImgListItem onClick={setIsOpen(true)} key={image}>
             <Fig>
               <Image src={image} srcSet={image} alt={image} loading="lazy" />
               {i === 4 && <figcaption>+{images.length - 5}</figcaption>}

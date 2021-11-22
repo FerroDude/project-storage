@@ -6,7 +6,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import styledComponents from 'styled-components';
 import { styled } from '@mui/material/styles';
 
-const Carousel = styledComponents.div`
+const CarouselComponent = styledComponents.div`
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -29,7 +29,7 @@ const Stepper = styled(MobileStepper)`
   width: 100%;
 `;
 
-const Preview = ({ images, type }) => {
+const Carousel = ({ images, type }) => {
   const [index, setIndex] = useState(0);
 
   const goToNextPicture = () => {
@@ -42,7 +42,7 @@ const Preview = ({ images, type }) => {
 
   return (
     images && (
-      <Carousel>
+      <CarouselComponent>
         <Image src={images[index]} alt={images[index]} />
         <Stepper
           variant="text"
@@ -70,9 +70,9 @@ const Preview = ({ images, type }) => {
             </Button>
           }
         />
-      </Carousel>
+      </CarouselComponent>
     )
   );
 };
 
-export default Preview;
+export default Carousel;
