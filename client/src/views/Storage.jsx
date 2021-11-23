@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import { rentStorage, getStorage } from '../services/storage';
 import PhotoGallery from '../components/PhotoGallery';
 import PaymentView from '../views/Payment';
+import {
+  createSubscription,
+  cancelSubscription
+} from '../services/subscription';
 
 const StorageView = (props) => {
   const [storage, setStorage] = useState(null);
@@ -18,13 +22,18 @@ const StorageView = (props) => {
     fetchStorage();
   }, [id]);
 
-  const handleRent = async () => {
-    storage.isRented = true;
-    storage.renter = user._id;
+  const handleRent = async (paymentMethodToken) => {
+    try {
+      await createSubscription({ paymentMethodToken, storage: storage._id });
 
-    setStorage({ ...storage });
-    console.log(storage);
-    await rentStorage(storage);
+      storage.isRented = true;
+      storage.renter = user._id;
+
+      setStorage({ ...storage });
+      await rentStorage(storage);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleUnrent = async () => {
@@ -60,14 +69,22 @@ const StorageView = (props) => {
         <strong>Location:</strong>
         <span></span>
         <br />
-        {(!storage.isRented && (
-          <button onClick={handleShowPaymentForm}>Rent this storage!</button>
-        )) ||
-          (storage.renter === user._id && (
-            <button onClick={handleUnrent}>Return this storage</button>
-          )) || <em>Not available!</em>}
+        {user && user.role === 'tenant' && (
+          <div>
+            {(!storage.isRented && (
+              <button onClick={handleShowPaymentForm}>
+                Rent this storage!
+              </button>
+            )) ||
+              (storage.renter === user._id && (
+                <button onClick={handleUnrent}>Return this storage</button>
+              )) || <em>Not available!</em>}
 
-        {showPaymentForm && <PaymentView onRent={handleRent} />}
+            {showPaymentForm && (
+              <PaymentView onRent={handleRent} storage={storage} />
+            )}
+          </div>
+        )}
       </div>
     )
   );

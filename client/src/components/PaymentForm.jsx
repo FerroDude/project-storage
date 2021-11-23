@@ -43,8 +43,7 @@ const NonInjectedPaymentForm = (props) => {
         console.log(error);
       } else if (paymentMethod) {
         const paymentMethodToken = paymentMethod.id;
-        props.onConfirmPaymentMethod(paymentMethodToken);
-        await props.onRent();
+        props.onConfirm(paymentMethodToken);
       }
     } catch (error) {
       console.log(error);
@@ -59,25 +58,29 @@ const NonInjectedPaymentForm = (props) => {
   );
 };
 
-const STRIPE_PUBLIC_API_KEY = 'API KEY HERE!';
+const STRIPE_PUBLIC_API_KEY = process.env.REACT_APP_STRIPE_PUBLIC_API_KEY;
 
 const PaymentForm = (props) => {
-  const [stripePromise, setStripePromise] = useState(
-    loadStripe(STRIPE_PUBLIC_API_KEY)
-  );
+  const [stripePromise, setStripePromise] = useState(null);
+
+  useEffect(() => {
+    setStripePromise(loadStripe(STRIPE_PUBLIC_API_KEY));
+  }, []);
 
   return (
-    <Elements stripe={stripePromise}>
-      <ElementsConsumer>
-        {({ stripe, elements }) => (
-          <NonInjectedPaymentForm
-            stripe={stripe}
-            elements={elements}
-            {...props}
-          />
-        )}
-      </ElementsConsumer>
-    </Elements>
+    stripePromise && (
+      <Elements stripe={stripePromise}>
+        <ElementsConsumer>
+          {({ stripe, elements }) => (
+            <NonInjectedPaymentForm
+              stripe={stripe}
+              elements={elements}
+              {...props}
+            />
+          )}
+        </ElementsConsumer>
+      </Elements>
+    )
   );
 };
 
