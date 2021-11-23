@@ -25,7 +25,7 @@ const GalleryModal = styled(Modal)`
   padding: 0;
 
   .MuiBackdrop-root {
-    background: rgba(0, 0, 0, 0.9);
+    background: rgb(0, 0, 0);
     @media only screen and (max-width: 600px) {
       background: black;
     }
@@ -92,16 +92,16 @@ const PhotoGallery = ({ images }) => {
 
   return (
     <Gallery>
-      {isOpen && (
+      {(isOpen && (
         <GalleryModal open={isOpen}>
           {images && (
             <OpenGallery>
-              <Close onClick={setIsOpen(false)} />
+              <Close onClick={() => setIsOpen(false)} />
               <Box
                 sx={{
                   margin: '0 auto',
                   width: '80vw',
-                  height: 450,
+                  height: '80vh',
                   overflowY: 'scroll'
                 }}
               >
@@ -121,17 +121,18 @@ const PhotoGallery = ({ images }) => {
             </OpenGallery>
           )}
         </GalleryModal>
+      )) || (
+        <ClosedGallery cols={3} gap={8}>
+          {images.slice(0, 5).map((image, i) => (
+            <CustomImgListItem onClick={() => setIsOpen(true)} key={image}>
+              <Fig>
+                <Image src={image} srcSet={image} alt={image} loading="lazy" />
+                {i === 4 && <figcaption>+{images.length - 5}</figcaption>}
+              </Fig>
+            </CustomImgListItem>
+          ))}
+        </ClosedGallery>
       )}
-      <ClosedGallery cols={3} gap={8}>
-        {images.slice(0, 5).map((image, i) => (
-          <CustomImgListItem onClick={setIsOpen(true)} key={image}>
-            <Fig>
-              <Image src={image} srcSet={image} alt={image} loading="lazy" />
-              {i === 4 && <figcaption>+{images.length - 5}</figcaption>}
-            </Fig>
-          </CustomImgListItem>
-        ))}
-      </ClosedGallery>
     </Gallery>
   );
 };

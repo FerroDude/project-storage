@@ -43,8 +43,7 @@ const NonInjectedPaymentForm = (props) => {
         console.log(error);
       } else if (paymentMethod) {
         const paymentMethodToken = paymentMethod.id;
-        props.onConfirmPaymentMethod(paymentMethodToken);
-        await props.onRent();
+        props.onConfirm(paymentMethodToken);
       }
     } catch (error) {
       console.log(error);

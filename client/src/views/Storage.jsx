@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { rentStorage, getStorage } from '../services/storage';
 import PhotoGallery from '../components/PhotoGallery';
 import PaymentView from '../views/Payment';
+import { createSubscription } from '../services/subscription';
 
 const StorageView = (props) => {
   const [storage, setStorage] = useState(null);
@@ -18,12 +19,13 @@ const StorageView = (props) => {
     fetchStorage();
   }, [id]);
 
-  const handleRent = async () => {
+  const handleRent = async (paymentMethodToken) => {
+    await createSubscription(paymentMethodToken);
+
     storage.isRented = true;
     storage.renter = user._id;
 
     setStorage({ ...storage });
-    console.log(storage);
     await rentStorage(storage);
   };
 
@@ -71,7 +73,9 @@ const StorageView = (props) => {
                 <button onClick={handleUnrent}>Return this storage</button>
               )) || <em>Not available!</em>}
 
-            {showPaymentForm && <PaymentView onRent={handleRent} />}
+            {showPaymentForm && (
+              <PaymentView onRent={handleRent} storage={storage} />
+            )}
           </div>
         )}
       </div>

@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const routeGuard = require('./../middleware/route-guard');
 const Subscription = require('./../models/subscription');
-//const stripe = require('./../utils/stripe-api');
+const stripe = require('./../api/stripe/api');
 
 router.get('/', routeGuard, async (req, res, next) => {
   try {
@@ -12,7 +12,7 @@ router.get('/', routeGuard, async (req, res, next) => {
       user: req.user._id,
       active: true
     });
-    res.json({ subscription });
+    res.json(subscription);
   } catch (error) {
     next(error);
   }
@@ -40,10 +40,11 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.patch('/', routeGuard, async (req, res, next) => {
+router.delete('/', routeGuard, async (req, res, next) => {
+  const { storageId } = req.body;
   try {
     await Subscription.findOneAndUpdate(
-      { user: req.user._id, active: true },
+      { storageId, active: true },
       { active: false }
     );
     res.json({});

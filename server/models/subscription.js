@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
   user: {
-    type: mongoose.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   },
   startDate: {
@@ -19,7 +20,16 @@ const schema = new mongoose.Schema({
   },
   customerId: {
     type: String,
-    default: false
+    required: true
+  },
+  storageId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Storage',
+    required: true
+  },
+  paymentMethodToken: {
+    type: String,
+    required: true
   }
 });
 
