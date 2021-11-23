@@ -12,6 +12,7 @@ import ProtectedRoute from './ProtectedRoute';
 import SignUpView from './SignUpForm';
 import AllStorages from '../views/AllStorages';
 import PaymentView from '../views/Payment';
+import ConfirmationView from '../views/Confirmation';
 
 export default function AllRoutes({
   handleAuthenticationChange,
@@ -90,6 +91,12 @@ export default function AllRoutes({
         authorized={!isLoaded || user}
         redirect="/signUp"
         render={(props) => <PaymentView {...props} user={user} />}
+      />
+      <ProtectedRoute
+        path="/confirmation/:type/:storageId"
+        authorized={!isLoaded || user}
+        redirect="/signUp"
+        render={(props) => <ConfirmationView {...props} />}
       />
       <Route exact path="/" component={HomeView} />
     </Switch>

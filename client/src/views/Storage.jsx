@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { rentStorage, getStorage } from '../services/storage';
 import PhotoGallery from '../components/PhotoGallery';
 import PaymentView from '../views/Payment';
@@ -10,6 +11,8 @@ import {
 const StorageView = (props) => {
   const [storage, setStorage] = useState(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+
+  const history = useHistory();
 
   const { user } = props;
   const { id } = props.match.params;
@@ -31,16 +34,19 @@ const StorageView = (props) => {
 
       setStorage({ ...storage });
       await rentStorage(storage);
+      history.push(`/confirmation/subscribed/${storage._id}`);
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleUnrent = async () => {
+    await cancelSubscription();
     storage.isRented = false;
     storage.renter = null;
     setStorage({ ...storage });
     await rentStorage(storage);
+    history.push(`/confirmation/unsubscribed/${storage._id}`);
   };
 
   const handleShowPaymentForm = () => {
