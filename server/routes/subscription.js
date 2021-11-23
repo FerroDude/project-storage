@@ -42,13 +42,10 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.delete('/', routeGuard, async (req, res, next) => {
-  const { storage } = req.body;
+router.delete('/:id', routeGuard, async (req, res, next) => {
+  const { id } = req.params;
   try {
-    await Subscription.findOneAndUpdate(
-      { storage, active: true },
-      { active: false }
-    );
+    await Subscription.deleteOne({ storage: id });
     res.json({});
   } catch (error) {
     next(error);

@@ -21,6 +21,7 @@ const StorageListView = ({ user }) => {
   return (
     (storages && (
       <div>
+        <h1>My Storages</h1>
         <ul>
           {storages.map((storage) => (
             <li key={storage._id}>

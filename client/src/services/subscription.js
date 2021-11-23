@@ -13,4 +13,4 @@ export const createSubscription = (body) => {
   });
 };
 
-export const cancelSubscription = () => api.delete('/subscription');
+export const cancelSubscription = (id) => api.delete(`/subscription/${id}`);

@@ -41,7 +41,7 @@ const StorageView = (props) => {
   };
 
   const handleUnrent = async () => {
-    await cancelSubscription();
+    await cancelSubscription(storage._id);
     storage.isRented = false;
     storage.renter = null;
     setStorage({ ...storage });
