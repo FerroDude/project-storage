@@ -58,25 +58,29 @@ const NonInjectedPaymentForm = (props) => {
   );
 };
 
-const STRIPE_PUBLIC_API_KEY = 'API KEY HERE!';
+const STRIPE_PUBLIC_API_KEY = process.env.REACT_APP_STRIPE_PUBLIC_API_KEY;
 
 const PaymentForm = (props) => {
-  const [stripePromise, setStripePromise] = useState(
-    loadStripe(STRIPE_PUBLIC_API_KEY)
-  );
+  const [stripePromise, setStripePromise] = useState(null);
+
+  useEffect(() => {
+    setStripePromise(loadStripe(STRIPE_PUBLIC_API_KEY));
+  }, []);
 
   return (
-    <Elements stripe={stripePromise}>
-      <ElementsConsumer>
-        {({ stripe, elements }) => (
-          <NonInjectedPaymentForm
-            stripe={stripe}
-            elements={elements}
-            {...props}
-          />
-        )}
-      </ElementsConsumer>
-    </Elements>
+    stripePromise && (
+      <Elements stripe={stripePromise}>
+        <ElementsConsumer>
+          {({ stripe, elements }) => (
+            <NonInjectedPaymentForm
+              stripe={stripe}
+              elements={elements}
+              {...props}
+            />
+          )}
+        </ElementsConsumer>
+      </Elements>
+    )
   );
 };
 

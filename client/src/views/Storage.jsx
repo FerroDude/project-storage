@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react';
 import { rentStorage, getStorage } from '../services/storage';
 import PhotoGallery from '../components/PhotoGallery';
 import PaymentView from '../views/Payment';
-import { createSubscription } from '../services/subscription';
+import {
+  createSubscription,
+  cancelSubscription
+} from '../services/subscription';
 
 const StorageView = (props) => {
   const [storage, setStorage] = useState(null);
@@ -20,13 +23,17 @@ const StorageView = (props) => {
   }, [id]);
 
   const handleRent = async (paymentMethodToken) => {
-    await createSubscription(paymentMethodToken);
+    try {
+      await createSubscription({ paymentMethodToken, storage: storage._id });
 
-    storage.isRented = true;
-    storage.renter = user._id;
+      storage.isRented = true;
+      storage.renter = user._id;
 
-    setStorage({ ...storage });
-    await rentStorage(storage);
+      setStorage({ ...storage });
+      await rentStorage(storage);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleUnrent = async () => {

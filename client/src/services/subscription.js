@@ -1,16 +1,16 @@
 import api from '../config/api';
 const endpoint = '/subscription';
 
-export const loadSubscription = () => {
-  return api.get(`${endpoint}`).then((res) => {
+export const loadSubscription = (id) => {
+  return api.get(`${endpoint}`, { id }).then((res) => {
     return res.data;
   });
 };
 
-export const createSubscription = () => {
-  return api.post(`${endpoint}`).then((res) => {
+export const createSubscription = (body) => {
+  return api.post(`${endpoint}`, body).then((res) => {
     return res.data;
   });
 };
 
-export const cancelSubscription = () => api.patch('/subscription');
+export const cancelSubscription = () => api.delete('/subscription');

@@ -22,7 +22,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
-  storageId: {
+  storage: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Storage',
     required: true

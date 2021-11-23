@@ -4,12 +4,11 @@ import { loadSubscription } from '../services/subscription';
 
 const PaymentView = ({ onRent, storage }) => {
   const [subscription, setSubscription] = useState(null);
-  console.log(subscription);
+
   useEffect(() => {
     if (storage) {
       const fetchSubscription = async () => {
         const subscription = await loadSubscription(storage._id);
-        console.log(subscription);
         setSubscription(subscription);
       };
 
