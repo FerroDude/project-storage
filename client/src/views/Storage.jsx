@@ -3,10 +3,36 @@ import { useHistory } from 'react-router-dom';
 import { rentStorage, getStorage } from '../services/storage';
 import PhotoGallery from '../components/PhotoGallery';
 import PaymentView from '../views/Payment';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import StarIcon from '@mui/icons-material/Star';
 import {
   createSubscription,
   cancelSubscription
 } from '../services/subscription';
+import styledComponents from 'styled-components';
+import { styled } from '@mui/material/styles';
+
+const Info = styledComponents.div`
+  color: ${(props) => props.theme.palette.primary.text};
+`;
+
+const Location = styledComponents.div`
+    display: flex;
+    align-items: center;
+`;
+
+const Rating = styledComponents.div`
+    display: flex;
+    align-items: center;
+`;
+
+const LocationIcon = styled(LocationOnIcon)`
+  color: ${(props) => props.theme.palette.secondary.main};
+`;
+
+const RatingIcon = styled(StarIcon)`
+  color: ${(props) => props.theme.palette.secondary.main};
+`;
 
 const StorageView = (props) => {
   const [storage, setStorage] = useState(null);
@@ -67,23 +93,24 @@ const StorageView = (props) => {
     storage && (
       <div>
         <PhotoGallery images={storage.gallery} />
-        <strong>Name</strong>
-        <span>{storage.name}</span>
-        <br />
-        <strong>Description</strong>
-        <span>{storage.description}</span>
-        <br />
-        <strong>Location:</strong>
-        <span></span>
-        <br />
-        <strong>Size:</strong>
-        <span>Width: {storage.width}</span>
-        <span>Length: {storage.length}</span>
-        <span>Area: {storage.width * storage.length}</span>
-        <br />
-        <strong>Location:</strong>
-        <span></span>
-        <br />
+        <Info>
+          <h3>{storage.name}</h3>
+          <p>{storage.description}</p>
+          <Location>
+            <LocationIcon />
+            Madrid
+          </Location>
+          <Rating>
+            <RatingIcon />
+            4.4
+          </Rating>
+          <strong>Dimensions:</strong>
+          <ul>
+            <li>Width: {storage.width}</li>
+            <li>Length: {storage.length}</li>
+            <li>Area: {storage.width * storage.length}</li>
+          </ul>
+        </Info>
         {user && user.role === 'tenant' && (
           <div>
             {(!storage.isRented && (

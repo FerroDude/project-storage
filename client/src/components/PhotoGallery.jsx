@@ -65,6 +65,7 @@ const Close = styled(CloseIcon)`
 
 const CustomImgListItem = styled(ImageListItem)`
   &:last-child img {
+    background: grey;
     opacity: 0.3;
   }
 `;
@@ -84,6 +85,7 @@ const Fig = styledComponents.figure`
     left: 0;
     width: 100%;
     text-align: center;
+    color: ${(props) => props.theme.palette.primary.text};
   }
 `;
 

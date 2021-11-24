@@ -102,7 +102,7 @@ width: 50 % ;
 const CustomizedNavLink = styledComponents((props) => <NavLink {...props} />)`
 text-decoration: none;
 width: 50% ;
-color: #fff;
+color: ${(props) => props.theme.palette.primary.text};
 font-size: 1.2em;
 font-weight: 600;
 `;

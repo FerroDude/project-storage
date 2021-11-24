@@ -2,7 +2,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { signOut } from './services/authentication';
 import { loadAuthenticatedUser, editUser } from './services/user.js';
-import './App.scss';
 import styled from 'styled-components';
 import Navbar from './components/Navbar.jsx';
 import AllRoutes from './components/AllRoutes.jsx';
@@ -15,6 +14,7 @@ const Wrapper = styled.div`
   margin: 0;
   padding-top: 1em;
 `;
+
 const Container = styled.div`
   height: 100%;
   width: 100%;
@@ -70,6 +70,4 @@ function App() {
     </Wrapper>
   );
 }
-
-<div></div>;
 export default App;
