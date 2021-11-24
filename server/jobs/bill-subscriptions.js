@@ -1,5 +1,7 @@
-const dotenv = require('dotenv');
-dotenv.config();
+const path = require('path');
+require('dotenv').config({
+  path: path.resolve(__dirname, '../.env')
+});
 
 const mongoose = require('mongoose');
 const Subscription = require('../models/subscription');
@@ -15,11 +17,14 @@ const billSubscriptions = async () => {
   });
 
   for (const subscription of subscriptions) {
-    const storage = Storage.findById(subscription.storage);
-    const price = storage.price;
+    const storage = await Storage.findById(subscription.storage);
+
+    const { price } = storage;
+    const { duration } = subscription;
+
     try {
       await stripe.paymentIntents.create({
-        amount: price,
+        amount: price * duration * 100,
         currency: 'eur',
         customer: subscription.customerId,
         payment_method: subscription.paymentMethodToken,
@@ -28,7 +33,7 @@ const billSubscriptions = async () => {
       });
       await Subscription.findByIdAndUpdate(subscription._id, {
         active: true,
-        nextBillingDate: new Date(Date.now() + addMonth())
+        nextBillingDate: addMonth(new Date(Date.now()))
       });
     } catch (error) {
       console.log('There was an error processing payment.');
