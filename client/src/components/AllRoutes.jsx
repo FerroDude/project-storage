@@ -91,7 +91,11 @@ export default function AllRoutes({
         redirect="/signUp"
         render={(props) => <PaymentView {...props} user={user} />}
       />
-      <Route exact path="/" component={HomeView} />
+      <Route
+        exact
+        path="/"
+        render={(props) => <HomeView {...props} user={user} />}
+      />
     </Switch>
   );
 }
