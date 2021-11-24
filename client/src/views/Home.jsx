@@ -1,3 +1,4 @@
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { Rating, Slider, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import React, { useEffect, useState } from 'react';
@@ -57,6 +58,8 @@ const AreaFilter = styledComponents.div``;
 const AreaFilterInputs = styledComponents.input``;
 
 const HomeView = ({ user }) => {
+  const [filters, setFilters] = useState({});
+
   const handleStorageCoords = async (coords) => {
     if (user) {
       const storageNearSearch = await getStorageNearCoods({
@@ -77,6 +80,15 @@ const HomeView = ({ user }) => {
     }
   };
 
+  const handleFilterChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   return (
     <Container>
       <MainHeader>Find the right storage for you</MainHeader>
@@ -89,6 +101,8 @@ const HomeView = ({ user }) => {
           max={2000}
           min={1}
           id="price"
+          onChange={handleFilterChange}
+          name="price"
         />
         <Typography>Search Radius</Typography>
         <PrettoSlider
@@ -97,6 +111,8 @@ const HomeView = ({ user }) => {
           defaultValue={[0, 100]}
           max={2000}
           min={0}
+          onChange={handleFilterChange}
+          name="radius"
         />
         <Typography>Unit Dimension</Typography>
         <AreaFilter>
@@ -105,19 +121,22 @@ const HomeView = ({ user }) => {
             placeholder="Insert Width"
             id="input-width"
             type="number"
-            value={0}
+            onChange={handleFilterChange}
           ></AreaFilterInputs>
           <AreaFilterInputs
             name="height"
             placeholder="Insert Height"
             id="input-height"
             type="number"
-            value={0}
+            onChange={handleFilterChange}
           ></AreaFilterInputs>
         </AreaFilter>
         <Rating name="no-value" value={null} />
+        <Button variant="contained">Done</Button>
       </SearchBarWrapper>
-      <Button variant="contained">Done</Button>
+      <Button>
+        <FilterAltIcon />
+      </Button>
     </Container>
   );
 };
