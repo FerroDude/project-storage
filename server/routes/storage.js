@@ -15,19 +15,28 @@ router.get('/listAll', async (req, res) => {
 });
 
 router.post('/search', async (req, res, next) => {
-  const { lng, lat, coords } = req.body;
+  const { lng, lat, coords, filters } = req.body;
 
   try {
+    const distance = filters.radius ? filters.radius[1] : 20;
+
     const storages = await Storage.find({
       location: {
         $geoWithin: {
-          $centerSphere: [[lng, lat], 1000 / process.env.EARTH_RADIUS]
+          $centerSphere: [[lng, lat], distance / process.env.EARTH_RADIUS]
         }
+      },
+      price: {
+        $gte: filters.price ? filters.price[0] : 0,
+        $lte: filters.price ? filters.price[1] : 2000
+      },
+      radius: {
+        $gte: filters.radius ? filters.radius[0] : 0,
+        $lte: filters.radius ? filters.radius[1] : 1000
       }
     });
 
     const sortedStorages = [...sortStorageByProximity(storages, coords)];
-    console.log(sortedStorages);
     res.json({ storages: sortedStorages });
   } catch (err) {
     next(err);
