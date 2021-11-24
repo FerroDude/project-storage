@@ -1,11 +1,12 @@
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { Rating, Slider, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styledComponents from 'styled-components';
 import SearchBar from '../components/SearchBar';
 import { getStorageNearCoods } from '../services/storage';
 import { styled } from '@mui/material/styles';
+import { CustomizedCancelIcon } from '../components/Navbar';
 
 const Container = styledComponents.div``;
 const MainHeader = styledComponents.h1``;
@@ -58,20 +59,23 @@ const AreaFilter = styledComponents.div``;
 const AreaFilterInputs = styledComponents.input``;
 
 const HomeView = ({ user }) => {
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState({ rating: 0 });
+  const [addFilterIsClicked, setAddFilterIsCliked] = useState(false);
 
   const handleStorageCoords = async (coords) => {
     if (user) {
       const storageNearSearch = await getStorageNearCoods({
         ...coords,
-        coords: [...user.location.coordinates]
+        coords: [...user.location.coordinates],
+        filters
       });
       return storageNearSearch;
     } else if (!user) {
       navigator.geolocation.getCurrentPosition(async (pos) => {
         const storageNearSearch = await getStorageNearCoods({
           ...coords,
-          coords: [pos.coords.longitude, pos.coords.latitude]
+          coords: [pos.coords.longitude, pos.coords.latitude],
+          filters
         });
         return storageNearSearch;
       });
@@ -89,54 +93,68 @@ const HomeView = ({ user }) => {
     }));
   };
 
+  const handleFilterSubmit = () => {
+    setAddFilterIsCliked((prev) => !prev);
+  };
+
   return (
     <Container>
       <MainHeader>Find the right storage for you</MainHeader>
-      <SearchBarWrapper>
-        <SearchBar user={user} onStorageCoordsChange={handleStorageCoords} />
-        <Typography>Price</Typography>
-        <PrettoSlider
-          valueLabelDisplay="auto"
-          defaultValue={[0, 100]}
-          max={2000}
-          min={1}
-          id="price"
-          onChange={handleFilterChange}
-          name="price"
-        />
-        <Typography>Search Radius</Typography>
-        <PrettoSlider
-          id="location-range"
-          valueLabelDisplay="auto"
-          defaultValue={[0, 100]}
-          max={2000}
-          min={0}
-          onChange={handleFilterChange}
-          name="radius"
-        />
-        <Typography>Unit Dimension</Typography>
-        <AreaFilter>
-          <AreaFilterInputs
-            name="width"
-            placeholder="Insert Width"
-            id="input-width"
-            type="number"
-            onChange={handleFilterChange}
-          ></AreaFilterInputs>
-          <AreaFilterInputs
-            name="height"
-            placeholder="Insert Height"
-            id="input-height"
-            type="number"
-            onChange={handleFilterChange}
-          ></AreaFilterInputs>
-        </AreaFilter>
-        <Rating name="no-value" value={null} />
-        <Button variant="contained">Done</Button>
-      </SearchBarWrapper>
-      <Button>
-        <FilterAltIcon />
+      <SearchBar user={user} onStorageCoordsChange={handleStorageCoords} />
+      <Button onClick={handleFilterSubmit}>
+        {addFilterIsClicked ? <CustomizedCancelIcon /> : <FilterAltIcon />}
       </Button>
+
+      {addFilterIsClicked && (
+        <SearchBarWrapper>
+          <Typography>Price</Typography>
+          <PrettoSlider
+            valueLabelDisplay="auto"
+            defaultValue={[0, 100]}
+            max={2000}
+            min={1}
+            id="price"
+            onChange={handleFilterChange}
+            name="price"
+          />
+          <Typography>Search Radius</Typography>
+          <PrettoSlider
+            id="location-range"
+            valueLabelDisplay="auto"
+            defaultValue={[0, 100]}
+            max={2000}
+            min={0}
+            onChange={handleFilterChange}
+            name="radius"
+          />
+          <Typography>Unit Dimension</Typography>
+          <AreaFilter>
+            <AreaFilterInputs
+              name="width"
+              placeholder="Insert Width"
+              id="input-width"
+              type="number"
+              onChange={handleFilterChange}
+            ></AreaFilterInputs>
+            <AreaFilterInputs
+              name="height"
+              placeholder="Insert Height"
+              id="input-height"
+              type="number"
+              onChange={handleFilterChange}
+            ></AreaFilterInputs>
+          </AreaFilter>
+          <Rating
+            name="rating"
+            value="simple-controlled"
+            onChange={handleFilterChange}
+            value={filters.rating}
+          />
+          <Button onClick={handleFilterSubmit} variant="contained">
+            Done
+          </Button>
+        </SearchBarWrapper>
+      )}
     </Container>
   );
 };

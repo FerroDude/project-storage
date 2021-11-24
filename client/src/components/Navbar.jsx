@@ -56,7 +56,7 @@ const CustomizedMenuIcon = styled((props) => <MenuIcon {...props} />)`
   font-size: 35px;
 `;
 
-const CustomizedCancelIcon = styled((props) => <ClearIcon {...props} />)`
+export const CustomizedCancelIcon = styled((props) => <ClearIcon {...props} />)`
   color: orange;
   font-size: 35px;
 `;
