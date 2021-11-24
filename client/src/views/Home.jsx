@@ -1,4 +1,5 @@
-import { Slider } from '@mui/material';
+import { Rating, Slider, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
 import React, { useEffect, useState } from 'react';
 import styledComponents from 'styled-components';
 import SearchBar from '../components/SearchBar';
@@ -10,7 +11,11 @@ const MainHeader = styledComponents.h1``;
 const SearchBarWrapper = styledComponents.div``;
 
 const PrettoSlider = styled(Slider)({
-  color: '#52af77',
+  background: '#FFB76B',
+  background:
+    'linear-gradient(to right, #FFB76B 13% , #FFA73D 18% , #FF7C00 90% , #FF7F04 40% )',
+  '-webkit-background-clip': 'text',
+  '-webkit-text-fill-color': '#fff',
   height: 8,
   '& .MuiSlider-track': {
     border: 'none'
@@ -35,7 +40,7 @@ const PrettoSlider = styled(Slider)({
     width: 32,
     height: 32,
     borderRadius: '50% 50% 50% 0',
-    backgroundColor: '#52af77',
+    backgroundColor: '#FF7C00',
     transformOrigin: 'bottom left',
     transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
     '&:before': { display: 'none' },
@@ -47,6 +52,9 @@ const PrettoSlider = styled(Slider)({
     }
   }
 });
+
+const AreaFilter = styledComponents.div``;
+const AreaFilterInputs = styledComponents.input``;
 
 const HomeView = ({ user }) => {
   const handleStorageCoords = async (coords) => {
@@ -74,8 +82,42 @@ const HomeView = ({ user }) => {
       <MainHeader>Find the right storage for you</MainHeader>
       <SearchBarWrapper>
         <SearchBar user={user} onStorageCoordsChange={handleStorageCoords} />
-        <PrettoSlider></PrettoSlider>
+        <Typography>Price</Typography>
+        <PrettoSlider
+          valueLabelDisplay="auto"
+          defaultValue={[0, 100]}
+          max={2000}
+          min={1}
+          id="price"
+        />
+        <Typography>Search Radius</Typography>
+        <PrettoSlider
+          id="location-range"
+          valueLabelDisplay="auto"
+          defaultValue={[0, 100]}
+          max={2000}
+          min={0}
+        />
+        <Typography>Unit Dimension</Typography>
+        <AreaFilter>
+          <AreaFilterInputs
+            name="width"
+            placeholder="Insert Width"
+            id="input-width"
+            type="number"
+            value={0}
+          ></AreaFilterInputs>
+          <AreaFilterInputs
+            name="height"
+            placeholder="Insert Height"
+            id="input-height"
+            type="number"
+            value={0}
+          ></AreaFilterInputs>
+        </AreaFilter>
+        <Rating name="no-value" value={null} />
       </SearchBarWrapper>
+      <Button variant="contained">Done</Button>
     </Container>
   );
 };
