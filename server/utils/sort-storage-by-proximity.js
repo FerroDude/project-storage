@@ -1,19 +1,18 @@
-const turf = require('turf');
+const { distance, point } = require('turf');
 
-module.exports = (storages, lon, lat) => {
+module.exports = (storages, userCoords) => {
   const storageAndDistance = [];
 
   storages.forEach((storage) => {
-    const distanceFromUser = turf.distance(
-      turf.point(storage.location.coordinates),
-      turf.point([lon, lat])
+    const distanceFromUser = distance(
+      point(storage.location.coordinates),
+      point(userCoords)
     );
     storageAndDistance.push([storage, distanceFromUser]);
   });
 
   const sortedStorages = storageAndDistance.sort((a, b) => {
-    return a[1] - b[1];
+    a[1] - b[1];
   });
-
   return sortedStorages;
 };

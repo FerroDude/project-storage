@@ -4,7 +4,7 @@ require('dotenv').config();
 const express = require('express');
 const routeGuard = require('../middleware/route-guard');
 const Storage = require('../models/storage');
-const sortStorageByProximity = require('..//utils/sort-storage-by-proximity');
+const sortStorageByProximity = require('../utils/sort-storage-by-proximity');
 
 const router = express.Router();
 
@@ -14,8 +14,8 @@ router.get('/listAll', async (req, res) => {
   res.json(storages);
 });
 
-router.get('/list/search', async (req, res, next) => {
-  const [lng, lat] = req.params;
+router.post('/search', async (req, res, next) => {
+  const { lng, lat, coords } = req.body;
 
   try {
     const storages = await Storage.find({
@@ -26,42 +26,12 @@ router.get('/list/search', async (req, res, next) => {
       }
     });
 
-    const sortedStorages = sortStorageByProximity(storages, lon, lat);
-
-    res.json(sortStorageByProximity(sortedStorages, lon, lat));
+    const sortedStorages = [...sortStorageByProximity(storages, coords)];
+    console.log(sortedStorages);
+    res.json({ storages: sortedStorages });
   } catch (err) {
     next(err);
   }
-  // } else {
-  //   if (guestLon && guestLat) {
-  //     try {
-  //       const storages = await Storage.find({
-  //         location: {
-  //           $geoWithin: {
-  //             $centerSphere: [
-  //               [guestLon, guestLat],
-  //               10 / process.env.EARTH_RADIUS
-  //             ]
-  //           }
-  //         }
-  //       });
-
-  //       const sortedStorages = sortStorageByProximity(
-  //         storages,
-  //         guestLon,
-  //         guestLat
-  //       );
-  //       res.json(sortStorageByProximity(sortedStorages, guestLon, guestLat));
-  //     } catch (err) {
-  //       next(err);
-  //     }
-  //   } else {
-  //     const storages = await Storage.find()
-  //       .sort({ 'rating.average': -1 })
-  //       .limit(10);
-  //     res.json(storages);
-  //   }
-  // }
 });
 
 router.get('/mystorages', async (req, res, next) => {
@@ -91,7 +61,6 @@ router.patch('/:id/rent', routeGuard, async (req, res, next) => {
     },
     { new: true }
   );
-  console.log(req.body);
   res.json(storage);
 });
 

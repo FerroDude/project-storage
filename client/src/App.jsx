@@ -39,7 +39,6 @@ function App() {
   const handleAuthenticationChange = async (user) => {
     setUser(user);
     setIsLoaded(true);
-    console.log('user', user);
   };
 
   const handleEditUser = async (user) => {

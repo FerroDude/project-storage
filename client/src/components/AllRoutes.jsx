@@ -92,13 +92,17 @@ export default function AllRoutes({
         redirect="/signUp"
         render={(props) => <PaymentView {...props} user={user} />}
       />
+      <Route
+        exact
+        path="/"
+        render={(props) => <HomeView {...props} user={user} />}
+      />
       <ProtectedRoute
         path="/confirmation/:type/:storageId"
         authorized={!isLoaded || user}
         redirect="/signUp"
         render={(props) => <ConfirmationView {...props} />}
       />
-      <Route exact path="/" component={HomeView} />
     </Switch>
   );
 }
