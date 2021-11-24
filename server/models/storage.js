@@ -32,7 +32,7 @@ const schema = new mongoose.Schema(
         }
       ]
     },
-    price: { type: String, required: true },
+    price: { type: Number, required: true },
     gallery: {
       type: [String]
     },

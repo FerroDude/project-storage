@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { rentStorage, getStorage } from '../services/storage';
 import PhotoGallery from '../components/PhotoGallery';
 import PaymentView from '../views/Payment';
+import {
+  createSubscription,
+  cancelSubscription
+} from '../services/subscription';
 
 const StorageView = (props) => {
   const [storage, setStorage] = useState(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+
+  const history = useHistory();
 
   const { user } = props;
   const { id } = props.match.params;
@@ -18,13 +25,37 @@ const StorageView = (props) => {
     fetchStorage();
   }, [id]);
 
-  const handleRent = async () => {
-    storage.isRented = true;
-    storage.renter = user._id;
+  const handleRent = async (paymentMethodToken) => {
+    try {
+      const duration = 55;
+      await createSubscription({
+        paymentMethodToken,
+        storage: storage._id,
+        duration
+      });
 
-    setStorage({ ...storage });
-    console.log(storage);
-    await rentStorage(storage);
+      storage.isRented = true;
+      storage.renter = user._id;
+
+      setStorage({ ...storage });
+      await rentStorage(storage);
+      history.push(`/confirmation/subscribed/${storage._id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUnrent = async () => {
+    try {
+      await cancelSubscription(storage._id);
+      storage.isRented = false;
+      storage.renter = null;
+      setStorage({ ...storage });
+      await rentStorage(storage);
+      history.push(`/confirmation/unsubscribed/${storage._id}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleShowPaymentForm = () => {
@@ -53,10 +84,22 @@ const StorageView = (props) => {
         <strong>Location:</strong>
         <span></span>
         <br />
-        {!storage.isRented && (
-          <button onClick={handleShowPaymentForm}>Rent this storage!</button>
+        {user && user.role === 'tenant' && (
+          <div>
+            {(!storage.isRented && (
+              <button onClick={handleShowPaymentForm}>
+                Rent this storage!
+              </button>
+            )) ||
+              (storage.renter === user._id && (
+                <button onClick={handleUnrent}>Return this storage</button>
+              )) || <em>Not available!</em>}
+
+            {showPaymentForm && (
+              <PaymentView onRent={handleRent} storage={storage} />
+            )}
+          </div>
         )}
-        {showPaymentForm && <PaymentView onRent={handleRent} />}
       </div>
     )
   );

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import Carousel from './Carousel';
 import styledComponents from 'styled-components';
 
 const FilePicker = styledComponents.div`
@@ -47,19 +48,7 @@ const FileUpload = ({ type, onPickFile }) => {
 
   return (
     <div>
-      {previewFiles && (
-        <div>
-          {type === 'multiple' ? (
-            <div>
-              {previewFiles.map((file) => (
-                <img key={file.name} src={file} alt="preview" height="100px" />
-              ))}
-            </div>
-          ) : (
-            <img src={previewFiles} alt="preview" height="100px" />
-          )}
-        </div>
-      )}
+      {previewFiles && <Carousel images={previewFiles} type={type} />}
       <FilePicker onClick={handleClick}>Click to select image(s)</FilePicker>
       <input
         style={{ display: 'none' }}

@@ -141,12 +141,33 @@ const Navbar = ({ handleSignOut, user }) => {
                   Profile
                 </CustomizedNavLink>
               </ListItem>
+              <ListItem>
+                <CustomizedNavLink
+                  onClick={() => {
+                    setIsClicked(false);
+                  }}
+                  to="/storage/list"
+                >
+                  My Storages
+                </CustomizedNavLink>
+              </ListItem>
+
               {user.role === 'landlord' && (
                 <>
-                  <CustomizedNavLink to="/storage/create">
+                  <CustomizedNavLink
+                    onClick={() => {
+                      setIsClicked(false);
+                    }}
+                    to="/storage/create"
+                  >
                     Create storage
                   </CustomizedNavLink>
-                  <CustomizedNavLink to="/storage/manage">
+                  <CustomizedNavLink
+                    onClick={() => {
+                      setIsClicked(false);
+                    }}
+                    to="/storage/manage"
+                  >
                     Manage storage
                   </CustomizedNavLink>
                 </>

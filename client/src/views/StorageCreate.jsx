@@ -3,17 +3,20 @@ import { createStorage } from '../services/storage';
 import AddressSearch from '../components/AddressSearch';
 import FileUpload from '../components/FileUpload';
 import { uploadMultipleFiles } from '../services/fileupload';
+import { useHistory } from 'react-router-dom';
 
 const StorageCreateView = () => {
   const [inputValues, setInputValues] = useState({
     name: '',
     description: '',
     coordinates: null,
-    price: '',
+    price: null,
     width: '',
     length: '',
     gallery: []
   });
+
+  const history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,7 +28,8 @@ const StorageCreateView = () => {
         formData.append('pictures', file);
       }
       const gallery = await uploadMultipleFiles(formData);
-      await createStorage({ ...inputValues, gallery });
+      const storage = await createStorage({ ...inputValues, gallery });
+      history.push(`/storage/${storage._id}`);
       console.log('Storage created');
     } catch (error) {
       console.log(error);
@@ -75,7 +79,7 @@ const StorageCreateView = () => {
         <label htmlFor="input-storage-price">Price</label>
         <input
           id="input-storage-price"
-          type="text"
+          type="number"
           placeholder="Price"
           name="price"
           value={inputValues.price}
