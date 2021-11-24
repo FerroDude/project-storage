@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { listMyStorages, listRentedStorages } from '../services/storage';
-import { Link } from 'react-router-dom';
+import Storage from '../components/Storage';
 
 const StorageListView = ({ user }) => {
   const [storages, setStorages] = useState(null);
@@ -22,15 +22,9 @@ const StorageListView = ({ user }) => {
     (storages && (
       <div>
         <h1>My Storages</h1>
-        <ul>
+        <ul style={{ padding: 0 }}>
           {storages.map((storage) => (
-            <li key={storage._id}>
-              {(user.role === 'landlord' && (
-                <Link to={`/storage/${storage._id}/manage`}>
-                  {storage.name}
-                </Link>
-              )) || <Link to={`/storage/${storage._id}`}>{storage.name}</Link>}
-            </li>
+            <Storage key={storage._id} user={user} storage={storage} />
           ))}
         </ul>
       </div>

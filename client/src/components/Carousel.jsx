@@ -11,18 +11,16 @@ const CarouselComponent = styledComponents.div`
   flex-direction: column;
   margin: 0;
   width: 15vw;
-  height: 15em;
+  height: 10em;
   @media only screen and (max-width: 600px) {
     width: 90vw;
   }
 `;
 
 const Image = styledComponents.img`
-  max-width: 100%;
-  max-height: 100%;
-  display: inline-block;
-  margin: 0;
-  vertical-align: middle;
+object-fit: cover;
+width: 100%;
+height: 100%;
 `;
 
 const Stepper = styled(MobileStepper)`
