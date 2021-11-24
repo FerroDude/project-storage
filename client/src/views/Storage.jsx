@@ -27,7 +27,12 @@ const StorageView = (props) => {
 
   const handleRent = async (paymentMethodToken) => {
     try {
-      await createSubscription({ paymentMethodToken, storage: storage._id });
+      const duration = 55;
+      await createSubscription({
+        paymentMethodToken,
+        storage: storage._id,
+        duration
+      });
 
       storage.isRented = true;
       storage.renter = user._id;
@@ -41,12 +46,16 @@ const StorageView = (props) => {
   };
 
   const handleUnrent = async () => {
-    await cancelSubscription(storage._id);
-    storage.isRented = false;
-    storage.renter = null;
-    setStorage({ ...storage });
-    await rentStorage(storage);
-    history.push(`/confirmation/unsubscribed/${storage._id}`);
+    try {
+      await cancelSubscription(storage._id);
+      storage.isRented = false;
+      storage.renter = null;
+      setStorage({ ...storage });
+      await rentStorage(storage);
+      history.push(`/confirmation/unsubscribed/${storage._id}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleShowPaymentForm = () => {

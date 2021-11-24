@@ -81,7 +81,7 @@ const StorageManagementView = (props) => {
           <label htmlFor="input-storage-price">Price</label>
           <input
             id="input-storage-price"
-            type="text"
+            type="number"
             placeholder="Price"
             name="price"
             value={storage.price}

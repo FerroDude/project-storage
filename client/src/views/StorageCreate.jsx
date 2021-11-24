@@ -10,7 +10,7 @@ const StorageCreateView = () => {
     name: '',
     description: '',
     coordinates: null,
-    price: '',
+    price: null,
     width: '',
     length: '',
     gallery: []
@@ -79,7 +79,7 @@ const StorageCreateView = () => {
         <label htmlFor="input-storage-price">Price</label>
         <input
           id="input-storage-price"
-          type="text"
+          type="number"
           placeholder="Price"
           name="price"
           value={inputValues.price}

@@ -20,7 +20,7 @@ router.get('/', routeGuard, async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-  const { paymentMethodToken, storage } = req.body;
+  const { paymentMethodToken, storage, duration } = req.body;
   try {
     const customer = await stripe.customers.create({
       name: req.user.name,
@@ -31,6 +31,7 @@ router.post('/', async (req, res, next) => {
       user: req.user._id,
       startDate: new Date(),
       nextBillingDate: new Date(),
+      duration,
       active: true,
       customerId: customer.id,
       storage,

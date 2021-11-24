@@ -14,6 +14,10 @@ const schema = new mongoose.Schema({
     type: Date,
     required: true
   },
+  duration: {
+    type: Number,
+    required: true
+  },
   active: {
     type: Boolean,
     default: false
