@@ -15,29 +15,29 @@ router.get('/listAll', async (req, res) => {
 });
 
 router.post('/search', async (req, res, next) => {
-  const { lng, lat, coords, filters } = req.body;
-
+  const { lng, lat, userCoords, filters } = req.body;
   try {
-    const distance = filters.radius ? filters.radius[1] : 20;
+    const radius = filters.radius ? filters.radius : 10;
 
     const storages = await Storage.find({
       location: {
         $geoWithin: {
-          $centerSphere: [[lng, lat], distance / process.env.EARTH_RADIUS]
+          $centerSphere: [[lng, lat], radius / process.env.EARTH_RADIUS]
         }
       },
       price: {
         $gte: filters.price ? filters.price[0] : 0,
         $lte: filters.price ? filters.price[1] : 2000
       },
-      radius: {
-        $gte: filters.radius ? filters.radius[0] : 0,
-        $lte: filters.radius ? filters.radius[1] : 1000
+      area: {
+        $gte: filters.area ? filters.area[0] : 0,
+        $lte: filters.area ? filters.area[1] : 10000
       }
     });
 
-    const sortedStorages = [...sortStorageByProximity(storages, coords)];
-    res.json({ storages: sortedStorages });
+    const sortedStorages = [...sortStorageByProximity(storages, userCoords)];
+    console.log(sortedStorages);
+    res.json({ sortedStorages });
   } catch (err) {
     next(err);
   }
@@ -109,7 +109,8 @@ router.post('/', routeGuard, async (req, res, next) => {
     price,
     gallery,
     width,
-    length
+    length,
+    area: width * length
   });
 
   try {
