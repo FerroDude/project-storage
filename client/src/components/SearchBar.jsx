@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styledComponents from 'styled-components';
+import { styled } from '@mui/material/styles';
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete';
+import TextField from '@mui/material/TextField';
 
-const Container = styled.div``;
-const SuggestionsList = styled.div``;
-const SearchInput = styled.input``;
-const SomeComponent = styled.div``;
-const SuggetionItem = styled.div``;
+const Container = styledComponents.div``;
+const SuggestionsList = styledComponents.div``;
+const SearchInput = styled(TextField)`
+  background: rgba(255, 127, 4, 0.15);
+`;
+const SomeComponent = styledComponents.div``;
+const SuggetionItem = styledComponents.div``;
 
 const SearchBar = ({ onStorageCoordsChange }) => {
   const [searchValue, setSearchValue] = useState('');
@@ -35,7 +39,8 @@ const SearchBar = ({ onStorageCoordsChange }) => {
                 id: 'input-search',
                 type: 'text',
                 placeholder: 'Where would you like to rent?',
-                name: 'search'
+                name: 'search',
+                variant: 'filled'
               })}
             />
             <SuggestionsList>
