@@ -5,6 +5,7 @@ import PhotoGallery from '../components/PhotoGallery';
 import PaymentView from '../views/Payment';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarIcon from '@mui/icons-material/Star';
+import PersonIcon from '@mui/icons-material/Person';
 import {
   createSubscription,
   cancelSubscription
@@ -12,26 +13,58 @@ import {
 import styledComponents from 'styled-components';
 import { styled } from '@mui/material/styles';
 
+const Storage = styledComponents.div`
+  background: ${(props) => props.theme.palette.background.component};
+  border-radius: 5px;
+  width: 90%;
+  height: 95%;
+  padding: ${(props) => props.theme.padding.element};
+  margin: ${(props) => props.theme.margin.element};
+  box-shadow: ${(props) => props.theme.shadow};
+`;
+
 const Info = styledComponents.div`
   color: ${(props) => props.theme.palette.primary.text};
 `;
 
+const Owner = styledComponents.div`
+  display: flex;
+  align-items: center;
+`;
+
 const Location = styledComponents.div`
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 `;
 
 const Rating = styledComponents.div`
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+`;
+
+const OwnerIcon = styled(PersonIcon)`
+  color: ${(props) => props.theme.palette.secondary.main};
+  margin: ${(props) => props.theme.margin.icon};
 `;
 
 const LocationIcon = styled(LocationOnIcon)`
   color: ${(props) => props.theme.palette.secondary.main};
+  margin: ${(props) => props.theme.margin.icon};
 `;
 
 const RatingIcon = styled(StarIcon)`
   color: ${(props) => props.theme.palette.secondary.main};
+  margin: ${(props) => props.theme.margin.icon};
+`;
+
+const Title = styledComponents.h3`
+  color: ${(props) => props.theme.palette.title.component};
+  font-weight: bold;
+`;
+
+const Subtitle = styledComponents.h4`
+  color: ${(props) => props.theme.palette.title.subtitle};
+  font-weight: bold;
 `;
 
 const StorageView = (props) => {
@@ -91,11 +124,15 @@ const StorageView = (props) => {
 
   return (
     storage && (
-      <div>
+      <Storage>
         <PhotoGallery images={storage.gallery} />
         <Info>
-          <h3>{storage.name}</h3>
+          <Title>{storage.name}</Title>
           <p>{storage.description}</p>
+          <Owner>
+            <OwnerIcon />
+            Pekka Tiitinen
+          </Owner>
           <Location>
             <LocationIcon />
             Madrid
@@ -104,7 +141,7 @@ const StorageView = (props) => {
             <RatingIcon />
             4.4
           </Rating>
-          <strong>Dimensions:</strong>
+          <Subtitle>Dimensions:</Subtitle>
           <ul>
             <li>Width: {storage.width}</li>
             <li>Length: {storage.length}</li>
@@ -127,7 +164,7 @@ const StorageView = (props) => {
             )}
           </div>
         )}
-      </div>
+      </Storage>
     )
   );
 };
