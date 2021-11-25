@@ -19,7 +19,10 @@ const Form = styledComponents.form`
   align-items: center;
   background: ${(props) => props.theme.palette.background.component};
   border-radius: 5px;
-  width: 90%;
+  width: 40%;
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+  }
   height: 95%;
   padding: ${(props) => props.theme.padding.element};
   margin: ${(props) => props.theme.margin.element};
@@ -28,7 +31,7 @@ const Form = styledComponents.form`
 
 const Input = styled(TextField)`
   margin: 1em 0;
-  width: 60%;
+  width: 40%;
   @media only screen and (max-width: 600px) {
     width: 100%;
   }
