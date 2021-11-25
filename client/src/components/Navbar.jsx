@@ -101,7 +101,6 @@ width: 50 % ;
 
 const CustomizedNavLink = styledComponents((props) => <NavLink {...props} />)`
 text-decoration: none;
-width: 50% ;
 color: #fff;
 font-size: 1.2em;
 font-weight: 600;
@@ -161,14 +160,6 @@ const Navbar = ({ handleSignOut, user }) => {
                     to="/storage/create"
                   >
                     Create storage
-                  </CustomizedNavLink>
-                  <CustomizedNavLink
-                    onClick={() => {
-                      setIsClicked(false);
-                    }}
-                    to="/storage/manage"
-                  >
-                    Manage storage
                   </CustomizedNavLink>
                 </>
               )}

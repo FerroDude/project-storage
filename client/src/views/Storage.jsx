@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { rentStorage, getStorage } from '../services/storage';
 import PhotoGallery from '../components/PhotoGallery';
 import PaymentView from '../views/Payment';
+import ReactCalendar from '../components/Calendar';
 
 const StorageView = (props) => {
   const [storage, setStorage] = useState(null);
@@ -59,6 +60,8 @@ const StorageView = (props) => {
         <br />
         <strong>Location:</strong>
         <span></span>
+        <br />
+        <ReactCalendar />
         <br />
         {(!storage.isRented && (
           <button onClick={handleShowPaymentForm}>Rent this storage!</button>
