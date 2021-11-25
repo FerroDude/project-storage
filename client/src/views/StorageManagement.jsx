@@ -10,7 +10,7 @@ const StorageManagementView = (props) => {
   const [files, setFiles] = useState([]);
   const history = useHistory();
   const { id } = props.match.params;
-  if (files) console.log(storage, files, files.length);
+
   useEffect(() => {
     const fetchStorage = async () => {
       const storage = await getStorage(id);
@@ -81,7 +81,7 @@ const StorageManagementView = (props) => {
           <label htmlFor="input-storage-price">Price</label>
           <input
             id="input-storage-price"
-            type="text"
+            type="number"
             placeholder="Price"
             name="price"
             value={storage.price}

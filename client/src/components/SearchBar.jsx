@@ -46,9 +46,9 @@ const SearchBar = ({ onStorageCoordsChange }) => {
                 };
                 return (
                   <SuggetionItem
+                    key={suggestion.id}
                     {...getSuggestionItemProps(suggestion, {
-                      style,
-                      key: suggestion.id
+                      style
                     })}
                   >
                     {suggestion.description}

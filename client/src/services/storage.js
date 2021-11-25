@@ -103,7 +103,7 @@ export const deleteStorage = (id) => {
 
 export const getStorageNearCoods = (body) => {
   return api
-    .get(`${endpoint}/list/search`, body)
+    .post(`${endpoint}/search`, body)
     .then((res) => res.data)
     .catch((err) => err);
 };

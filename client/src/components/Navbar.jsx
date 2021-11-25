@@ -56,7 +56,7 @@ const CustomizedMenuIcon = styled((props) => <MenuIcon {...props} />)`
   font-size: 35px;
 `;
 
-const CustomizedCancelIcon = styled((props) => <ClearIcon {...props} />)`
+export const CustomizedCancelIcon = styled((props) => <ClearIcon {...props} />)`
   color: orange;
   font-size: 35px;
 `;
@@ -101,7 +101,8 @@ width: 50 % ;
 
 const CustomizedNavLink = styledComponents((props) => <NavLink {...props} />)`
 text-decoration: none;
-color: #fff;
+width: 50% ;
+color: ${(props) => props.theme.palette.primary.text};
 font-size: 1.2em;
 font-weight: 600;
 `;
