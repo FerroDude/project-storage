@@ -61,24 +61,60 @@ const AreaFilterInputs = styledComponents.input``;
 const HomeView = ({ user }) => {
   const [filters, setFilters] = useState({ rating: 0 });
   const [addFilterIsClicked, setAddFilterIsCliked] = useState(false);
+  const [searchResults, setSearchResults] = useState({ results: null });
+  const [hasResults, setHasResults] = useState(false);
+
+  const getSearchResults = async (
+    serviceHandlerFunction,
+    userCoords,
+    filters,
+    searchCoords
+  ) => {
+    return await serviceHandlerFunction({
+      userCoords: [...userCoords],
+      filters,
+      ...searchCoords
+    });
+  };
 
   const handleStorageCoords = async (coords) => {
+    let storageNearSearch;
     if (user) {
-      const storageNearSearch = await getStorageNearCoods({
-        ...coords,
-        coords: [...user.location.coordinates],
-        filters
-      });
-      return storageNearSearch;
+      const userCoordinates = user.location.coordinates;
+
+      if (userCoordinates) {
+        storageNearSearch = await getSearchResults(
+          getStorageNearCoods,
+          userCoordinates,
+          filters,
+          coords
+        );
+
+        setSearchResults({ results: [...storageNearSearch] });
+      } else {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+          const guestUserCoords = [pos.coords.longitude, pos.coords.latitude];
+          storageNearSearch = await getSearchResults(
+            getStorageNearCoods,
+            guestUserCoords,
+            filters,
+            coords
+          );
+        });
+
+        setSearchResults({ results: [...storageNearSearch] });
+      }
     } else if (!user) {
       navigator.geolocation.getCurrentPosition(async (pos) => {
-        const storageNearSearch = await getStorageNearCoods({
-          ...coords,
-          coords: [pos.coords.longitude, pos.coords.latitude],
-          filters
-        });
-        return storageNearSearch;
+        const guestUserCoords = [pos.coords.longitude, pos.coords.latitude];
+        storageNearSearch = await getSearchResults(
+          getStorageNearCoods,
+          guestUserCoords,
+          filters,
+          coords
+        );
       });
+      setSearchResults({ results: [...storageNearSearch] });
     } else {
       alert('Please, allow access to your location for a better experience');
     }
@@ -93,16 +129,24 @@ const HomeView = ({ user }) => {
     }));
   };
 
-  const handleFilterSubmit = () => {
+  const handleFilterSubmit = (e) => {
     setAddFilterIsCliked((prev) => !prev);
+    if (e.target.id === 'cancel-filter') {
+      setFilters({ ranting: 0 });
+    }
   };
 
+  console.log(filters);
   return (
     <Container>
       <MainHeader>Find the right storage for you</MainHeader>
       <SearchBar user={user} onStorageCoordsChange={handleStorageCoords} />
       <Button onClick={handleFilterSubmit}>
-        {addFilterIsClicked ? <CustomizedCancelIcon /> : <FilterAltIcon />}
+        {addFilterIsClicked ? (
+          <CustomizedCancelIcon id="cancel-filter" />
+        ) : (
+          <FilterAltIcon />
+        )}
       </Button>
 
       {addFilterIsClicked && (
@@ -117,33 +161,27 @@ const HomeView = ({ user }) => {
             onChange={handleFilterChange}
             name="price"
           />
-          <Typography>Search Radius</Typography>
+          <Typography>Search Radius from Location</Typography>
           <PrettoSlider
             id="location-range"
             valueLabelDisplay="auto"
-            defaultValue={[0, 100]}
-            max={2000}
+            defaultValue={10}
+            max={50}
             min={0}
             onChange={handleFilterChange}
             name="radius"
           />
-          <Typography>Unit Dimension</Typography>
-          <AreaFilter>
-            <AreaFilterInputs
-              name="width"
-              placeholder="Insert Width"
-              id="input-width"
-              type="number"
-              onChange={handleFilterChange}
-            ></AreaFilterInputs>
-            <AreaFilterInputs
-              name="height"
-              placeholder="Insert Height"
-              id="input-height"
-              type="number"
-              onChange={handleFilterChange}
-            ></AreaFilterInputs>
-          </AreaFilter>
+          <Typography>Total Storage Area</Typography>
+          <PrettoSlider
+            id="area"
+            valueLabelDisplay="auto"
+            defaultValue={[0, 0]}
+            max={1000}
+            min={0}
+            onChange={handleFilterChange}
+            name="area"
+          />
+
           <Rating
             name="rating"
             value="simple-controlled"

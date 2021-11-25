@@ -15,10 +15,11 @@ const SearchBar = ({ onStorageCoordsChange }) => {
   const [searchValue, setSearchValue] = useState('');
 
   const handleSelection = async (value) => {
-    const results = await geocodeByAddress(value);
-    const latLng = await getLatLng(results[0]);
-
-    onStorageCoordsChange(latLng);
+    try {
+      const searchAddress = await geocodeByAddress(value);
+      const latLng = await getLatLng(searchAddress[0]);
+      onStorageCoordsChange(latLng);
+    } catch {}
   };
 
   return (
