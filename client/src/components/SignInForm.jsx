@@ -5,6 +5,11 @@ import { styled } from '@mui/material/styles';
 import styledComponents from 'styled-components';
 import TextField from '@mui/material/TextField';
 import LoginIcon from '@mui/icons-material/Login';
+import InputAdornment from '@mui/material/InputAdornment';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LockIcon from '@mui/icons-material/Lock';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const LogInIcon = styled(LoginIcon)`
   font-size: 3em;
@@ -29,9 +34,16 @@ const Form = styledComponents.form`
   box-shadow: ${(props) => props.theme.shadow};
 `;
 
+const Button = styledComponents.button`
+  width: 50%;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+`;
+
 const Input = styled(TextField)`
   margin: 1em 0;
-  width: 40%;
+  width: 50%;
   @media only screen and (max-width: 600px) {
     width: 100%;
   }
@@ -48,7 +60,7 @@ const Input = styled(TextField)`
 const Title = styledComponents.h1`
   color: ${(props) => props.theme.palette.title.component};
   font-weight: bold;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 `;
 
 const SignInForm = (props) => {
@@ -56,6 +68,7 @@ const SignInForm = (props) => {
     emailOrUsername: '',
     password: ''
   });
+  const [passwordVisible, setPasswordvisible] = useState(false);
 
   const history = useHistory();
 
@@ -71,6 +84,10 @@ const SignInForm = (props) => {
     history.push('/profile');
   };
 
+  const handlePasswordVisibility = () => {
+    setPasswordvisible(!passwordVisible);
+  };
+
   return (
     <div>
       <Form onSubmit={handleFormSubmission}>
@@ -84,19 +101,46 @@ const SignInForm = (props) => {
           type="text"
           value={inputValues.username}
           onChange={handleInputChange}
-          placeholder="Email or username"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircleIcon />
+              </InputAdornment>
+            )
+          }}
         />
         <Input
           variant="filled"
           label="Password"
           id="password"
           name="password"
-          type="password"
+          type={(passwordVisible && 'text') || 'password'}
           value={inputValues.password}
           onChange={handleInputChange}
-          placeholder="password"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockIcon />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position="end">
+                {(passwordVisible && (
+                  <VisibilityOffIcon
+                    sx={{ cursor: 'pointer' }}
+                    onClick={handlePasswordVisibility}
+                  />
+                )) || (
+                  <VisibilityIcon
+                    sx={{ cursor: 'pointer' }}
+                    onClick={handlePasswordVisibility}
+                  />
+                )}
+              </InputAdornment>
+            )
+          }}
         />
-        <button type="submit">Submit</button>
+        <Button type="submit">Submit</Button>
       </Form>
     </div>
   );

@@ -12,7 +12,7 @@ router.get('/:id', async (req, res, next) => {
   res.json(user);
 });
 
-router.get('/', routeGuard, (req, res, next) => {
+router.get('/', (req, res, next) => {
   res.json(req.user);
 });
 

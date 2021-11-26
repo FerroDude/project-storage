@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material';
 const theme = createTheme({
   shadow: '5px 5px 15px 5px #080808',
   margin: {
-    element: '0.5em auto 3em auto',
+    element: '3em auto 3em auto',
     icon: '0.2em 0.3em 0.2em 0'
   },
   padding: {
@@ -18,7 +18,8 @@ const theme = createTheme({
     background: {
       dark: '#101010',
       main: '#141414',
-      component: '#181818'
+      component: '#181818',
+      light: '#242424'
     },
     primary: {
       main: '#FF7F04',
