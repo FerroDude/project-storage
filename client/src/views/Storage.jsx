@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { rentStorage, getStorage } from '../services/storage';
 import PhotoGallery from '../components/PhotoGallery';
 import PaymentView from '../views/Payment';
-
 import ReactCalendar from '../components/Calendar';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarIcon from '@mui/icons-material/Star';
@@ -52,6 +51,14 @@ const StorageView = (props) => {
     };
     fetchStorage();
   }, [id]);
+
+  const calculateDays = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
 
   const handleRent = async (paymentMethodToken) => {
     try {

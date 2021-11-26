@@ -11,6 +11,8 @@ const Container = styledComponents.div`
   justify-content: space-around;
   width: 100%;
   position: relative;
+  overflow: button;
+  
 `;
 
 const Left = styledComponents.div`
