@@ -11,6 +11,7 @@ const Container = styledComponents.div``;
 const SuggestionsList = styledComponents.div``;
 const SearchInput = styled(TextField)`
   background: rgba(255, 127, 4, 0.15);
+  color: white;
 `;
 const SomeComponent = styledComponents.div``;
 const SuggetionItem = styledComponents.div``;
@@ -22,8 +23,10 @@ const SearchBar = ({ onStorageCoordsChange }) => {
     try {
       const searchAddress = await geocodeByAddress(value);
       const latLng = await getLatLng(searchAddress[0]);
-      onStorageCoordsChange(latLng);
-    } catch {}
+      await onStorageCoordsChange(latLng);
+    } catch {
+      // TODO We might want to create an error page for 500 requests or a No result found components
+    }
   };
 
   return (

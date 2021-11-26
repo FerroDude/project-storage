@@ -14,13 +14,15 @@ const Container = styledComponents.div`
   position: relative;
   background: ${(props) => props.theme.palette.background.dark};
   box-shadow: ${(props) => props.theme.shadow};
+  padding: 1em;
+  
 `;
 
 const Left = styledComponents.div`
   display: flex;
   align-items: center;
-  flex: 2;
-  padding-left: 10px;
+  flex:2;
+
 `;
 const CustomizedLocationIcon = styled((props) => <LocationOnIcon {...props} />)`
   color: orange;
@@ -52,6 +54,8 @@ const Button = styledComponents.button`
   background: none; 
   border: none; 
   cursor: pointer;
+  margin: 0;
+  padding:0;
   `;
 
 const CustomizedMenuIcon = styled((props) => <MenuIcon {...props} />)`
@@ -66,15 +70,14 @@ export const CustomizedCancelIcon = styled((props) => <ClearIcon {...props} />)`
 
 const DropdownMenu = styledComponents.div`
   position: absolute; 
-  height: calc(100vh - (37px + 1em)); 
-  width: 100vw; 
-  top: calc(37px + 1em); 
+  height: calc(100vh - (45px + 2em));
+  width: 100vw;
+  top: calc(45px + 2em);
   background: ${(props) => props.theme.palette.background.main};
   transform: ${(props) =>
     props.isClicked ? 'translateX(0vw)' : 'translateX(100vw)'};
   transition: transform ease .5s;
-  padding: 5em 0 0 0;
-  z-index: 2;
+  z-index: 1;
 `;
 
 const UnorderedList = styledComponents.ul`

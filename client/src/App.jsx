@@ -18,13 +18,14 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   position: relative;
+  overflow-x: hidden;
 `;
 
 function App() {
   //setting state for user with hooks
   const [user, setUser] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-
+  console.log(isLoaded);
   const loadUser = async () => {
     const user = await loadAuthenticatedUser();
     setUser(user);

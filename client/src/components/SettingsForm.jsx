@@ -4,6 +4,50 @@ import { uploadSingleFile } from '../services/fileupload';
 import FileUpload from './FileUpload';
 import AddressSearch from './AddressSearch';
 import { useHistory } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
+import styledComponents from 'styled-components';
+import TextField from '@mui/material/TextField';
+
+const Form = styledComponents.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: ${(props) => props.theme.palette.background.component};
+  border-radius: 5px;
+  width: 90%;
+  height: 95%;
+  padding: ${(props) => props.theme.padding.element};
+  margin: ${(props) => props.theme.margin.element};
+  box-shadow: ${(props) => props.theme.shadow};
+`;
+
+const Subtitle = styledComponents.h3`
+  color: ${(props) => props.theme.palette.title.subtitle};
+  margin: 1em 0 1em 0;
+`;
+
+const Input = styled(TextField)`
+  margin: 1em 0;
+  width: 60%;
+  background: rgba(255, 127, 4, 0.07);
+  border-radius: 5px 5px 0 0;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+  .MuiFilledInput-input {
+    color: ${(props) => props.theme.palette.primary.text};
+  }
+  .MuiInputLabel-root {
+    color: ${(props) => props.theme.palette.primary.main};
+  }
+`;
+
+const Title = styledComponents.h1`
+  color: ${(props) => props.theme.palette.title.component};
+  font-weight: bold;
+  margin-bottom: 0.5em;
+`;
 
 const SettingsForm = ({ onEditUser }) => {
   const [user, setUser] = useState({
@@ -62,11 +106,13 @@ const SettingsForm = ({ onEditUser }) => {
   return (
     user && (
       <div>
-        <form onSubmit={handleFormSubmission}>
+        <Form onSubmit={handleFormSubmission}>
+          <Title>Settings</Title>
           <FileUpload type="single" onPickFile={setProfileImgFile} />
-          <h3>Personal details</h3>
-          <label htmlFor="input-username">Username</label>
-          <input
+          <Subtitle>Personal details</Subtitle>
+          <Input
+            variant="filled"
+            label="Username"
             id="input-username"
             type="text"
             placeholder="Username"
@@ -74,8 +120,9 @@ const SettingsForm = ({ onEditUser }) => {
             value={user.username}
             onChange={handleInputChange}
           />
-          <label htmlFor="input-fName">First Name</label>
-          <input
+          <Input
+            variant="filled"
+            label="First name"
             id="input-fName"
             type="text"
             placeholder="First Name"
@@ -83,8 +130,9 @@ const SettingsForm = ({ onEditUser }) => {
             value={user.fName}
             onChange={handleInputChange}
           />
-          <label htmlFor="input-lName">Last name</label>
-          <input
+          <Input
+            variant="filled"
+            label="Last name"
             id="input-lName"
             type="text"
             placeholder="Last name"
@@ -92,9 +140,10 @@ const SettingsForm = ({ onEditUser }) => {
             value={user.lName}
             onChange={handleInputChange}
           />
-          <h3>Contact information</h3>
-          <label htmlFor="input-email">Email</label>
-          <input
+          <Subtitle>Contact information</Subtitle>
+          <Input
+            variant="filled"
+            label="Email"
             id="input-email"
             type="email"
             placeholder="Your Email"
@@ -102,8 +151,9 @@ const SettingsForm = ({ onEditUser }) => {
             value={user.email}
             onChange={handleInputChange}
           />
-          <label htmlFor="input-phone">Phone Number</label>
-          <input
+          <Input
+            variant="filled"
+            label="Phone number"
             id="input-phone"
             type="text"
             placeholder="Your Phone Number"
@@ -111,10 +161,10 @@ const SettingsForm = ({ onEditUser }) => {
             value={user.phoneNumber}
             onChange={handleInputChange}
           />
-          <h3>Location</h3>
+          <Subtitle>Location</Subtitle>
           <AddressSearch onCoordinatesChange={handleCoordinatesChange} />
           <button type="submit">Save</button>
-        </form>
+        </Form>
       </div>
     )
   );

@@ -22,6 +22,9 @@ const Storage = styledComponents.div`
   padding: ${(props) => props.theme.padding.element};
   margin: ${(props) => props.theme.margin.element};
   box-shadow: ${(props) => props.theme.shadow};
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 const Info = styledComponents.div`
@@ -58,12 +61,12 @@ const RatingIcon = styled(StarIcon)`
   margin: ${(props) => props.theme.margin.icon};
 `;
 
-const Title = styledComponents.h3`
+const Title = styledComponents.h2`
   color: ${(props) => props.theme.palette.title.component};
   font-weight: bold;
 `;
 
-const Subtitle = styledComponents.h4`
+const Subtitle = styledComponents.h3`
   color: ${(props) => props.theme.palette.title.subtitle};
   font-weight: bold;
 `;

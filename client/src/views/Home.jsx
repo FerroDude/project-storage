@@ -7,10 +7,12 @@ import SearchBar from '../components/SearchBar';
 import { getStorageNearCoods } from '../services/storage';
 import { styled } from '@mui/material/styles';
 import { CustomizedCancelIcon } from '../components/Navbar';
+import SlideShow from '../components/SlideShow';
 
 const Container = styledComponents.div``;
 const MainHeader = styledComponents.h1``;
 const SearchBarWrapper = styledComponents.div``;
+const SearchResults = styledComponents.div``;
 
 const PrettoSlider = styled(Slider)({
   background: '#FFB76B',
@@ -90,7 +92,7 @@ const HomeView = ({ user }) => {
           coords
         );
 
-        setSearchResults({ results: [...storageNearSearch] });
+        setSearchResults({ results: storageNearSearch });
       } else {
         navigator.geolocation.getCurrentPosition(async (pos) => {
           const guestUserCoords = [pos.coords.longitude, pos.coords.latitude];
@@ -100,9 +102,8 @@ const HomeView = ({ user }) => {
             filters,
             coords
           );
+          setSearchResults({ results: storageNearSearch });
         });
-
-        setSearchResults({ results: [...storageNearSearch] });
       }
     } else if (!user) {
       navigator.geolocation.getCurrentPosition(async (pos) => {
@@ -113,8 +114,8 @@ const HomeView = ({ user }) => {
           filters,
           coords
         );
+        setSearchResults({ results: storageNearSearch });
       });
-      setSearchResults({ results: [...storageNearSearch] });
     } else {
       alert('Please, allow access to your location for a better experience');
     }
@@ -136,7 +137,7 @@ const HomeView = ({ user }) => {
     }
   };
 
-  console.log(filters);
+  console.log(searchResults.results);
   return (
     <Container>
       <MainHeader>Find the right storage for you</MainHeader>
@@ -192,6 +193,11 @@ const HomeView = ({ user }) => {
             Done
           </Button>
         </SearchBarWrapper>
+      )}
+      {searchResults.results && (
+        <SearchResults>
+          <SlideShow storages={searchResults.results.sortedStorages} />
+        </SearchResults>
       )}
     </Container>
   );

@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 
-const ratingSchema = new mongoose.Schema({
-  ratings: [Number],
-  average: Number
-});
+// const ratingSchema = new mongoose.Schema({
+//   ratings: [Number],
+//   average: {
+//     type: Number,
+//     default: 0
+//   }
+// });
 
 const schema = new mongoose.Schema(
   {
@@ -16,7 +19,7 @@ const schema = new mongoose.Schema(
     },
     description: {
       type: String,
-      maxlength: 160,
+      maxlength: 500,
       required: true
     },
     owner: {
@@ -57,11 +60,16 @@ const schema = new mongoose.Schema(
       required: true
     },
     area: Number,
-    rating: [ratingSchema],
+    rating: [Number],
+    average: {
+      type: Number,
+      default: 0
+    },
     review: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'Review'
     }
+    // TODO : we might want to iterate over the rating array in the rating property of the storage model and used array.reduce to sum all the ratings and divide by the number of ratings in that array
   },
   { timestamps: { createdAt: 'createAt', updatedAt: 'updateAt' } }
 );
