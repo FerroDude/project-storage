@@ -7,6 +7,7 @@ import SearchBar from '../components/SearchBar';
 import { getStorageNearCoods } from '../services/storage';
 import { styled } from '@mui/material/styles';
 import { CustomizedCancelIcon } from '../components/Navbar';
+import SlideShow from '../components/SlideShow';
 
 const Container = styledComponents.div``;
 const MainHeader = styledComponents.h1``;
@@ -194,7 +195,11 @@ const HomeView = ({ user }) => {
           </Button>
         </SearchBarWrapper>
       )}
-      {searchResults && <SearchResults></SearchResults>}
+      {searchResults && (
+        <SearchResults>
+          <SlideShow />
+        </SearchResults>
+      )}
     </Container>
   );
 };
