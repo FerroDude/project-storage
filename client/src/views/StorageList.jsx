@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { listMyStorages, listRentedStorages } from '../services/storage';
 import StorageCard from '../components/StorageCard';
 import styledComponents from 'styled-components';
-import { styled } from '@mui/material/styles';
 
 const StorageList = styledComponents.ul`
   display: flex;
@@ -11,11 +10,14 @@ const StorageList = styledComponents.ul`
   color: white;
   background: ${(props) => props.theme.palette.background.component};
   border-radius: 5px;
-  width: 90%;
+  width: 70%;
   height: 95%;
   padding: ${(props) => props.theme.padding.element};
   margin: ${(props) => props.theme.margin.element};
   box-shadow: ${(props) => props.theme.shadow};
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+  }
 `;
 
 const Title = styledComponents.h1`

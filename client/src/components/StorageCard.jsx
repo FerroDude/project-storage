@@ -60,9 +60,11 @@ const Title = styledComponents.h3`
 `;
 
 const Info = styled(CardContent)`
-  padding-left: 2em;
+  width: 100%;
+  padding-left: 4em;
   @media only screen and (max-width: 600px) {
     padding: 0;
+    width: initial;
   }
   display: flex;
   flex-direction: column;

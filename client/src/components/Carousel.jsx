@@ -12,7 +12,7 @@ const CarouselComponent = styledComponents.div`
   flex-direction: column;
   justify-content: 
   margin: 0 3em 0 0;
-  width: 15vw;
+  width: 20vw;
   height: 10em;
   @media only screen and (max-width: 600px) {
     width: 100%;
