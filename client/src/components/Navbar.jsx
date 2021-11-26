@@ -7,12 +7,13 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Container = styledComponents.div`
+  margin-bottom: 2em;
   display: flex;
   justify-content: space-around;
   width: 100%;
   position: relative;
-  overflow: button;
-  
+  background: ${(props) => props.theme.palette.background.dark};
+  box-shadow: ${(props) => props.theme.shadow};
 `;
 
 const Left = styledComponents.div`
@@ -23,11 +24,11 @@ const Left = styledComponents.div`
 `;
 const CustomizedLocationIcon = styled((props) => <LocationOnIcon {...props} />)`
   color: orange;
+  margin: ${(props) => props.theme.margin.icon};
 `;
 
 const CurrentLocation = styledComponents.span`
-  font-size: 15px; 
-  margin-left: 5px; 
+  font-size: 15px;  
   cursor: pointer; 
   text-decoration: none; 
   color: white; 
@@ -54,12 +55,12 @@ const Button = styledComponents.button`
   `;
 
 const CustomizedMenuIcon = styled((props) => <MenuIcon {...props} />)`
-  color: orange;
+  color: ${(props) => props.theme.palette.primary.main};
   font-size: 35px;
 `;
 
 export const CustomizedCancelIcon = styled((props) => <ClearIcon {...props} />)`
-  color: orange;
+  color: ${(props) => props.theme.palette.primary.main};
   font-size: 35px;
 `;
 
@@ -68,45 +69,42 @@ const DropdownMenu = styledComponents.div`
   height: calc(100vh - (37px + 1em)); 
   width: 100vw; 
   top: calc(37px + 1em); 
-  background: #000;
+  background: ${(props) => props.theme.palette.background.main};
   transform: ${(props) =>
     props.isClicked ? 'translateX(0vw)' : 'translateX(100vw)'};
   transition: transform ease .5s;
-  padding: 25px 0 0 0;
+  padding: 5em 0 0 0;
+  z-index: 1;
 `;
 
 const UnorderedList = styledComponents.ul`
-width: 100% ;
-height: 70% ;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-align-items: center;
-padding: 0;
-list-style: none;
+  width: 100% ;
+  height: 70% ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  list-style: none;
 `;
 
 const ListItem = styledComponents.li`
-text-align: center;
-width: 50 % ;
-
-&
-.active {
-  padding: 15px 45px;
-  color: #FFA73D;
-  // background: #000;
-  // width: 50%;
-  // border-radius: 15px;
-}
-
+  text-align: center;
+  width: 100%;
+  line-height: 8em;
+  & :hover {
+    color: ${(props) => props.theme.palette.primary.main};
+    background-color: ${(props) => props.theme.palette.background.dark};
+  }
 `;
 
 const CustomizedNavLink = styledComponents((props) => <NavLink {...props} />)`
-text-decoration: none;
-width: 50% ;
-color: ${(props) => props.theme.palette.primary.text};
-font-size: 1.2em;
-font-weight: 600;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: ${(props) => props.theme.palette.primary.text};
+  font-size: 1.2em;
+  font-weight: 600;
 `;
 
 const Navbar = ({ handleSignOut, user }) => {

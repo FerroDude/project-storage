@@ -53,6 +53,7 @@ const schema = new mongoose.Schema(
       type: Number,
       required: true
     },
+    area: Number,
     rating: [ratingSchema],
     review: {
       type: [mongoose.Schema.Types.ObjectId],
