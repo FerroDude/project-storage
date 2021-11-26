@@ -74,7 +74,7 @@ const DropdownMenu = styledComponents.div`
     props.isClicked ? 'translateX(0vw)' : 'translateX(100vw)'};
   transition: transform ease .5s;
   padding: 5em 0 0 0;
-  z-index: 1;
+  z-index: 2;
 `;
 
 const UnorderedList = styledComponents.ul`
