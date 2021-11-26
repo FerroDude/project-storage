@@ -66,20 +66,20 @@ export const CustomizedCancelIcon = styled((props) => <ClearIcon {...props} />)`
 
 const DropdownMenu = styledComponents.div`
   position: absolute; 
-  height: calc(100vh - (37px + 1em)); 
+  height: 150vh;
   width: 100vw; 
-  top: calc(37px + 1em); 
+  top: calc(5.5em + 1em); 
   background: ${(props) => props.theme.palette.background.main};
   transform: ${(props) =>
     props.isClicked ? 'translateX(0vw)' : 'translateX(100vw)'};
   transition: transform ease .5s;
-  padding: 5em 0 0 0;
-  z-index: 1;
+  padding: 0 0 0 0;
+  z-index: 1000;
 `;
 
 const UnorderedList = styledComponents.ul`
-  width: 100% ;
-  height: 70% ;
+  width: 100%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,10 +90,11 @@ const UnorderedList = styledComponents.ul`
 const ListItem = styledComponents.li`
   text-align: center;
   width: 100%;
-  line-height: 8em;
+  line-height: 6em;
   & :hover {
+    font-size: 1.8em;
     color: ${(props) => props.theme.palette.primary.main};
-    background-color: ${(props) => props.theme.palette.background.dark};
+    //background-color: ${(props) => props.theme.palette.background.dark};
   }
 `;
 
@@ -154,22 +155,26 @@ const Navbar = ({ handleSignOut, user }) => {
 
               {user.role === 'landlord' && (
                 <>
-                  <CustomizedNavLink
-                    onClick={() => {
-                      setIsClicked(false);
-                    }}
-                    to="/storage/create"
-                  >
-                    Create storage
-                  </CustomizedNavLink>
-                  <CustomizedNavLink
-                    onClick={() => {
-                      setIsClicked(false);
-                    }}
-                    to="/storage/manage"
-                  >
-                    Manage storage
-                  </CustomizedNavLink>
+                  <ListItem>
+                    <CustomizedNavLink
+                      onClick={() => {
+                        setIsClicked(false);
+                      }}
+                      to="/storage/create"
+                    >
+                      Create storage
+                    </CustomizedNavLink>
+                  </ListItem>
+                  <ListItem>
+                    <CustomizedNavLink
+                      onClick={() => {
+                        setIsClicked(false);
+                      }}
+                      to="/storage/manage"
+                    >
+                      Manage storage
+                    </CustomizedNavLink>
+                  </ListItem>
                 </>
               )}
               <ListItem>
