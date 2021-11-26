@@ -11,6 +11,7 @@ const Container = styledComponents.div``;
 const SuggestionsList = styledComponents.div``;
 const SearchInput = styled(TextField)`
   background: rgba(255, 127, 4, 0.15);
+  color: white;
 `;
 const SomeComponent = styledComponents.div``;
 const SuggetionItem = styledComponents.div``;
