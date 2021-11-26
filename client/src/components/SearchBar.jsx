@@ -23,7 +23,9 @@ const SearchBar = ({ onStorageCoordsChange }) => {
       const searchAddress = await geocodeByAddress(value);
       const latLng = await getLatLng(searchAddress[0]);
       onStorageCoordsChange(latLng);
-    } catch {}
+    } catch {
+      // TODO We might want to create an error page for 500 requests or a No result found component   s
+    }
   };
 
   return (

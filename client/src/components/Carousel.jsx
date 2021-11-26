@@ -7,24 +7,41 @@ import styledComponents from 'styled-components';
 import { styled } from '@mui/material/styles';
 
 const CarouselComponent = styledComponents.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  margin: 0;
-  width: 15vw;
+  justify-content: 
+  margin: 0 3em 0 0;
+  width: 20vw;
   height: 10em;
   @media only screen and (max-width: 600px) {
-    width: 90vw;
+    width: 100%;
+    margin: 0;
   }
 `;
 
 const Image = styledComponents.img`
-object-fit: cover;
-width: 100%;
-height: 100%;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 `;
 
 const Stepper = styled(MobileStepper)`
+  position: absolute;
+  display: block;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  height: 100%;
   width: 100%;
+
+  & .MuiMobileStepper-dots {
+    position: absolute;
+    justify-content: center;
+    top: 90%;
+    width: 100%;
+    margin: 0 auto;
+  }
 `;
 
 const Carousel = ({ images, type }) => {
@@ -43,17 +60,17 @@ const Carousel = ({ images, type }) => {
       <CarouselComponent>
         <Image src={images[index]} alt={images[index]} />
         <Stepper
-          variant="text"
+          variant="dots"
           position="static"
           index={index}
-          steps={images.length}
+          steps={5}
+          activeStep={index}
           backButton={
             <Button
               size="small"
               onClick={goToPrevPicture}
               disabled={index === 0}
             >
-              Back
               <ArrowBackIcon />
             </Button>
           }
@@ -63,7 +80,6 @@ const Carousel = ({ images, type }) => {
               onClick={goToNextPicture}
               disabled={index === images.length - 1}
             >
-              Next
               <ArrowForwardIcon />
             </Button>
           }

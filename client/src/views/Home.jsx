@@ -11,6 +11,7 @@ import { CustomizedCancelIcon } from '../components/Navbar';
 const Container = styledComponents.div``;
 const MainHeader = styledComponents.h1``;
 const SearchBarWrapper = styledComponents.div``;
+const SearchResults = styledComponents.div``;
 
 const PrettoSlider = styled(Slider)({
   background: '#FFB76B',
@@ -193,6 +194,7 @@ const HomeView = ({ user }) => {
           </Button>
         </SearchBarWrapper>
       )}
+      {searchResults && <SearchResults></SearchResults>}
     </Container>
   );
 };
