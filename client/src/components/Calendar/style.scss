@@ -48,7 +48,6 @@
   background-color: #e6e6e6;
 }
 .react-calendar__navigation button[disabled] {
-  background-color: #f0f0f0;
 }
 .react-calendar__month-view__weekdays {
   text-align: center;
@@ -85,7 +84,6 @@
   background: none;
 }
 .react-calendar__tile:disabled {
-  background-color: red;
   color: grey;
 }
 .react-calendar__tile:enabled:hover,

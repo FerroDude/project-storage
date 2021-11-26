@@ -77,7 +77,7 @@ const DropdownMenu = styledComponents.div`
   transform: ${(props) =>
     props.isClicked ? 'translateX(0vw)' : 'translateX(100vw)'};
   transition: transform ease .5s;
-  z-index: 1;
+  z-index: 2;
 `;
 
 const UnorderedList = styledComponents.ul`
@@ -157,14 +157,16 @@ const Navbar = ({ handleSignOut, user }) => {
 
               {user.role === 'landlord' && (
                 <>
-                  <CustomizedNavLink
-                    onClick={() => {
-                      setIsClicked(false);
-                    }}
-                    to="/storage/create"
-                  >
-                    Create storage
-                  </CustomizedNavLink>
+                  <ListItem>
+                    <CustomizedNavLink
+                      onClick={() => {
+                        setIsClicked(false);
+                      }}
+                      to="/storage/create"
+                    >
+                      Create storage
+                    </CustomizedNavLink>
+                  </ListItem>
                 </>
               )}
               <ListItem>

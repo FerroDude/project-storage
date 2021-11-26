@@ -120,6 +120,13 @@ const StorageView = (props) => {
     }
   };
 
+  //function that checks if react calendar date is in the past
+  const tileDisabled = (date, view) => {
+    if (view === 'month') {
+      return date < new Date();
+    }
+  };
+
   const handleUnrent = async () => {
     try {
       await cancelSubscription(storage._id);
@@ -142,11 +149,6 @@ const StorageView = (props) => {
   return (
     storage && (
       <Storage>
-        <ReactCalendar
-          date={date}
-          setDate={setDate}
-          onChange={calendarOnChange}
-        />
         <PhotoGallery images={storage.gallery} />
         <Info>
           <Title>{storage.name}</Title>
@@ -181,7 +183,17 @@ const StorageView = (props) => {
                 <button onClick={handleUnrent}>Return this storage</button>
               )) || <em>Not available!</em>}
             {showPaymentForm && (
-              <PaymentView onRent={handleRent} storage={storage} />
+              <div>
+                <h2>Select renting dates:</h2>
+                <br />
+                <ReactCalendar
+                  date={date}
+                  setDate={setDate}
+                  onChange={calendarOnChange}
+                />
+                <br />
+                <PaymentView onRent={handleRent} storage={storage} />
+              </div>
             )}
           </div>
         )}
