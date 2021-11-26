@@ -15,6 +15,7 @@ const Profile = styledComponents.div`
   margin: ${(props) => props.theme.margin.element};
   box-shadow: ${(props) => props.theme.shadow};
   @media only screen and (max-width: 600px) {
+    flex-direction: column;
     width: 90%;
   }
 `;
@@ -23,6 +24,10 @@ const Info = styledComponents.div`
   display: flex;
   flex-direction: column;
   width: 30%;
+  @media only screen and (max-width: 600px) {
+    margin-top: 3em;
+    width: 100%;
+  }
 `;
 
 const Header = styledComponents.div`
@@ -30,11 +35,10 @@ const Header = styledComponents.div`
   width: 25%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   @media only screen and (max-width: 600px) {
-    height: initial;
-    flex-direction: column;
-    justify-content: initial;
-    align-items: center;
+    width: 100%;
   }
 `;
 
@@ -48,12 +52,11 @@ const Subtitle = styledComponents.h3`
 `;
 
 const ProfilePicture = styled(Avatar)`
-  margin: 0 0 1em 0;
+  margin: 1em;
   height: auto;
-  width: 100%;
+  width: 60%;
+
   @media only screen and (max-width: 600px) {
-    height: 10%;
-    width: initial;
   }
 `;
 
@@ -65,7 +68,7 @@ const Section = styledComponents.div`
 
 const Button = styledComponents.button`
 margin: 0;
-align-self: flex-end;
+align-self: flex-start;
   & * {
     color: ${(props) => props.theme.palette.primary.main};
   }
@@ -85,7 +88,6 @@ const ProfileView = ({ user }) => {
         <Header>
           {user.profilePicture && (
             <ProfilePicture
-              variant="rounded"
               src={user.profilePicture}
               alt={`${user.username}'s profile`}
             />
