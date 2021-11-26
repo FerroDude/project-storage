@@ -61,12 +61,16 @@ router.get('/:id', async (req, res, next) => {
 
 router.patch('/:id/rent', routeGuard, async (req, res, next) => {
   const { id } = req.params;
-  const { isRented, renter } = req.body;
+  const { isRented, renter, rentDates } = req.body;
+
+  console.log('RENTED DATES HERE', rentDates);
+
   const storage = await Storage.findByIdAndUpdate(
     id,
     {
       isRented,
-      renter
+      renter,
+      rentDates
     },
     { new: true }
   );
