@@ -17,7 +17,7 @@ const schema = new mongoose.Schema(
     },
     description: {
       type: String,
-      maxlength: 160,
+      maxlength: 500,
       required: true
     },
     owner: {

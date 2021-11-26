@@ -3,6 +3,32 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete';
+import { styled } from '@mui/material/styles';
+import styledComponents from 'styled-components';
+import TextField from '@mui/material/TextField';
+
+const Input = styled(TextField)`
+  margin: 1em 0;
+  width: 100%;
+  background: rgba(255, 127, 4, 0.07);
+  border-radius: 5px 5px 0 0;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+  .MuiFilledInput-input {
+    color: ${(props) => props.theme.palette.primary.text};
+  }
+  .MuiInputLabel-root {
+    color: ${(props) => props.theme.palette.primary.main};
+  }
+`;
+
+const Wrapper = styledComponents.div`
+  width: 60%;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+`;
 
 const searchOptions = {
   componentRestrictions: { country: ['es', 'pt'] },
@@ -20,7 +46,7 @@ const AddressSearch = ({ onCoordinatesChange }) => {
   };
 
   return (
-    <div>
+    <Wrapper>
       <PlacesAutocomplete
         value={searchTerm}
         onChange={setSearchTerm}
@@ -29,12 +55,12 @@ const AddressSearch = ({ onCoordinatesChange }) => {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
-            <label htmlFor="input-storage-address">Address</label>
-            <input
+            <Input
               {...getInputProps({
+                variant: 'filled',
+                label: 'Address',
                 id: 'input-storage-address',
                 type: 'text',
-                placeholder: 'Type your address',
                 name: 'address'
               })}
             />
@@ -59,7 +85,7 @@ const AddressSearch = ({ onCoordinatesChange }) => {
           </div>
         )}
       </PlacesAutocomplete>
-    </div>
+    </Wrapper>
   );
 };
 

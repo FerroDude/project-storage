@@ -55,9 +55,6 @@ const ProfilePicture = styled(Avatar)`
   margin: 1em;
   height: auto;
   width: 60%;
-
-  @media only screen and (max-width: 600px) {
-  }
 `;
 
 const Section = styledComponents.div`
@@ -67,8 +64,12 @@ const Section = styledComponents.div`
 `;
 
 const Button = styledComponents.button`
-margin: 0;
-align-self: flex-start;
+  margin: 0;
+  padding: 1em 3em;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+  align-self: flex-start;
   & * {
     color: ${(props) => props.theme.palette.primary.main};
   }
