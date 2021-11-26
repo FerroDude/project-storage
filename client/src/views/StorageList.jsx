@@ -1,6 +1,28 @@
 import { useEffect, useState } from 'react';
 import { listMyStorages, listRentedStorages } from '../services/storage';
-import Storage from '../components/Storage';
+import StorageCard from '../components/StorageCard';
+import styledComponents from 'styled-components';
+
+const StorageList = styledComponents.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  background: ${(props) => props.theme.palette.background.component};
+  border-radius: 5px;
+  width: 70%;
+  height: 95%;
+  padding: ${(props) => props.theme.padding.element};
+  margin: ${(props) => props.theme.margin.element};
+  box-shadow: ${(props) => props.theme.shadow};
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+  }
+`;
+
+const Title = styledComponents.h1`
+  color: ${(props) => props.theme.palette.title.component};
+`;
 
 const StorageListView = ({ user }) => {
   const [storages, setStorages] = useState(null);
@@ -20,14 +42,12 @@ const StorageListView = ({ user }) => {
 
   return (
     (storages && (
-      <div>
-        <h1>My Storages</h1>
-        <ul style={{ padding: 0 }}>
-          {storages.map((storage) => (
-            <Storage key={storage._id} user={user} storage={storage} />
-          ))}
-        </ul>
-      </div>
+      <StorageList>
+        <Title>My Storages</Title>
+        {storages.map((storage) => (
+          <StorageCard key={storage._id} user={user} storage={storage} />
+        ))}
+      </StorageList>
     )) || <p>No storages</p>
   );
 };
