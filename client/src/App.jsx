@@ -12,7 +12,6 @@ const Wrapper = styled.div`
   height: 100%;
   font-family: 'Manrope', sans-serif;
   margin: 0;
-  padding-top: 1em;
 `;
 
 const Container = styled.div`
