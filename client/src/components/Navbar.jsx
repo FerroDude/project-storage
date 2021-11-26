@@ -14,13 +14,15 @@ const Container = styledComponents.div`
   position: relative;
   background: ${(props) => props.theme.palette.background.dark};
   box-shadow: ${(props) => props.theme.shadow};
+  padding: 1em;
+  
 `;
 
 const Left = styledComponents.div`
   display: flex;
   align-items: center;
-  flex: 2;
-  padding-left: 10px;
+  flex:2;
+
 `;
 const CustomizedLocationIcon = styled((props) => <LocationOnIcon {...props} />)`
   color: orange;
@@ -52,6 +54,8 @@ const Button = styledComponents.button`
   background: none; 
   border: none; 
   cursor: pointer;
+  margin: 0;
+  padding:0;
   `;
 
 const CustomizedMenuIcon = styled((props) => <MenuIcon {...props} />)`
@@ -73,7 +77,6 @@ const DropdownMenu = styledComponents.div`
   transform: ${(props) =>
     props.isClicked ? 'translateX(0vw)' : 'translateX(100vw)'};
   transition: transform ease .5s;
-  padding: 0 0 0 0;
   z-index: 1000;
 `;
 
