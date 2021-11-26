@@ -4,6 +4,51 @@ import PhotoGallery from '../components/PhotoGallery';
 import { editStorage, getStorage, deleteStorage } from '../services/storage';
 import { useHistory } from 'react-router-dom';
 import { uploadMultipleFiles } from '../services/fileupload';
+import { styled } from '@mui/material/styles';
+import styledComponents from 'styled-components';
+import TextField from '@mui/material/TextField';
+
+const Form = styledComponents.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: ${(props) => props.theme.palette.background.component};
+  border-radius: 5px;
+  width: 90%;
+  height: 95%;
+  padding: ${(props) => props.theme.padding.element};
+  margin: ${(props) => props.theme.margin.element};
+  box-shadow: ${(props) => props.theme.shadow};
+`;
+
+const Subtitle = styledComponents.h3`
+  color: ${(props) => props.theme.palette.title.subtitle};
+  margin: 1em 0 1em 0;
+`;
+
+const Input = styled(TextField)`
+  margin: 1em 0;
+  width: 60%;
+  background: rgba(255, 127, 4, 0.07);
+  border-radius: 5px 5px 0 0;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+  .MuiFilledInput-input {
+    color: ${(props) => props.theme.palette.primary.text};
+  }
+  .MuiInputLabel-root {
+    color: ${(props) => props.theme.palette.primary.main};
+  }
+
+  .MuiFormHelperText-root {
+    color: ${(props) => props.theme.palette.primary.text};
+    margin: 0;
+    background: ${(props) => props.theme.palette.background.component};
+    font-size: 1em;
+  }
+`;
 
 const StorageManagementView = (props) => {
   const [storage, setStorage] = useState(null);
@@ -58,8 +103,8 @@ const StorageManagementView = (props) => {
         <form onSubmit={handleFormSubmission}>
           <FileUpload type="multiple" onPickFile={handleGalleryChange} />
           <h3>Personal details</h3>
-          <label htmlFor="input-username">Name</label>
-          <input
+          <Input
+            label="Name"
             id="input-name"
             type="text"
             placeholder="Name"
@@ -67,8 +112,8 @@ const StorageManagementView = (props) => {
             value={storage.name}
             onChange={handleInputChange}
           />
-          <label htmlFor="input-storage-description">Description</label>
-          <textarea
+          <Input
+            label="Description"
             id="input-storage-description"
             type="text"
             placeholder="Description (max. 160 characters)"
@@ -78,8 +123,8 @@ const StorageManagementView = (props) => {
             maxLength="160"
           />
           <p>{160 - storage.description.length} characters remaining.</p>
-          <label htmlFor="input-storage-price">Price</label>
-          <input
+          <Input
+            label="Price"
             id="input-storage-price"
             type="number"
             placeholder="Price"
@@ -88,8 +133,8 @@ const StorageManagementView = (props) => {
             onChange={handleInputChange}
           />
           <p>Storage space size</p>
-          <label htmlFor="input-storage-width">Width</label>
-          <input
+          <Input
+            label="Width"
             id="input-storage-width"
             type="text"
             placeholder="Width"
@@ -97,8 +142,8 @@ const StorageManagementView = (props) => {
             value={storage.width}
             onChange={handleInputChange}
           />
-          <label htmlFor="input-storage-length">Length</label>
-          <input
+          <Input
+            label="Length"
             id="input-storage-length"
             type="text"
             placeholder="Length"

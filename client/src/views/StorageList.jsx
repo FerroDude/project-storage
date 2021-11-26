@@ -24,6 +24,11 @@ const Title = styledComponents.h1`
   color: ${(props) => props.theme.palette.title.component};
 `;
 
+const Info = styledComponents.p`
+  margin-top: 3em;
+  color: ${(props) => props.theme.palette.primary.text};
+`;
+
 const StorageListView = ({ user }) => {
   const [storages, setStorages] = useState(null);
 
@@ -41,14 +46,18 @@ const StorageListView = ({ user }) => {
   }, [user]);
 
   return (
-    (storages && (
+    storages && (
       <StorageList>
         <Title>My Storages</Title>
-        {storages.map((storage) => (
-          <StorageCard key={storage._id} user={user} storage={storage} />
-        ))}
+        {storages.length ? (
+          storages.map((storage) => (
+            <StorageCard key={storage._id} user={user} storage={storage} />
+          ))
+        ) : (
+          <Info>You don't currently have any storages on your list</Info>
+        )}
       </StorageList>
-    )) || <p>No storages</p>
+    )
   );
 };
 

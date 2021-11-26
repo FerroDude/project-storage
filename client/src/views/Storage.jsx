@@ -70,6 +70,12 @@ const Subtitle = styledComponents.h3`
   font-weight: bold;
 `;
 
+const Description = styledComponents.p`
+  @media only screen and (min-width: 600px) {
+    width: 50%;
+  }
+`;
+
 const StorageView = (props) => {
   const [storage, setStorage] = useState(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
@@ -131,7 +137,7 @@ const StorageView = (props) => {
         <PhotoGallery images={storage.gallery} />
         <Info>
           <Title>{storage.name}</Title>
-          <p>{storage.description}</p>
+          <Description>{storage.description}</Description>
           <Owner>
             <OwnerIcon />
             Pekka Tiitinen
