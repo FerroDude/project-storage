@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 
 const ratingSchema = new mongoose.Schema({
   ratings: [Number],
-  average: Number
+  average: {
+    type: Number,
+    default: 0
+    // TODO : we might want to iterate over the rating array in the rating property of the storage model and used array.reduce to sum all the ratings and divide by the number of ratings in that array
+  }
 });
 
 const schema = new mongoose.Schema(
