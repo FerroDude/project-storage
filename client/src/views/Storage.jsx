@@ -191,7 +191,7 @@ const StorageView = (props) => {
               )) || <em>Not available!</em>}
             {showPaymentForm && (
               <div>
-                <h2>Select renting dates:</h2>
+                <Subtitle>Select renting dates</Subtitle>
                 <br />
                 <ReactCalendar
                   date={date}

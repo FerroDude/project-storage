@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
 import PaymentForm from '../components/PaymentForm';
 import { loadSubscription } from '../services/subscription';
+import styledComponents from 'styled-components';
+
+const Subtitle = styledComponents.h3`
+  margin-top: 0.5em;
+  color: ${(props) => props.theme.palette.title.subtitle};
+  font-weight: bold;
+`;
 
 const PaymentView = ({ onRent, storage }) => {
   const [subscription, setSubscription] = useState(null);
@@ -19,7 +26,7 @@ const PaymentView = ({ onRent, storage }) => {
   return (
     (!subscription && (
       <div>
-        <h2>Please fill in your credit card details below</h2>
+        <Subtitle>Please fill in your credit card details below</Subtitle>
         <PaymentForm onConfirm={onRent} />
       </div>
     )) ||
