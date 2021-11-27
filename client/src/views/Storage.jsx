@@ -67,6 +67,7 @@ const Title = styledComponents.h2`
 `;
 
 const Subtitle = styledComponents.h3`
+  margin-top: 0.5em;
   color: ${(props) => props.theme.palette.title.subtitle};
   font-weight: bold;
 `;
@@ -75,6 +76,11 @@ const Description = styledComponents.p`
   @media only screen and (min-width: 600px) {
     width: 50%;
   }
+`;
+
+const DetailWrapper = styledComponents.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const StorageView = (props) => {
@@ -152,18 +158,20 @@ const StorageView = (props) => {
         <Info>
           <Title>{storage.name}</Title>
           <Description>{storage.description}</Description>
-          <Owner>
-            <OwnerIcon />
-            {storage.owner.username}
-          </Owner>
-          <Location>
-            <LocationIcon />
-            Madrid
-          </Location>
-          <Rating>
-            <RatingIcon />
-            4.4
-          </Rating>
+          <DetailWrapper>
+            <Owner>
+              <OwnerIcon />
+              {storage.owner.username}
+            </Owner>
+            <Location>
+              <LocationIcon />
+              Madrid
+            </Location>
+            <Rating>
+              <RatingIcon />
+              {storage.average}
+            </Rating>
+          </DetailWrapper>
           <Subtitle>Dimensions:</Subtitle>
           <ul>
             <li>Width: {storage.width}</li>
