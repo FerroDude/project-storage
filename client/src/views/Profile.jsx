@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import styledComponents from 'styled-components';
 import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
+import { useEffect } from 'react';
+import { loadAuthenticatedUser } from '../services/user';
 
 const Profile = styledComponents.div`
   color: ${(props) => props.theme.palette.primary.text};

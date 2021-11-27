@@ -25,7 +25,6 @@ function App() {
   //setting state for user with hooks
   const [user, setUser] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  console.log(isLoaded);
   const loadUser = async () => {
     const user = await loadAuthenticatedUser();
     setUser(user);
@@ -63,6 +62,7 @@ function App() {
             isLoaded={isLoaded}
             handleAuthenticationChange={handleAuthenticationChange}
             handleEditUser={handleEditUser}
+            loadUser={loadUser}
           />
         </Container>
       </BrowserRouter>
