@@ -26,11 +26,27 @@ const SearchContainer = styledComponents.div`
     flex: 2;
     border-radius: 50px;
     
+    #input-search {
+      padding: 1em
+    }
   }
 
 `;
 
-const SearchBarWrapper = styledComponents.div``;
+const SearchBarFilterContainer = styledComponents.div`
+  margin: 2.5em 0;
+  padding: 1em 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1em;
+
+  .MuiRating-root {
+    background: #342211;
+    padding: 3px 10px;
+    width: 40%;
+    border-radius: 35px;
+  }
+  `;
 const SearchResults = styledComponents.div``;
 
 const PrettoSlider = styled(Slider)({
@@ -170,7 +186,7 @@ const HomeView = ({ user }) => {
         </Button>
       </SearchContainer>
       {addFilterIsClicked && (
-        <SearchBarWrapper>
+        <SearchBarFilterContainer>
           <Typography>Price</Typography>
           <PrettoSlider
             valueLabelDisplay="auto"
@@ -211,7 +227,7 @@ const HomeView = ({ user }) => {
           <Button onClick={handleFilterSubmit} variant="contained">
             Done
           </Button>
-        </SearchBarWrapper>
+        </SearchBarFilterContainer>
       )}
       {searchResults.results && (
         <SearchResults>

@@ -28,7 +28,7 @@ const SomeComponent = styledComponents.div``;
 const SuggetionItem = styledComponents.div`
 margin: 10px 0;
 padding: 5px 10px;
-border-radius: 10px;
+border-radius: 20px;
 `;
 
 const SearchBar = ({ onStorageCoordsChange }) => {

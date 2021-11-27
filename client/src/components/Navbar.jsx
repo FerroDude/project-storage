@@ -70,9 +70,9 @@ export const CustomizedCancelIcon = styled((props) => <ClearIcon {...props} />)`
 
 const DropdownMenu = styledComponents.div`
   position: absolute; 
-  height: 150vh;
-  width: 100vw; 
-  top: calc(5.5em + 1em); 
+  height: calc(100vh - (65px + 1em));
+  width: 100vw;
+  top: calc(65px + 1em);
   background: ${(props) => props.theme.palette.background.main};
   transform: ${(props) =>
     props.isClicked ? 'translateX(0vw)' : 'translateX(100vw)'};
@@ -88,16 +88,16 @@ const UnorderedList = styledComponents.ul`
   align-items: center;
   padding: 0;
   list-style: none;
-`;
+  `;
 
 const ListItem = styledComponents.li`
   text-align: center;
   width: 100%;
   line-height: 6em;
+
   & :hover {
-    font-size: 1.8em;
     color: ${(props) => props.theme.palette.primary.main};
-    //background-color: ${(props) => props.theme.palette.background.dark};
+    background-color: ${(props) => props.theme.palette.background.dark};
   }
 `;
 
@@ -168,7 +168,6 @@ const Navbar = ({ handleSignOut, user }) => {
                       Create storage
                     </CustomizedNavLink>
                   </ListItem>
-<<<<<<< HEAD
                   <ListItem>
                     <CustomizedNavLink
                       onClick={() => {
@@ -179,8 +178,6 @@ const Navbar = ({ handleSignOut, user }) => {
                       Manage storage
                     </CustomizedNavLink>
                   </ListItem>
-=======
->>>>>>> 6c70d5febd5178c20398183e0b5298be22c77864
                 </>
               )}
               <ListItem>
