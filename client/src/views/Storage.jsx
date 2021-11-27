@@ -80,16 +80,10 @@ const Description = styledComponents.p`
 const StorageView = (props) => {
   const [storage, setStorage] = useState(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
-  const [showCalendar, setShowCalendar] = useState(false);
   const [date, setDate] = useState(new Date());
 
   const calendarOnChange = (date) => {
     setDate(date);
-    console.log(date[0], date[1]);
-  };
-
-  const toggleCalendar = () => {
-    setShowCalendar(!showCalendar);
   };
 
   const history = useHistory();
@@ -106,30 +100,29 @@ const StorageView = (props) => {
   }, [id]);
 
   const handleRent = async (paymentMethodToken) => {
+    storage.isRented = true;
+    storage.renter = user._id;
+    storage.rentDates = date;
+
+    //function that gets days between two dates
+    const getDays = (date1, date2) => {
+      const diff = Math.abs(date2.getTime() - date1.getTime());
+      return Math.ceil(diff / (1000 * 3600 * 24));
+    };
+
     try {
-      const duration = 55;
+      const duration = getDays(date[0], date[1]);
       await createSubscription({
         paymentMethodToken,
         storage: storage._id,
         duration
       });
 
-      storage.isRented = true;
-      storage.renter = user._id;
-      storage.rentDates = date;
-
       setStorage({ ...storage });
       await rentStorage(storage);
       history.push(`/confirmation/subscribed/${storage._id}`);
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  //function that checks if react calendar date is in the past
-  const tileDisabled = (date, view) => {
-    if (view === 'month') {
-      return date < new Date();
     }
   };
 
