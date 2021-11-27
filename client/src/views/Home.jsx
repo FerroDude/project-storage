@@ -1,20 +1,27 @@
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { Rating, Slider, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styledComponents from 'styled-components';
 import SearchBar from '../components/SearchBar';
-import { getStorageNearCoods } from '../services/storage';
+import { getHighRatedStorages, getStorageNearCoods } from '../services/storage';
 import { styled } from '@mui/material/styles';
 import { CustomizedCancelIcon } from '../components/Navbar';
 import SlideShow from '../components/SlideShow';
 
-const Container = styledComponents.div``;
-const MainHeader = styledComponents.h1`
-  padding: 0 1em 1em;
-  font-size: 1.5em;
-  text-align: center;
-  width: 70%  
+const Container = styledComponents.div`
+  display: flex;
+  flex-direction: column;
+  
+  .allow-location {
+    margin: 2em auto;
+    width: 60%;
+    font-weight: 500;
+  }
+  `;
+const SlideHeader = styledComponents.h6`
+  padding: 1em;
+  width: 100%  
 `;
 const SearchContainer = styledComponents.div`
   display: flex;
@@ -27,7 +34,8 @@ const SearchContainer = styledComponents.div`
     border-radius: 50px;
     
     #input-search {
-      padding: 1em
+      padding: 1em;
+      color: white;
     }
   }
 
@@ -47,7 +55,20 @@ const SearchBarFilterContainer = styledComponents.div`
     border-radius: 35px;
   }
   `;
-const SearchResults = styledComponents.div``;
+const SearchResults = styledComponents.div`
+padding: 1em;
+margin: 1em 0;  
+
+.slick-list {
+    height: 15em;
+    border-radius: 20px;
+}
+
+.slick-dots li button:before {
+  color: #ff7f04; 
+}
+
+`;
 
 const PrettoSlider = styled(Slider)({
   background: '#FFB76B',
@@ -100,6 +121,18 @@ const HomeView = ({ user }) => {
   const [addFilterIsClicked, setAddFilterIsCliked] = useState(false);
   const [searchResults, setSearchResults] = useState({ results: null });
   const [hasResults, setHasResults] = useState(false);
+
+  const [isLocationAllowed, setIsLocationAllowed] = useState(false);
+  const [highRatedStorages, setHighRatedStorages] = useState(null);
+
+  useEffect(() => {
+    console.log('useEffect called');
+    const getStorages = async () => {
+      const loadedStorages = await getHighRatedStorages();
+      setHighRatedStorages(loadedStorages);
+    };
+    getStorages();
+  }, []);
 
   const getSearchResults = async (
     serviceHandlerFunction,
@@ -172,7 +205,7 @@ const HomeView = ({ user }) => {
     }
   };
 
-  console.log(searchResults.results);
+  console.log(highRatedStorages);
   return (
     <Container>
       <SearchContainer>
@@ -231,9 +264,25 @@ const HomeView = ({ user }) => {
       )}
       {searchResults.results && (
         <SearchResults>
+          <SlideHeader>Search Results</SlideHeader>
           <SlideShow storages={searchResults.results.sortedStorages} />
         </SearchResults>
       )}
+
+      {highRatedStorages && (
+        <SearchResults>
+          <SlideHeader>Worldwide Recommendations</SlideHeader>
+          <SlideShow storages={highRatedStorages.data} />
+        </SearchResults>
+      )}
+
+      <Button
+        className="allow-location"
+        onClick={handleFilterSubmit}
+        variant="contained"
+      >
+        Allow Location Access
+      </Button>
     </Container>
   );
 };

@@ -21,7 +21,6 @@ justify-content: space-between;`;
 
 const SearchInput = styled(TextField)`
   background: rgba(255, 127, 4, 0.15);
-  color: white;
   width: 100%;
 `;
 const SomeComponent = styledComponents.div``;
