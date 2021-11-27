@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 
 const SuggestionsList = styledComponents.div`
 position: absolute;
-z-index: 1;
+z-index: 800;
 background: rgb(20 20 20);
 width: 100%;
 right: 0;
