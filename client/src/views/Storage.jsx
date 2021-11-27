@@ -144,7 +144,7 @@ const StorageView = (props) => {
     setShowPaymentForm(!showPaymentForm);
   };
   // setStorage({ ...storage, isRented: true, renter: user._id }); PREVIOUS WAY
-
+  console.log(storage);
   return (
     storage && (
       <Storage>
@@ -154,7 +154,7 @@ const StorageView = (props) => {
           <Description>{storage.description}</Description>
           <Owner>
             <OwnerIcon />
-            Pekka Tiitinen
+            {storage.owner.username}
           </Owner>
           <Location>
             <LocationIcon />

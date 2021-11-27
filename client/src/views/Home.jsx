@@ -35,7 +35,7 @@ const SearchContainer = styledComponents.div`
     
     #input-search {
       padding: 1em;
-      color: white;
+      color: ${(props) => props.theme.palette.primary.text};
     }
   }
 
@@ -55,10 +55,11 @@ const SearchBarFilterContainer = styledComponents.div`
     border-radius: 35px;
   }
   `;
+
 const SearchResults = styledComponents.div`
 padding: 1em;
 margin: 1em 0;  
-
+color: ${(props) => props.theme.palette.primary.text};
 .slick-list {
     height: 15em;
     border-radius: 20px;
@@ -253,13 +254,12 @@ const HomeView = ({ user }) => {
 
           <Rating
             name="rating"
-            value="simple-controlled"
             onChange={handleFilterChange}
             value={filters.rating}
           />
-          <Button onClick={handleFilterSubmit} variant="contained">
+          <button onClick={handleFilterSubmit} variant="contained">
             Done
-          </Button>
+          </button>
         </SearchBarFilterContainer>
       )}
       {searchResults.results && (
@@ -276,13 +276,13 @@ const HomeView = ({ user }) => {
         </SearchResults>
       )}
 
-      <Button
+      <button
         className="allow-location"
         onClick={handleFilterSubmit}
         variant="contained"
       >
         Allow Location Access
-      </Button>
+      </button>
     </Container>
   );
 };
