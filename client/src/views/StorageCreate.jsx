@@ -20,6 +20,10 @@ const Form = styledComponents.form`
   padding: ${(props) => props.theme.padding.element};
   margin: ${(props) => props.theme.margin.element};
   box-shadow: ${(props) => props.theme.shadow};
+
+  .price-input {
+    margin-top: 61px;
+  }
 `;
 
 const Subtitle = styledComponents.h3`
@@ -142,6 +146,7 @@ const StorageCreateView = () => {
           name="price"
           value={inputValues.price}
           onChange={handleInputChange}
+          className="price-input"
         />
         <Subtitle>Storage space size</Subtitle>
         <Input
