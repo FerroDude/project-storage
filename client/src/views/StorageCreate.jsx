@@ -64,7 +64,8 @@ const StorageCreateView = () => {
     price: null,
     width: '',
     length: '',
-    gallery: []
+    gallery: [],
+    rentDates: []
   });
 
   const history = useHistory();

@@ -14,6 +14,9 @@ const schema = new mongoose.Schema(
       type: String,
       required: true
     },
+    rentDates: {
+      type: [String]
+    },
     description: {
       type: String,
       maxlength: 500,

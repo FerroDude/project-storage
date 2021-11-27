@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { rentStorage, getStorage } from '../services/storage';
 import PhotoGallery from '../components/PhotoGallery';
 import PaymentView from '../views/Payment';
+import ReactCalendar from '../components/Calendar/Index';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarIcon from '@mui/icons-material/Star';
 import PersonIcon from '@mui/icons-material/Person';
@@ -70,9 +71,26 @@ const Subtitle = styledComponents.h3`
   font-weight: bold;
 `;
 
+const Description = styledComponents.p`
+  @media only screen and (min-width: 600px) {
+    width: 50%;
+  }
+`;
+
 const StorageView = (props) => {
   const [storage, setStorage] = useState(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [date, setDate] = useState(new Date());
+
+  const calendarOnChange = (date) => {
+    setDate(date);
+    console.log(date[0], date[1]);
+  };
+
+  const toggleCalendar = () => {
+    setShowCalendar(!showCalendar);
+  };
 
   const history = useHistory();
 
@@ -98,6 +116,7 @@ const StorageView = (props) => {
 
       storage.isRented = true;
       storage.renter = user._id;
+      storage.rentDates = date;
 
       setStorage({ ...storage });
       await rentStorage(storage);
@@ -107,11 +126,19 @@ const StorageView = (props) => {
     }
   };
 
+  //function that checks if react calendar date is in the past
+  const tileDisabled = (date, view) => {
+    if (view === 'month') {
+      return date < new Date();
+    }
+  };
+
   const handleUnrent = async () => {
     try {
       await cancelSubscription(storage._id);
       storage.isRented = false;
       storage.renter = null;
+      storage.rentDates = [];
       setStorage({ ...storage });
       await rentStorage(storage);
       history.push(`/confirmation/unsubscribed/${storage._id}`);
@@ -131,7 +158,7 @@ const StorageView = (props) => {
         <PhotoGallery images={storage.gallery} />
         <Info>
           <Title>{storage.name}</Title>
-          <p>{storage.description}</p>
+          <Description>{storage.description}</Description>
           <Owner>
             <OwnerIcon />
             Pekka Tiitinen
@@ -161,9 +188,18 @@ const StorageView = (props) => {
               (storage.renter === user._id && (
                 <button onClick={handleUnrent}>Return this storage</button>
               )) || <em>Not available!</em>}
-
             {showPaymentForm && (
-              <PaymentView onRent={handleRent} storage={storage} />
+              <div>
+                <h2>Select renting dates:</h2>
+                <br />
+                <ReactCalendar
+                  date={date}
+                  setDate={setDate}
+                  onChange={calendarOnChange}
+                />
+                <br />
+                <PaymentView onRent={handleRent} storage={storage} />
+              </div>
             )}
           </div>
         )}
