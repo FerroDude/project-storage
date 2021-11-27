@@ -32,6 +32,7 @@ const Input = styled(TextField)`
   width: 60%;
   background: rgba(255, 127, 4, 0.07);
   border-radius: 5px 5px 0 0;
+  z-index: 1;
   @media only screen and (max-width: 600px) {
     width: 100%;
   }
