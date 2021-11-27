@@ -253,13 +253,12 @@ const HomeView = ({ user }) => {
 
           <Rating
             name="rating"
-            value="simple-controlled"
             onChange={handleFilterChange}
             value={filters.rating}
           />
-          <Button onClick={handleFilterSubmit} variant="contained">
+          <button onClick={handleFilterSubmit} variant="contained">
             Done
-          </Button>
+          </button>
         </SearchBarFilterContainer>
       )}
       {searchResults.results && (
@@ -276,13 +275,13 @@ const HomeView = ({ user }) => {
         </SearchResults>
       )}
 
-      <Button
+      <button
         className="allow-location"
         onClick={handleFilterSubmit}
         variant="contained"
       >
         Allow Location Access
-      </Button>
+      </button>
     </Container>
   );
 };

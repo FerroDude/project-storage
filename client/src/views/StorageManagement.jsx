@@ -51,6 +51,13 @@ const Buttons = styledComponents.div`
   justify-content: space-between;
   @media only screen and (max-width: 600px) {
     flex-direction: column;
+    width: 100%;
+  }
+`;
+
+const Button = styledComponents.button`
+  @media only screen and (max-width: 600px) {
+    padding: 1em 3em;
   }
 `;
 
@@ -184,8 +191,8 @@ const StorageManagementView = (props) => {
             value={`${storage.length * storage.width} `}
           />
           <Buttons>
-            <button>Save storage</button>
-            <button onClick={handleStorageDeletion}>Delete storage</button>
+            <Button>Save storage</Button>
+            <Button onClick={handleStorageDeletion}>Delete storage</Button>
           </Buttons>
         </Form>
       </div>
