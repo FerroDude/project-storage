@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 const Container = styledComponents.div`
   margin-bottom: 2em;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
   position: relative;
   background: ${(props) => props.theme.palette.background.dark};
@@ -120,6 +120,8 @@ const Navbar = ({ handleSignOut, user }) => {
 
   return (
     <Container>
+      <img className="homeLogo" src="/ssd.png" alt="Logo" />
+
       <DropdownMenu isClicked={isClicked}>
         <UnorderedList>
           <ListItem>
