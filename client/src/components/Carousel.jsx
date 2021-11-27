@@ -42,6 +42,22 @@ const Stepper = styled(MobileStepper)`
     width: 100%;
     margin: 0 auto;
   }
+
+  & .MuiButton-root:first-child {
+    background: ${(props) => props.theme.palette.background.opaqueLight};
+    border-radius: 5px;
+    position: absolute;
+    top: 45%;
+    left: 1%;
+  }
+
+  & .MuiButton-root:nth-child(3) {
+    background: ${(props) => props.theme.palette.background.opaqueLight};
+    border-radius: 5px;
+    position: absolute;
+    top: 45%;
+    left: 74%;
+  }
 `;
 
 const Carousel = ({ images, type }) => {
@@ -63,7 +79,7 @@ const Carousel = ({ images, type }) => {
           variant="dots"
           position="static"
           index={index}
-          steps={5}
+          steps={images.length}
           activeStep={index}
           backButton={
             <Button

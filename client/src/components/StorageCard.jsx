@@ -39,12 +39,12 @@ const Rating = styledComponents.div`
 
 const LocationIcon = styled(LocationOnIcon)`
   color: ${(props) => props.theme.palette.secondary.main};
-  margin: ${(props) => props.theme.margin.icon};
+  ${'' /* margin: ${(props) => props.theme.margin.icon}; */}
 `;
 
 const RatingIcon = styled(StarIcon)`
   color: ${(props) => props.theme.palette.secondary.main};
-  margin: ${(props) => props.theme.margin.icon};
+  ${'' /* margin: ${(props) => props.theme.margin.icon}; */}
 `;
 
 const Area = styledComponents.p`
@@ -72,6 +72,8 @@ const Info = styled(CardContent)`
 `;
 
 const Details = styledComponents.div`
+  margin: 0 auto;
+  width: 100%;
   @media only screen and (max-width: 600px) {
     display: flex;
     justify-content: space-around;

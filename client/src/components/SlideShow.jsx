@@ -4,9 +4,11 @@ import styledComponent from 'styled-components';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Rating } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
 
 const Slide = styledComponent.div`
     position: relative;
+    color: #fff;    
 `;
 const StorageImage = styledComponent.img`
     border-radius: 20px;
@@ -58,32 +60,38 @@ function SlideShow({ storages }) {
         const storage = data[0];
         const distance = data[1];
         return (
-          <Slide key={storage._id}>
-            <StorageImage
-              src={
-                storage.gallery
-                  ? storage.gallery[0]
-                  : '../../public/out-of-stock.png'
-              }
-              alt="Storage Image"
-            />
-            <StorageLocation>
-              <LocationOnIcon />
-              <StorageCityAndCountry>Lisbon, Portugal</StorageCityAndCountry>
-            </StorageLocation>
-            <CustomizedRating
-              name="storage-rating"
-              defautValue={storage.average}
-              precision={0.5}
-              readOnly
-            />
-            {distance && (
-              <StorageDistance>
-                <Distance>{Number(distance).toPrecision(2)}</Distance>
-                <span> miles</span>
-              </StorageDistance>
-            )}
-          </Slide>
+          <Link
+            to={{
+              pathname: `/storage/${storage._id}`
+            }}
+          >
+            <Slide key={storage._id}>
+              <StorageImage
+                src={
+                  storage.gallery
+                    ? storage.gallery[0]
+                    : '../../public/out-of-stock.png'
+                }
+                alt="Storage Image"
+              />
+              <StorageLocation>
+                <LocationOnIcon />
+                <StorageCityAndCountry>Lisbon, Portugal</StorageCityAndCountry>
+              </StorageLocation>
+              <CustomizedRating
+                name="storage-rating"
+                defautValue={storage.average}
+                precision={0.5}
+                readOnly
+              />
+              {distance && (
+                <StorageDistance>
+                  <Distance>{Number(distance).toPrecision(2)}</Distance>
+                  <span> miles</span>
+                </StorageDistance>
+              )}
+            </Slide>
+          </Link>
         );
       })}
     </Slider>

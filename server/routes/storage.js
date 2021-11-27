@@ -33,7 +33,7 @@ router.post('/search/near-user', async (req, res, next) => {
   const lng = data.lng;
   const lat = data.lat;
   try {
-    const radius = 10;
+    const radius = 50;
 
     const storages = await Storage.find({
       location: {
