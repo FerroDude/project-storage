@@ -107,7 +107,7 @@ const PhotoGallery = ({ images }) => {
                   overflowY: 'scroll'
                 }}
               >
-                <ImageList variant="masonry" cols={4} gap={10}>
+                <ImageList variant="masonry" cols={2} gap={10}>
                   {images.map((image) => (
                     <ImageListItem key={image}>
                       <Image

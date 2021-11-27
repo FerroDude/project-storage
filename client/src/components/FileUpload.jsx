@@ -3,9 +3,14 @@ import Carousel from './Carousel';
 import styledComponents from 'styled-components';
 
 const FilePicker = styledComponents.div`
-  background: grey;
-  width: 100px;
-  height: 100px;
+  background: rgba(255, 127, 4, 0.07);
+  width: 100%;
+  border-radius: 5px;
+  padding: 1em 1em;
+  margin: 1em 0;
+  font-size: 1em;
+  color: rgba(255, 127, 4, 1);
+  border: 1px solid rgba(255, 127, 4, 0.3);
   cursor: pointer;
 `;
 

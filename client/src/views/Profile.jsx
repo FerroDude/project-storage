@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import styledComponents from 'styled-components';
 import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
+import { useEffect } from 'react';
+import { loadAuthenticatedUser } from '../services/user';
 
 const Profile = styledComponents.div`
   color: ${(props) => props.theme.palette.primary.text};
@@ -53,8 +55,12 @@ const Subtitle = styledComponents.h3`
 
 const ProfilePicture = styled(Avatar)`
   margin: 1em;
-  height: auto;
-  width: 60%;
+  height: 8em;
+  width: 90%;
+
+  % img {
+    object-fit: contain;
+  }
 `;
 
 const Section = styledComponents.div`
@@ -89,6 +95,7 @@ const ProfileView = ({ user }) => {
         <Header>
           {user.profilePicture && (
             <ProfilePicture
+              variant="rounded"
               src={user.profilePicture}
               alt={`${user.username}'s profile`}
             />

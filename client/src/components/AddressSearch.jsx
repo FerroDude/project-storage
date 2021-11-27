@@ -7,6 +7,24 @@ import { styled } from '@mui/material/styles';
 import styledComponents from 'styled-components';
 import TextField from '@mui/material/TextField';
 
+const SuggestionsList = styledComponents.div`
+position: absolute;
+z-index: 1;
+background: rgb(20 20 20);
+width: 100%;
+right: 0;
+padding: 1em 1em;
+display: flex;
+flex-direction: column;
+justify-content: space-between;`;
+
+const SuggestionItem = styledComponents.div`
+color: ${(props) => props.theme.palette.primary.text};
+margin: 10px 0;
+padding: 5px 10px;
+border-radius: 20px;
+`;
+
 const Input = styled(TextField)`
   margin: 1em 0;
   width: 100%;
@@ -31,7 +49,7 @@ const Wrapper = styledComponents.div`
 `;
 
 const searchOptions = {
-  componentRestrictions: { country: ['es', 'pt'] },
+  // componentRestrictions: { country: ['es', 'pt'] },
   types: ['address']
 };
 
@@ -64,24 +82,24 @@ const AddressSearch = ({ onCoordinatesChange }) => {
                 name: 'address'
               })}
             />
-            <div>
+            <SuggestionsList>
               {loading && <div>...loading</div>}
               {suggestions.map((suggestion) => {
                 const style = {
-                  backgroundColor: suggestion.active && '#41b3f3'
+                  backgroundColor: suggestion.active && '#242424'
                 };
                 return (
-                  <div
+                  <SuggestionItem
                     {...getSuggestionItemProps(suggestion, {
                       style,
                       key: suggestion.description
                     })}
                   >
                     {suggestion.description}
-                  </div>
+                  </SuggestionItem>
                 );
               })}
-            </div>
+            </SuggestionsList>
           </div>
         )}
       </PlacesAutocomplete>

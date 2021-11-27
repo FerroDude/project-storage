@@ -94,7 +94,7 @@ router.get('/rented', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
-  const storage = await Storage.findById(id);
+  const storage = await Storage.findById(id).populate('owner');
   res.json(storage);
 });
 

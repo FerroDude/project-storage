@@ -50,7 +50,9 @@ export default function AllRoutes({
         path="/profile"
         authorized={isLoaded && user}
         redirect="/signIn"
-        render={(props) => <ProfileView {...props} user={user} />}
+        render={(props) => (
+          <ProfileView {...props} loadUser={props.loadUser} user={user} />
+        )}
       />
       <ProtectedRoute
         path="/settings"

@@ -70,7 +70,7 @@ export const CustomizedCancelIcon = styled((props) => <ClearIcon {...props} />)`
 
 const DropdownMenu = styledComponents.div`
   position: absolute; 
-  height: calc(100vh - (65px + 1em));
+  height: 150vh;
   width: 100vw;
   top: calc(65px + 1em);
   background: ${(props) => props.theme.palette.background.main};
@@ -97,7 +97,7 @@ const ListItem = styledComponents.li`
 
   & :hover {
     color: ${(props) => props.theme.palette.primary.main};
-    background-color: ${(props) => props.theme.palette.background.dark};
+    font-size: 1.8em;
   }
 `;
 
@@ -166,16 +166,6 @@ const Navbar = ({ handleSignOut, user }) => {
                       to="/storage/create"
                     >
                       Create storage
-                    </CustomizedNavLink>
-                  </ListItem>
-                  <ListItem>
-                    <CustomizedNavLink
-                      onClick={() => {
-                        setIsClicked(false);
-                      }}
-                      to="/storage/manage"
-                    >
-                      Manage storage
                     </CustomizedNavLink>
                   </ListItem>
                 </>
