@@ -97,7 +97,7 @@ const ListItem = styledComponents.li`
 
   & :hover {
     color: ${(props) => props.theme.palette.primary.main};
-    background-color: ${(props) => props.theme.palette.background.dark};
+    font-size: 1.8em;
   }
 `;
 
