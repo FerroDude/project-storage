@@ -46,7 +46,7 @@ const Input = styled(TextField)`
     color: ${(props) => props.theme.palette.primary.text};
     margin: 0;
     background: ${(props) => props.theme.palette.background.component};
-    font-size: 1em;
+    font-size: 0.8em;
   }
 `;
 
@@ -104,6 +104,7 @@ const StorageCreateView = () => {
   return (
     <div>
       <Form onSubmit={handleSubmit}>
+        <Title>Create a new storage</Title>
         <FileUpload type="multiple" onPickFile={handleGalleryChange} />
         <Input
           variant="filled"

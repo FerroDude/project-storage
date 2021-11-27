@@ -168,19 +168,6 @@ const Navbar = ({ handleSignOut, user }) => {
                       Create storage
                     </CustomizedNavLink>
                   </ListItem>
-<<<<<<< HEAD
-                  <ListItem>
-                    <CustomizedNavLink
-                      onClick={() => {
-                        setIsClicked(false);
-                      }}
-                      to="/storage/manage"
-                    >
-                      Manage storage
-                    </CustomizedNavLink>
-                  </ListItem>
-=======
->>>>>>> 6c70d5febd5178c20398183e0b5298be22c77864
                 </>
               )}
               <ListItem>

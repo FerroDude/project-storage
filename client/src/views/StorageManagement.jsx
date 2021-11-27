@@ -22,11 +22,6 @@ const Form = styledComponents.form`
   box-shadow: ${(props) => props.theme.shadow};
 `;
 
-const Subtitle = styledComponents.h3`
-  color: ${(props) => props.theme.palette.title.subtitle};
-  margin: 1em 0 1em 0;
-`;
-
 const Input = styled(TextField)`
   margin: 1em 0;
   width: 60%;
@@ -46,8 +41,28 @@ const Input = styled(TextField)`
     color: ${(props) => props.theme.palette.primary.text};
     margin: 0;
     background: ${(props) => props.theme.palette.background.component};
-    font-size: 1em;
+    font-size: 0.8em;
   }
+`;
+
+const Buttons = styledComponents.div`
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+  }
+`;
+
+const Title = styledComponents.h1`
+  color: ${(props) => props.theme.palette.title.component};
+  font-weight: bold;
+  margin-bottom: 0.5em;
+`;
+
+const Subtitle = styledComponents.h3`
+  color: ${(props) => props.theme.palette.title.subtitle};
+  margin: 1em 0 1em 0;
 `;
 
 const StorageManagementView = (props) => {
@@ -98,12 +113,12 @@ const StorageManagementView = (props) => {
   return (
     storage && (
       <div>
-        <button onClick={handleStorageDeletion}>Delete storage</button>
         <PhotoGallery images={storage.gallery} />
-        <form onSubmit={handleFormSubmission}>
+        <Form onSubmit={handleFormSubmission}>
+          <Title>Manage your storage</Title>
           <FileUpload type="multiple" onPickFile={handleGalleryChange} />
-          <h3>Personal details</h3>
           <Input
+            variant="filled"
             label="Name"
             id="input-name"
             type="text"
@@ -113,17 +128,24 @@ const StorageManagementView = (props) => {
             onChange={handleInputChange}
           />
           <Input
-            label="Description"
+            multiline
+            variant="filled"
+            label="Description (max. 500 characters)"
+            minRows="5"
             id="input-storage-description"
             type="text"
-            placeholder="Description (max. 160 characters)"
             name="description"
+            helperText={`${
+              500 - storage.description.length
+            } characters remaining.`}
             value={storage.description}
             onChange={handleInputChange}
-            maxLength="160"
+            inputProps={{
+              maxLength: '500'
+            }}
           />
-          <p>{160 - storage.description.length} characters remaining.</p>
           <Input
+            variant="filled"
             label="Price"
             id="input-storage-price"
             type="number"
@@ -132,8 +154,9 @@ const StorageManagementView = (props) => {
             value={storage.price}
             onChange={handleInputChange}
           />
-          <p>Storage space size</p>
+          <Subtitle>Storage space size</Subtitle>
           <Input
+            variant="filled"
             label="Width"
             id="input-storage-width"
             type="text"
@@ -143,6 +166,7 @@ const StorageManagementView = (props) => {
             onChange={handleInputChange}
           />
           <Input
+            variant="filled"
             label="Length"
             id="input-storage-length"
             type="text"
@@ -151,9 +175,19 @@ const StorageManagementView = (props) => {
             value={storage.length}
             onChange={handleInputChange}
           />
-          <p>Total area: {storage.width * storage.length}</p>
-          <button>Save storage</button>
-        </form>
+          <Input
+            variant="filled"
+            label="Total area"
+            id="input-storage-area"
+            type="text"
+            name="area"
+            value={`${storage.length * storage.width} `}
+          />
+          <Buttons>
+            <button>Save storage</button>
+            <button onClick={handleStorageDeletion}>Delete storage</button>
+          </Buttons>
+        </Form>
       </div>
     )
   );
