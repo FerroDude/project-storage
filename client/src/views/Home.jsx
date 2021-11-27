@@ -4,7 +4,12 @@ import Button from '@mui/material/Button';
 import React, { useState, useEffect } from 'react';
 import styledComponents from 'styled-components';
 import SearchBar from '../components/SearchBar';
-import { getHighRatedStorages, getStorageNearCoods } from '../services/storage';
+import {
+  getHighRatedStorages,
+  getStorage,
+  getStorageNearCoods,
+  getStoragesNearUser
+} from '../services/storage';
 import { styled } from '@mui/material/styles';
 import { CustomizedCancelIcon } from '../components/Navbar';
 import SlideShow from '../components/SlideShow';
@@ -123,6 +128,8 @@ const HomeView = ({ user }) => {
   const [hasResults, setHasResults] = useState(false);
 
   const [isLocationAllowed, setIsLocationAllowed] = useState(false);
+  const [nearStorage, setNearStorage] = useState([]);
+
   const [highRatedStorages, setHighRatedStorages] = useState(null);
 
   useEffect(() => {
@@ -205,7 +212,40 @@ const HomeView = ({ user }) => {
     }
   };
 
-  console.log(highRatedStorages);
+  const handleAllowLocation = async (e) => {
+    if (user) {
+      const storages = await getStoragesNearUser({
+        lng: user.location.coordinates[0],
+        lat: user.location.coordinates[1]
+      });
+
+      setNearStorage([...storages.data]);
+
+      if (!storages.data.length > 0) {
+        e.target.innerHTML = 'No Storages Near You';
+        e.target.disabled = true;
+      } else {
+        setIsLocationAllowed(true);
+      }
+    } else if (!user) {
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        const userCoords = {
+          lat: pos.coords.longitude,
+          lng: pos.coords.latitude
+        };
+        const storages = await getStoragesNearUser(userCoords);
+        setNearStorage(storages.length ? [...storages] : []);
+        if (!storages.data.length > 0) {
+          e.target.innerHTML = 'No Storages Near You';
+          e.target.disabled = true;
+        } else {
+          setIsLocationAllowed(true);
+        }
+      });
+    }
+  };
+
+  console.log(nearStorage);
   return (
     <Container>
       <SearchContainer>
@@ -276,13 +316,20 @@ const HomeView = ({ user }) => {
         </SearchResults>
       )}
 
-      <Button
-        className="allow-location"
-        onClick={handleFilterSubmit}
-        variant="contained"
-      >
-        Allow Location Access
-      </Button>
+      {!isLocationAllowed ? (
+        <Button
+          className="allow-location"
+          onClick={handleAllowLocation}
+          variant="contained"
+        >
+          Find Storages Near You
+        </Button>
+      ) : (
+        <SearchResults>
+          <SlideHeader>Storages Near You</SlideHeader>
+          <SlideShow storages={nearStorage} />
+        </SearchResults>
+      )}
     </Container>
   );
 };

@@ -21,13 +21,38 @@ router.post('/search/high-rated', async (req, res, next) => {
     for (let storage of sortedStorages) {
       formatted.push([storage, null]);
     }
-
-    console.log(sortedStorages);
     res.json({ data: formatted });
   } catch (err) {
     next(err);
   }
 });
+router.post('/search/near-user', async (req, res, next) => {
+  const data = req.body;
+  console.log(data);
+
+  const lng = data.lng;
+  const lat = data.lat;
+  try {
+    const radius = 10;
+
+    const storages = await Storage.find({
+      location: {
+        $geoWithin: {
+          $centerSphere: [[lng, lat], radius / process.env.EARTH_RADIUS]
+        }
+      }
+    });
+
+    const sortedStorages = [...sortStorageByProximity(storages, [lng, lat])];
+
+    console.log(sortedStorages);
+
+    res.json({ data: sortedStorages });
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post('/search', async (req, res, next) => {
   const { lng, lat, userCoords, filters } = req.body;
   try {
@@ -50,7 +75,7 @@ router.post('/search', async (req, res, next) => {
     });
 
     const sortedStorages = [...sortStorageByProximity(storages, userCoords)];
-    console.log(sortedStorages);
+
     res.json({ sortedStorages });
   } catch (err) {
     next(err);
