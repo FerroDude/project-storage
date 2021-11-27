@@ -1,23 +1,55 @@
 import React from 'react';
 import Slider from 'react-slick';
-import style from 'styled-components';
+import styledComponent from 'styled-components';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Rating } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
-const Slide = style.div``;
-const StorageImage = style.img``;
-const StorageLocation = style.div``;
-const StorageCityAndCountry = style.span``;
-const StorageDistance = style.div``;
-const Distance = style.span``;
+const Slide = styledComponent.div`
+    position: relative;
+`;
+const StorageImage = styledComponent.img`
+    border-radius: 20px;
+    width: 100%;
+    height: 240px;
+`;
+const StorageLocation = styledComponent.div`
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 54px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 5px;
+    font-weight: 600;
+    `;
+const StorageCityAndCountry = styledComponent.span`
+    
+`;
+const StorageDistance = styledComponent.div`
+    top: 0;
+    right: 0;
+    position: absolute;
+    margin: 5px 10px 0px 0px;
+`;
+const Distance = styledComponent.span``;
+
+const CustomizedRating = styled(Rating)`
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 25px;
+  width: 100%;
+  padding-left: 5px;
+`;
 
 function SlideShow({ storages }) {
   const settings = {
     dots: true,
     infite: true,
     speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false
   };
 
   return (
@@ -39,36 +71,21 @@ function SlideShow({ storages }) {
               <LocationOnIcon />
               <StorageCityAndCountry>Lisbon, Portugal</StorageCityAndCountry>
             </StorageLocation>
-            <Rating
+            <CustomizedRating
               name="storage-rating"
               defautValue={storage.average}
               precision={0.5}
               readOnly
             />
-            <StorageDistance>
-              <Distance>{distance}</Distance> <span>miles</span>
-            </StorageDistance>
+            {distance && (
+              <StorageDistance>
+                <Distance>{Number(distance).toPrecision(2)}</Distance>
+                <span> miles</span>
+              </StorageDistance>
+            )}
           </Slide>
         );
       })}
-      {/* <Slide>
-        <Dummy>1</Dummy>
-      </Slide>
-      <Slide>
-        <Dummy>2</Dummy>
-      </Slide>
-      <Slide>
-        <Dummy>3</Dummy>
-      </Slide>
-      <Slide>
-        <Dummy>4</Dummy>
-      </Slide>
-      <Slide>
-        <Dummy>5</Dummy>
-      </Slide>
-      <Slide>
-        <Dummy>6</Dummy>
-      </Slide> */}
     </Slider>
   );
 }

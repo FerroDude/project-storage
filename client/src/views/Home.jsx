@@ -1,18 +1,74 @@
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { Rating, Slider, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styledComponents from 'styled-components';
 import SearchBar from '../components/SearchBar';
-import { getStorageNearCoods } from '../services/storage';
+import { getHighRatedStorages, getStorageNearCoods } from '../services/storage';
 import { styled } from '@mui/material/styles';
 import { CustomizedCancelIcon } from '../components/Navbar';
 import SlideShow from '../components/SlideShow';
 
-const Container = styledComponents.div``;
-const MainHeader = styledComponents.h1``;
-const SearchBarWrapper = styledComponents.div``;
-const SearchResults = styledComponents.div``;
+const Container = styledComponents.div`
+  display: flex;
+  flex-direction: column;
+  
+  .allow-location {
+    margin: 2em auto;
+    width: 60%;
+    font-weight: 500;
+  }
+  `;
+const SlideHeader = styledComponents.h6`
+  padding: 1em;
+  width: 100%  
+`;
+const SearchContainer = styledComponents.div`
+  display: flex;
+  padding: 0 1em;
+  justify-content: space-between;
+  position: relative;
+
+  & :first-child:first-child {
+    flex: 2;
+    border-radius: 50px;
+    
+    #input-search {
+      padding: 1em;
+      color: white;
+    }
+  }
+
+`;
+
+const SearchBarFilterContainer = styledComponents.div`
+  margin: 2.5em 0;
+  padding: 1em 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1em;
+
+  .MuiRating-root {
+    background: #342211;
+    padding: 3px 10px;
+    width: 40%;
+    border-radius: 35px;
+  }
+  `;
+const SearchResults = styledComponents.div`
+padding: 1em;
+margin: 1em 0;  
+
+.slick-list {
+    height: 15em;
+    border-radius: 20px;
+}
+
+.slick-dots li button:before {
+  color: #ff7f04; 
+}
+
+`;
 
 const PrettoSlider = styled(Slider)({
   background: '#FFB76B',
@@ -65,6 +121,18 @@ const HomeView = ({ user }) => {
   const [addFilterIsClicked, setAddFilterIsCliked] = useState(false);
   const [searchResults, setSearchResults] = useState({ results: null });
   const [hasResults, setHasResults] = useState(false);
+
+  const [isLocationAllowed, setIsLocationAllowed] = useState(false);
+  const [highRatedStorages, setHighRatedStorages] = useState(null);
+
+  useEffect(() => {
+    console.log('useEffect called');
+    const getStorages = async () => {
+      const loadedStorages = await getHighRatedStorages();
+      setHighRatedStorages(loadedStorages);
+    };
+    getStorages();
+  }, []);
 
   const getSearchResults = async (
     serviceHandlerFunction,
@@ -137,21 +205,21 @@ const HomeView = ({ user }) => {
     }
   };
 
-  console.log(searchResults.results);
+  console.log(highRatedStorages);
   return (
     <Container>
-      <MainHeader>Find the right storage for you</MainHeader>
-      <SearchBar user={user} onStorageCoordsChange={handleStorageCoords} />
-      <Button onClick={handleFilterSubmit}>
-        {addFilterIsClicked ? (
-          <CustomizedCancelIcon id="cancel-filter" />
-        ) : (
-          <FilterAltIcon />
-        )}
-      </Button>
-
+      <SearchContainer>
+        <SearchBar user={user} onStorageCoordsChange={handleStorageCoords} />
+        <Button onClick={handleFilterSubmit}>
+          {addFilterIsClicked ? (
+            <CustomizedCancelIcon id="cancel-filter" />
+          ) : (
+            <FilterAltIcon />
+          )}
+        </Button>
+      </SearchContainer>
       {addFilterIsClicked && (
-        <SearchBarWrapper>
+        <SearchBarFilterContainer>
           <Typography>Price</Typography>
           <PrettoSlider
             valueLabelDisplay="auto"
@@ -192,13 +260,29 @@ const HomeView = ({ user }) => {
           <Button onClick={handleFilterSubmit} variant="contained">
             Done
           </Button>
-        </SearchBarWrapper>
+        </SearchBarFilterContainer>
       )}
       {searchResults.results && (
         <SearchResults>
+          <SlideHeader>Search Results</SlideHeader>
           <SlideShow storages={searchResults.results.sortedStorages} />
         </SearchResults>
       )}
+
+      {highRatedStorages && (
+        <SearchResults>
+          <SlideHeader>Worldwide Recommendations</SlideHeader>
+          <SlideShow storages={highRatedStorages.data} />
+        </SearchResults>
+      )}
+
+      <Button
+        className="allow-location"
+        onClick={handleFilterSubmit}
+        variant="contained"
+      >
+        Allow Location Access
+      </Button>
     </Container>
   );
 };

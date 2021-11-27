@@ -14,6 +14,20 @@ router.get('/listAll', async (req, res) => {
   res.json(storages);
 });
 
+router.post('/search/high-rated', async (req, res, next) => {
+  try {
+    const sortedStorages = await Storage.find().sort({ average: -1 }).limit(5);
+    const formatted = [];
+    for (let storage of sortedStorages) {
+      formatted.push([storage, null]);
+    }
+
+    console.log(sortedStorages);
+    res.json({ data: formatted });
+  } catch (err) {
+    next(err);
+  }
+});
 router.post('/search', async (req, res, next) => {
   const { lng, lat, userCoords, filters } = req.body;
   try {

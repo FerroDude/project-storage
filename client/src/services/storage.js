@@ -107,3 +107,10 @@ export const getStorageNearCoods = (body) => {
     .then((res) => res.data)
     .catch((err) => err);
 };
+
+export const getHighRatedStorages = () => {
+  return api
+    .post(`${endpoint}/search/high-rated`)
+    .then((res) => res.data)
+    .catch((err) => err);
+};
