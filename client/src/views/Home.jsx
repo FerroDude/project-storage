@@ -10,7 +10,26 @@ import { CustomizedCancelIcon } from '../components/Navbar';
 import SlideShow from '../components/SlideShow';
 
 const Container = styledComponents.div``;
-const MainHeader = styledComponents.h1``;
+const MainHeader = styledComponents.h1`
+  padding: 0 1em 1em;
+  font-size: 1.5em;
+  text-align: center;
+  width: 70%  
+`;
+const SearchContainer = styledComponents.div`
+  display: flex;
+  padding: 0 1em;
+  justify-content: space-between;
+  position: relative;
+
+  & :first-child:first-child {
+    flex: 2;
+    border-radius: 50px;
+    
+  }
+
+`;
+
 const SearchBarWrapper = styledComponents.div``;
 const SearchResults = styledComponents.div``;
 
@@ -140,16 +159,16 @@ const HomeView = ({ user }) => {
   console.log(searchResults.results);
   return (
     <Container>
-      <MainHeader>Find the right storage for you</MainHeader>
-      <SearchBar user={user} onStorageCoordsChange={handleStorageCoords} />
-      <Button onClick={handleFilterSubmit}>
-        {addFilterIsClicked ? (
-          <CustomizedCancelIcon id="cancel-filter" />
-        ) : (
-          <FilterAltIcon />
-        )}
-      </Button>
-
+      <SearchContainer>
+        <SearchBar user={user} onStorageCoordsChange={handleStorageCoords} />
+        <Button onClick={handleFilterSubmit}>
+          {addFilterIsClicked ? (
+            <CustomizedCancelIcon id="cancel-filter" />
+          ) : (
+            <FilterAltIcon />
+          )}
+        </Button>
+      </SearchContainer>
       {addFilterIsClicked && (
         <SearchBarWrapper>
           <Typography>Price</Typography>
