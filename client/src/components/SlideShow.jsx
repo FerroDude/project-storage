@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from 'react-slick';
 import styledComponent from 'styled-components';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { Rating } from '@mui/material';
+import Rating from '@mui/material/Rating';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 
@@ -59,6 +59,7 @@ function SlideShow({ storages }) {
       {storages.map((data) => {
         const storage = data[0];
         const distance = data[1];
+        console.log(storage.average);
         return (
           <Link
             to={{
@@ -78,11 +79,13 @@ function SlideShow({ storages }) {
                 <LocationOnIcon />
                 <StorageCityAndCountry>Lisbon, Portugal</StorageCityAndCountry>
               </StorageLocation>
+
               <CustomizedRating
-                name="storage-rating"
-                defautValue={storage.average}
+                name={`${storage.name}-rating`}
+                value={storage.average}
                 precision={0.5}
-                readOnly
+                max={5}
+                readOnly={true}
               />
               {distance && (
                 <StorageDistance>
