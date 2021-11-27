@@ -21,6 +21,8 @@ router.post('/search/high-rated', async (req, res, next) => {
     for (let storage of sortedStorages) {
       formatted.push([storage, null]);
     }
+
+    console.log(formatted);
     res.json({ data: formatted });
   } catch (err) {
     next(err);
