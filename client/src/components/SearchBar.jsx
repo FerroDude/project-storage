@@ -9,25 +9,28 @@ import TextField from '@mui/material/TextField';
 
 const Container = styledComponents.div``;
 const SuggestionsList = styledComponents.div`
-position: absolute;
-z-index: 1;
-background: rgb(20 20 20);
-width: 100%;
-right: 0;
-padding: 1em 1em;
-display: flex;
-flex-direction: column;
-justify-content: space-between;`;
+  position: absolute;
+  z-index: 1;
+  background: rgb(20 20 20);
+  width: 100%;
+  right: 0;
+  padding: 1em 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 const SearchInput = styled(TextField)`
   background: rgba(255, 127, 4, 0.15);
   width: 100%;
 `;
+
 const SomeComponent = styledComponents.div``;
 const SuggetionItem = styledComponents.div`
-margin: 10px 0;
-padding: 5px 10px;
-border-radius: 20px;
+  color: ${(props) => props.theme.palette.primary.text};
+  margin: 10px 0;
+  padding: 5px 10px;
+  border-radius: 20px;
 `;
 
 const SearchBar = ({ onStorageCoordsChange }) => {
@@ -65,7 +68,7 @@ const SearchBar = ({ onStorageCoordsChange }) => {
               {loading && <SomeComponent>...loading</SomeComponent>}
               {suggestions.map((suggestion) => {
                 const style = {
-                  backgroundColor: suggestion.active && 'orange'
+                  backgroundColor: suggestion.active && '#242424'
                 };
                 return (
                   <SuggetionItem
