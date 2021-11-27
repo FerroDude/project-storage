@@ -108,6 +108,13 @@ export const getStorageNearCoods = (body) => {
     .catch((err) => err);
 };
 
+export const getStoragesNearUser = (body) => {
+  return api
+    .post(`${endpoint}/search/near-user`, body)
+    .then((res) => res.data)
+    .catch((err) => err);
+};
+
 export const getHighRatedStorages = () => {
   return api
     .post(`${endpoint}/search/high-rated`)
