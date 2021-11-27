@@ -55,8 +55,12 @@ const Subtitle = styledComponents.h3`
 
 const ProfilePicture = styled(Avatar)`
   margin: 1em;
-  height: auto;
-  width: 60%;
+  height: 8em;
+  width: 90%;
+
+  % img {
+    object-fit: contain;
+  }
 `;
 
 const Section = styledComponents.div`
@@ -91,6 +95,7 @@ const ProfileView = ({ user }) => {
         <Header>
           {user.profilePicture && (
             <ProfilePicture
+              variant="rounded"
               src={user.profilePicture}
               alt={`${user.username}'s profile`}
             />
