@@ -16,7 +16,10 @@ const StorageList = styledComponents.ul`
   margin: ${(props) => props.theme.margin.element};
   box-shadow: ${(props) => props.theme.shadow};
   @media only screen and (max-width: 600px) {
-    width: 90%;
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    margin: 0;
   }
 `;
 

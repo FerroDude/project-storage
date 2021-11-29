@@ -26,7 +26,10 @@ const Form = styledComponents.form`
   border-radius: 5px;
   width: 40%;
   @media only screen and (max-width: 600px) {
-    width: 90%;
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    margin: 0;
   }
   height: 95%;
   padding: ${(props) => props.theme.padding.element};

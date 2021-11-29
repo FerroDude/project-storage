@@ -18,6 +18,12 @@ const Form = styledComponents.form`
   padding: ${(props) => props.theme.padding.element};
   margin: ${(props) => props.theme.margin.element};
   box-shadow: ${(props) => props.theme.shadow};
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    margin: 0;
+  }
 `;
 
 const Input = styled(TextField)`

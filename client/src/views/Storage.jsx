@@ -23,7 +23,11 @@ const Storage = styledComponents.div`
   margin: ${(props) => props.theme.margin.element};
   box-shadow: ${(props) => props.theme.shadow};
   @media only screen and (max-width: 600px) {
-    width: 90%;
+    flex-direction: column;
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    margin: 0;
   }
 `;
 

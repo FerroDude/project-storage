@@ -18,7 +18,10 @@ const Profile = styledComponents.div`
   box-shadow: ${(props) => props.theme.shadow};
   @media only screen and (max-width: 600px) {
     flex-direction: column;
-    width: 90%;
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    margin: 0;
   }
 `;
 
