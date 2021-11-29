@@ -205,10 +205,10 @@ const Navbar = ({ handleSignOut, user }) => {
         </UnorderedList>
       </DropdownMenu>
       <Left>
-        <CustomizedLocationIcon />
+        {/* <CustomizedLocationIcon />
         <CurrentLocation as="a" href="#">
           Current User Location
-        </CurrentLocation>
+        </CurrentLocation> */}
       </Left>
       <Right>
         <Button onClick={handleClick}>
