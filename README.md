@@ -1,4 +1,24 @@
-# project-storage
+# Super Storage Detective
+
+The main goal was to create an app that allows users to rent their extra storage spaces.
+The project uses React.js in the frontend and Node.js / MongoDB in the backend.
+Also included google maps API, cloudinary, Stripe and react-calendar.
+Everything is built using React Hooks and Async Await.
+
+Technologies:
+ - Javascript
+ - React.js
+ - Material UI
+ - Express
+ - MongoDB
+ - Mongoose
+ - Node.js
+ - SCSS
+
+External API's:
+ - Gooogle maps
+ - Cloudinary
+ - Stripe
 
 ## Technologies
 
